@@ -13,27 +13,7 @@ function toMd5 (str) {
     return md5.update(str).digest('hex')
 }
 
-const mapDIr = (verDirs, callback) => {
-    console.log('directory-AA---',fs.statSync(verDirs).isDirectory())
-  //  const loadVerDir = fs.readdirSync(verDirs);
 
-    // if(!fs.statSync(loadVerDir).isDirectory()) {
-    //    typeof(callback) == 'function' && callback(loadVerDir)
-    // } else {
-    //   console.log('directory----',loadVerDir)
-    //     loadVerDir.forEach(item=>{
-    //     //  path.join(pageDir, loadPageDir[i])
-    //       console.log('im----',item)
-    //      //  let isDirectory = fs.statSync(item).isDirectory()
-    //      // if(isDirectory) {
-    //      //   mapDIr(item)
-    //      // }else {
-    //      //   typeof(callback) == 'function' && callback(item)
-    //      // }
-    //     })
-    // }
-
-}
 class VersionCompilerPlugin {
     apply (compiler) {
         compiler.hooks.done.tapPromise('creatVersion', async (stats) => {
@@ -69,38 +49,52 @@ class VersionCompilerPlugin {
         const chunks = []
         try {
           //  const fileNames = nodeDir.files(path.resolve('ver'), { sync: true })
-            const verDirs = path.resolve('ver')
+          const repeatVersion = fileName => {
+            const baseFileName = path.basename(fileName)
+            if (baseFileName === 'chunk.json.ver' || baseFileName === 'versions.mapping' || !baseFileName.endsWith('.ver')) {
+                return
+            }
+            const version = fs.readFileSync(fileName, { encoding: 'UTF-8' })
+            const name = baseFileName.replace(/\.ver$/, '')
+            const ext = '.' + name.split('.').pop()
+            const baseName = name.split('.').slice(0, -1).join('.')
+            mappings.push(`${fileName.slice(path.resolve('ver').length + 1)}#${version}`)
+            chunks.push(`//q.qunarzz.com/${projectName}/prd/${baseName}@${version}${ext}`)
+          }
+          
+          const verDirs = path.resolve('ver')
 
-            mapDIr(verDirs,item=>{
-              console.log('item-----', item)
-            })
-            // loadVerDir.forEach(item=>{
-            //     console.log('item------',   item)
-            // })
+          const mapDIr = (verDirs, callback) => {
+              if(!fs.statSync(verDirs).isDirectory()) {
+                repeatVersion(verDirs)
+              } else {
+                fs.readdirSync(verDirs).forEach(item=>{
+                  const __item = path.resolve(verDirs,item)
+                   if(fs.statSync(__item).isDirectory()) {
+                     mapDIr(__item,_=>{})
+                   } else {
+                    repeatVersion(__item)
+                    typeof(callback) === 'function' && callback(__item)
+                   }
+                })
+              }
+          }
+            mapDIr(verDirs)
 
-          //  fileNames.forEach(fileName => {
-            //     const baseFileName = path.basename(fileName)
-            //     if (baseFileName === 'chunk.json.ver' || baseFileName === 'versions.mapping' || !baseFileName.endsWith('.ver')) {
-            //         return
-            //     }
-            //     const version = fs.readFileSync(fileName, { encoding: 'UTF-8' })
-            //     const name = baseFileName.replace(/\.ver$/, '')
-            //
-            //     const ext = '.' + name.split('.').pop()
-            //     const baseName = name.split('.').slice(0, -1).join('.')
-            //
-            //     mappings.push(`${fileName.slice(path.resolve('ver').length + 1)}#${version}`)
-            //     chunks.push(`//q.qunarzz.com/${projectName}/prd/${baseName}@${version}${ext}`)
-            // })
+       console.log(mappings)
+       console.log(chunks)
+          
         } catch (e) {
             console.log(e)
         }
-        //
-        // const chunkMd5 = toMd5(mappings.join('\n'))
-        // fs.outputFile(path.resolve('ver', 'chunk.json.ver'), chunkMd5, 'utf-8')
-        // mappings.push(`chunk.json#${chunkMd5}`)
-        // fs.outputFile(path.resolve('ver', 'versions.mapping'), mappings.join('\n'), 'utf-8')
-        // fs.outputFile(path.resolve(`prd/chunk@${chunkMd5}.json`), JSON.stringify(chunks), 'utf-8')
+    
+        
+        const chunkMd5 = toMd5(mappings.join('\n'))
+        console.log('mappings---', chunkMd5)
+        fs.writeFileSync(path.resolve('ver', 'chunk.json.ver'), chunkMd5, 'utf-8')
+        mappings.push(`chunk.json#${chunkMd5}`)
+        fs.writeFileSync(path.resolve('ver', 'versions.mapping'), mappings.join('\n'), 'utf-8')
+        fs.writeFileSync(path.resolve(`dist/chunk@${chunkMd5}.json`), JSON.stringify(chunks), 'utf-8')
     }
 }
 
