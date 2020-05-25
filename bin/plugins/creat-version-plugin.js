@@ -13,18 +13,26 @@ function toMd5 (str) {
     return md5.update(str).digest('hex')
 }
 
-const mapDIr = (directory, callback) => {
+const mapDIr = (verDirs, callback) => {
+    console.log('directory-AA---',fs.statSync(verDirs).isDirectory())
+  //  const loadVerDir = fs.readdirSync(verDirs);
 
-  // directory.forEach(item=>{
-  // //  path.join(pageDir, loadPageDir[i])
-  //   console.log('im----',pageDir)
-  //   let isDirectory = fs.statSync(item).isDirectory()
-  //  if(isDirectory) {
-  //    mapDIr(item)
-  //  }else {
-  //    typeof(callback) == 'function' && callback(item)
-  //  }
-  // })
+    // if(!fs.statSync(loadVerDir).isDirectory()) {
+    //    typeof(callback) == 'function' && callback(loadVerDir)
+    // } else {
+    //   console.log('directory----',loadVerDir)
+    //     loadVerDir.forEach(item=>{
+    //     //  path.join(pageDir, loadPageDir[i])
+    //       console.log('im----',item)
+    //      //  let isDirectory = fs.statSync(item).isDirectory()
+    //      // if(isDirectory) {
+    //      //   mapDIr(item)
+    //      // }else {
+    //      //   typeof(callback) == 'function' && callback(item)
+    //      // }
+    //     })
+    // }
+
 }
 class VersionCompilerPlugin {
     apply (compiler) {
@@ -62,8 +70,8 @@ class VersionCompilerPlugin {
         try {
           //  const fileNames = nodeDir.files(path.resolve('ver'), { sync: true })
             const verDirs = path.resolve('ver')
-            const loadVerDir = fs.readdirSync(verDirs);
-            mapDIr(loadVerDir,item=>{
+
+            mapDIr(verDirs,item=>{
               console.log('item-----', item)
             })
             // loadVerDir.forEach(item=>{
