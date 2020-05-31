@@ -87,7 +87,6 @@ class VersionCompilerPlugin {
     
         
         const chunkMd5 = toMd5(mappings.join('\n'))
-        console.log('mappings---', chunkMd5)
         fs.writeFileSync(path.resolve('ver', 'chunk.json.ver'), chunkMd5, 'utf-8')
         mappings.push(`chunk.json#${chunkMd5}`)
         fs.writeFileSync(path.resolve('ver', 'versions.mapping'), mappings.join('\n'), 'utf-8')
