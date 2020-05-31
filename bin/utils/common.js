@@ -1,3 +1,4 @@
+const webpack = require('webpack')
 const path = require('path')
 const fs = require("fs")
 const confman = require('confman')
@@ -55,8 +56,37 @@ const getEntry = () => {
   }
 }
 
+
+const dllReferencePlugin = (config) => {
+    const libKeys = Object.keys(config.library)
+    return libKeys.map(name=>{
+        const __fileName = filterFile(path.join(CWD, config.build, "dll"), `${name}[^.]*\\.manifest\\.json`)
+        if (!__fileName) {
+            console.error(`没有找到${name}对应的dll manifest.json 文件`);
+            return null;
+        }
+        return new webpack.DllReferencePlugin({
+            context:  path.join(CWD),
+            manifest: require(path.join(CWD, config.build, "dll", __fileName))
+        });
+    })
+}
+
+const loadDllAssets = (config) => {
+    return fs
+        .readdirSync(path.join(CWD, config.build, "dll"))
+        .filter(filename => filename.match(/.js$/))
+        .map(filename => {
+            return {
+                filepath: path.join(CWD, config.build, config.dll,filename), 
+                outputPath: 'dll',
+                publicPath: 'dll',
+        }
+        })
+}
 module.exports = {
 	config: getConfig(),
-    filterFile,
-    entry: getEntry()
+    entry: getEntry(),
+    dllReferencePlugin,
+    loadDllAssets
 }

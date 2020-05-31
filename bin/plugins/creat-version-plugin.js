@@ -17,10 +17,7 @@ function toMd5 (str) {
 class VersionCompilerPlugin {
     apply (compiler) {
         compiler.hooks.done.tapPromise('creatVersion', async (stats) => {
-
              const fileList = Object.keys(stats.compilation.assets)
-               console.log('stats----',fileList)
-
              await this.writeFilemappingsion(fileList)
         })
     }

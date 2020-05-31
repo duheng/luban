@@ -5,24 +5,8 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const path = require('path')
 const CWD = process.cwd()
 
-const { filterFile, entry } = require('../utils/common')
+const { entry, dllReferencePlugin } = require('../utils/common')
 const rules = require('./rules')
-
-
-const dllReferencePlugin = (config) => {
-  const libKeys = Object.keys(config.library)
-  return libKeys.map(name=>{
-    const __fileName = filterFile(path.join(CWD, config.build, "dll"), `${name}[^.]*\\.manifest\\.json`)
-    if (!__fileName) {
-        console.error(`没有找到${name}对应的dll manifest.json 文件`);
-        return null;
-    }
-    return new webpack.DllReferencePlugin({
-        context:  path.join(CWD),
-        manifest: require(path.join(CWD, config.build, "dll", __fileName))
-    });
-  })
-}
 
 const webpackConfig = config => {
   return {
@@ -53,6 +37,7 @@ const webpackConfig = config => {
         React: 'react',
       }),
       ...dllReferencePlugin(config),
+    
       // new TransferWebpackPlugin(
       //   [
       //     {
