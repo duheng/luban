@@ -1,11 +1,12 @@
 const webpack = require('webpack')
 const TransferWebpackPlugin = require('transfer-webpack-plugin')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
+const AddAssetHtmlPlugin = require('add-asset-html-webpack-plugin')
 
 const path = require('path')
 const CWD = process.cwd()
 
-const { entry, dllReferencePlugin } = require('../utils/common')
+const { entry, dllReferencePlugin, loadDllAssets  } = require('../utils/common')
 const rules = require('./rules')
 
 const webpackConfig = config => {
@@ -37,7 +38,7 @@ const webpackConfig = config => {
         React: 'react',
       }),
       ...dllReferencePlugin(config),
-    
+      new AddAssetHtmlPlugin(loadDllAssets(config))
       // new TransferWebpackPlugin(
       //   [
       //     {

@@ -3,14 +3,15 @@ const merge = require('webpack-merge')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const CreatVersionPlugin = require('../plugins/creat-version-plugin')
 const CreatHtmlPlugin = require('../plugins/creat-html-plugin')
-const AddAssetHtmlPlugin = require('add-asset-html-webpack-plugin')
 
 const baseConfig = require('./base.config')
 
-const { config, loadDllAssets } = require('../utils/common')
+const { config } = require('../utils/common')
 
 const path = require('path')
 const CWD = process.cwd()
+
+const buildPath =  path.resolve(CWD, config.build)
 
 const jsName  = 'js/[name]@[chunkhash].js'
 const cssName = 'css/[name]@[chunkhash].css'
@@ -46,8 +47,7 @@ const plugins = [
       ignoreOrder: true // Enable to remove warnings about conflicting order
   }),
   new CreatVersionPlugin(),
-  ...CreatHtmlPlugin('production',__baseConfig),
-  new AddAssetHtmlPlugin(loadDllAssets(config))
+  ...CreatHtmlPlugin('production',__baseConfig)
 ]
 
 
@@ -57,7 +57,7 @@ module.exports = () => {
  
   return merge(__baseConfig, {
     output: {
-      path: path.resolve(CWD, config.build),
+      path: buildPath,
       publicPath: config.static[process.env.MODE],
       chunkFilename: 'js/[name]-[chunkhash:8].js',
       filename: jsName
@@ -68,5 +68,11 @@ module.exports = () => {
     performance: {
       hints: false,
     },
+    devServer: {
+      contentBase: path.resolve(CWD, config.build),
+      compress: true,
+      port: 9000,
+      hot: true,
+    }
   })
 }

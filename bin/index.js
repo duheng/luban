@@ -17,6 +17,18 @@ commander
   })
 
 commander
+.command('server')
+.description('本地开发服务🐆')
+.allowUnknownOption()
+.action(async (options) => {
+  try {
+    await require('./commands/server')(options)
+  }catch(err){
+    console.log('server--',err)
+  }
+    
+})
+commander
   .command('dll')
   .description('打包第三方模块🐆')
   .allowUnknownOption()

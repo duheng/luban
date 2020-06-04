@@ -16,6 +16,7 @@ const HtmlWebpackPluginItem = (name) => {
         chunks:[`${name}`],
         templateContent: ({htmlWebpackPlugin}) => {
           const { js } = htmlWebpackPlugin.files
+          console.log('htmlWebpackPlugin.tags.bodyTags--',htmlWebpackPlugin.tags.bodyTags)
             return  `
             <html>
               <head>

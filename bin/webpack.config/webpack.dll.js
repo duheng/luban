@@ -5,11 +5,15 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const { config } = require('../utils/common')
 
 const dllPath = path.join(CWD, config.build, 'dll')
-const library = '[name]'
-
+const library = '[name]_[chunkhash]'
+console.log('AAA:  ',{
+        vendors: config.vendors || [],
+         ...config.library
+    })
 module.exports = {
     mode: "production",
     entry:{
+        vendors: config.vendors || [],
         ...config.library
     },
     plugins:[
