@@ -8,7 +8,15 @@ const { askCurrentDir, askProductName, askReplayDir, selectTmpl } = require('../
 const CWD = process.cwd()
 const tmplDir = path.join(__dirname,'..','..','.tmpl')
 
-const pullOriginTmpl = (selectTmpl) => {
+const spinner = ora({
+  text: '',
+  spinner: {
+    interval: 80, // optional
+    frames: ['🚚', '🔗', '🔍','📃']
+  }
+})
+
+const getOriginTmpl = (selectTmpl) => {
   const __tmplOriginUtl = `https://github.com/duheng/tmpl_${selectTmpl}.git`
   if (!which('git')) {
     echo('检测到您还没有安装git，请先安装git');
@@ -22,14 +30,36 @@ const pullOriginTmpl = (selectTmpl) => {
  
 }
 
+const pullOriginTmpl = (selectTmpl) => {
+   const __tmplOriginUtl = `https://github.com/duheng/tmpl_${selectTmpl}.git`
+  if (!which('git')) {
+    spinner.fail('检测到您还没有安装git，请先安装git');
+    exit(1);
+  }
+  if (exec(`git pull`).code !== 0) {
+    spinner.info('远程模版有更新,正在重新下载');
+    cd('..')
+    rm('-rf',`tmpl_${selectTmpl}`)
+    getOriginTmpl(selectTmpl)
+  }
+  spinner.succeed(`模版 ${selectTmpl} 已更新\r`)
+}
+
 const pullTmpl = (selectTmpl) => {
 
   !fs.existsSync(tmplDir) && mkdir('-p',tmplDir)
 
   const __selectTmpl = path.join(tmplDir,`tmpl_${selectTmpl}`)
   if(!fs.existsSync(__selectTmpl)) {
+    spinner.text = `模版 ${selectTmpl} 下载中\r`
     cd(tmplDir)
+    getOriginTmpl(selectTmpl)
+    spinner.succeed(`模版 ${selectTmpl} 已下载\r`)
+  } else {
+    spinner.text = `检测模版 ${selectTmpl} 的变更\r`
+    cd(__selectTmpl)
     pullOriginTmpl(selectTmpl)
+    
   }
 }
 
@@ -48,16 +78,10 @@ module.exports = async (options) => {
        // 选择模版
       const __selectTmpl = await selectTmpl()
 
-      const spinner = ora({
-        text: `模版 ${__selectTmpl} 载中...\r\n`,
-        spinner: {
-          interval: 80, // optional
-          frames: ['🚚', '🔗', '🔍','📃']
-        }
-      }).start()
+      spinner.start()
        // 下载对应模版
       pullTmpl(__selectTmpl)
-      spinner.succeed(`模版 ${__selectTmpl} 已下载\r`)
+     
        // 拷贝模版到业务目录
       const __source = `${tmplDir}/tmpl_${__selectTmpl}/*`
       try {
