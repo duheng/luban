@@ -7,6 +7,14 @@ commander
   .version(packages.version)
 
 commander
+  .command('init')
+  .description('创建项目')
+  .allowUnknownOption()
+  .action(async (options) => {
+    await require('./commands/init')(options)
+})
+
+commander
   .command('pack')
   .description('打包💼')
   .option('-p --prod', '打包线上版本')
@@ -14,13 +22,13 @@ commander
   .allowUnknownOption()
   .action(async (options) => {
     await require('./commands/pack')(options)
-  })
+})
 
 commander
 .command('server')
 .description('本地开发服务🐆')
 .allowUnknownOption()
-.action(async (options) => {
+.action(async (options) => { 
   try {
     await require('./commands/server')(options)
   }catch(err){
@@ -28,6 +36,7 @@ commander
   }
     
 })
+
 commander
   .command('dll')
   .description('打包第三方模块🐆')
