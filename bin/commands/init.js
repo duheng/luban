@@ -22,7 +22,7 @@ const getOriginTmpl = (selectTmpl) => {
     echo('检测到您还没有安装git，请先安装git');
     exit(1);
   }
-  echo(`模版 ${selectTmpl} 下载中\r`);
+  echo(`模版 ${selectTmpl} 下载中...\r`);
   if (exec(`git clone ${__tmplOriginUtl}`).code !== 0) {
     echo('Error: Git clone failed');
     exit(1);
@@ -31,7 +31,7 @@ const getOriginTmpl = (selectTmpl) => {
 }
 
 const pullOriginTmpl = (selectTmpl) => {
-   echo(`检测模版 ${selectTmpl} 的变更\r`);
+   echo(`检测模版 ${selectTmpl} 的变更...\r`);
    const __tmplOriginUtl = `https://github.com/duheng/tmpl_${selectTmpl}.git`
   if (!which('git')) {
     spinner.fail('检测到您还没有安装git，请先安装git');
@@ -57,6 +57,12 @@ const pullTmpl = (selectTmpl) => {
     cd(__selectTmpl)
     pullOriginTmpl(selectTmpl)
   }
+}
+
+const installPackage = (pakDir) => {
+  echo(`🔍 安装依赖包...\r`);
+  cd(pakDir)
+  exec('npm install')
 }
 
 module.exports = async (options) => {
@@ -89,9 +95,11 @@ module.exports = async (options) => {
           cp('-Rf',__source,`${CWD}/${__name}`)
         }
         spinner.succeed(`项目 ${__name} 已创建\r`)
+        installPackage(__isCur ? CWD : `${CWD}/${__name}`)
       }catch(err) {
         spinner.fail(`项目 ${__name} 已创建失败\r\n${err}`)
       }
+
       spinner.stop()
      
 }

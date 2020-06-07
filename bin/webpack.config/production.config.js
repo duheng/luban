@@ -54,7 +54,7 @@ const plugins = [
 
 
 module.exports = () => {
- 
+ console.log('__baseConfig----', __baseConfig)
   return merge(__baseConfig, {
     output: {
       path: buildPath,

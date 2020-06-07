@@ -5,7 +5,7 @@ const askCurrentDir = async () => {
     const __isCurrentDir = await inquirer.prompt([
         {
             type:"confirm",
-            message:"是否在当前目录创建项目:",
+            message:"是否以当前目录作为项目根目录:",
             name:"iscur",
          
         }

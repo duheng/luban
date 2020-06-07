@@ -81,12 +81,23 @@ const loadDllAssets = (config) => {
                 filepath: path.join(CWD, config.build, config.dll,filename), 
                 outputPath: 'dll',
                 publicPath: 'dll',
-        }
+            }
         })
 }
+
+const genAlias = (projectDir,config) => {
+  var names = fs.readdirSync(projectDir)
+  var map = {}
+  names.forEach(name => {
+    map[name] = path.resolve(projectDir, name)
+  })
+  return {...map,...config.alias}
+}
+
 module.exports = {
 	config: getConfig(),
     entry: getEntry(),
     dllReferencePlugin,
-    loadDllAssets
+    loadDllAssets,
+    genAlias
 }
