@@ -1,14 +1,26 @@
 const webpack = require('webpack')
 const merge = require('webpack-merge')
-const baseConfig = require('./base.config')
-const { config } = require('../utils/common')
 const path = require('path')
+const baseConfig = require('./base.config')
+const CreatHtmlPlugin = require('../plugins/creat-html-plugin')
+const { config } = require('../utils/common')
+const __baseConfig = baseConfig(config)
+
 const CWD = process.cwd()
 const buildPath =  path.resolve(CWD, config.build)
+
 const jsName  = 'js/[name]@dev.js'
 const cssName = 'css/[name]@dev.css'
+
+const plugins = () => {
+  let __plugins = [
+      ...CreatHtmlPlugin('development',__baseConfig)
+    ]
+    return __plugins
+}
+
 module.exports = () => {
-  return merge(baseConfig(config), {
+  return merge(__baseConfig, {
     output: {
       path: buildPath,
       publicPath: config.static[process.env.MODE],
@@ -16,15 +28,19 @@ module.exports = () => {
       filename: jsName
     },
     mode: 'development',
-    devtool: 'source-map',
-
+    devtool: 'none',
     performance: {
       hints: false,
     },
+    plugins: plugins(),
     devServer: {
       contentBase: buildPath,
       compress: true,
-      port: 9000
+      port: 9000,
+      hot: true,
+      inline: true,
+      historyApiFallback: true
+
     }
   })
 }

@@ -14,9 +14,17 @@ const plugins = (config) => {
            verbose: true,
            cleanOnceBeforeBuildPatterns: ['**/*', '!dll', '!dll/**/*']
        }),
-      new webpack.ProvidePlugin({
-        React: 'react',
-      })
+       new webpack.DefinePlugin({
+          'process.env': {
+            MODE: JSON.stringify(process.env.MODE),
+            NODE_ENV: JSON.stringify(process.env.NODE_ENV),
+          },
+          API: JSON.stringify(config.api[process.env.MODE]),
+          STATIC: JSON.stringify(config.static[process.env.MODE]),
+        }),
+       new webpack.ProvidePlugin({
+          React: 'react',
+       })
       // new TransferWebpackPlugin(
       //   [
       //     {

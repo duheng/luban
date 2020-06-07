@@ -30,14 +30,6 @@ __baseConfig.module.rules.map(item => {
 })
 
 const plugins = [
-  new webpack.DefinePlugin({
-    'process.env': {
-      MODE: JSON.stringify(process.env.MODE),
-      NODE_ENV: JSON.stringify('production'),
-    },
-    API: JSON.stringify(config.api[process.env.MODE]),
-    STATIC: JSON.stringify(config.static[process.env.MODE]),
-  }),
   new MiniCssExtractPlugin({
       // Options similar to the same options in webpackOptions.output
       // all options are optional

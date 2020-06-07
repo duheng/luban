@@ -11,14 +11,16 @@ const webpackProd = path.resolve(__dirname, '..', 'webpack.config', 'production.
 const server = (options) => {
 		//exec(webpack + ' --config ' + dllWebpack)
   return new Promise((resolve, reject) => {
-    exec(`${webpack} --config ${webpackProd} --mode=development --colors`)
-   exec(webpackDevServer + ' --config ' + webpackProd + ' --colors')
+    //exec(`${webpack} --config ${webpackProd} --mode=development --colors`)
+    exec(webpackDevServer + ' --config ' + webpackDev + ' --colors')
     resolve(true)
 
   })
 }
 
 module.exports = async (options) => {
+	process.env.NODE_ENV = 'development'
+	process.env.MODE = 'development'
     await server(options)
  
 }

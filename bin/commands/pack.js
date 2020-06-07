@@ -26,16 +26,12 @@ module.exports = async (options) => {
        console.log('打包dll失败：',e)
     }
     let webpackConfig = webpackDev
-	if(options.prod) {
+	if(options.prod) { //生产环境
 		process.env.NODE_ENV = 'production'
+		process.env.MODE = 'production'
 		webpackConfig = webpackProd
 	} else {
 		process.env.NODE_ENV = 'development'
-	}
-
-	if(options.min) {
-		process.env.MODE = 'production'
-	} else {
 		process.env.MODE = 'development'
 	}
 
