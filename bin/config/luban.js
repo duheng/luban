@@ -7,24 +7,16 @@ module.exports = {
   "build": "dist",
   "dll": "dll",
   "static": {
-    "development": "/",
-    "test": "/",
-    "production": ""
+    "development": "",
+    "production": "//api.luban.com/"
   },
   "api": {
-    "development": "/",
-    "test": "/",
+    "development": "",
     "production": "//api.luban.com/"
   },
   "entry": {},
   "library": {},
-  "alias": {
-    "scss": "scss",
-    "components": "components",
-    "utils": "utils",
-    "assets": "assets",
-    "app": "app"
-  },
+  "alias": {},
   "devtool": "source-map",
   "css_modules": false,
   "template": {

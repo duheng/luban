@@ -11,7 +11,7 @@ const crypto = require('crypto')
 
 const HtmlWebpackPluginItem = (name) => {
     return new HtmlWebpackPlugin({
-        inject: false, // 禁用自动注入
+        inject: true, // 禁用自动注入
         filename: `${name}.html`,
         chunks:[`${name}`],
         templateContent: ({htmlWebpackPlugin}) => {
@@ -24,6 +24,7 @@ const HtmlWebpackPluginItem = (name) => {
               </head>
               <body>
                 <h1>Hello World</h1>
+                <div id="app"></div>
                 ${htmlWebpackPlugin.tags.bodyTags}
               </body>
             </html>

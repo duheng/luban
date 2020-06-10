@@ -64,6 +64,10 @@ const selectTmpl = async () => {
             suffix:"☆☆☆☆☆",
             choices:[
               {
+                name : 'egg+react+redux的前后端结合的ssr项目(推荐)',
+                value : "Koa_React_redux"
+              },
+              {
                 name : 'koa+react+redux的前后端结合的ssr项目',
                 value : "Koa_React_redux"
               },
