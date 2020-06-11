@@ -1,5 +1,6 @@
 const webpack = require('webpack')
 const TransferWebpackPlugin = require('transfer-webpack-plugin')
+const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const AddAssetHtmlPlugin = require('add-asset-html-webpack-plugin')
 
@@ -10,6 +11,7 @@ const { entry, dllReferencePlugin, loadDllAssets, genAlias } = require('../utils
 const rules = require('./rules')
 const plugins = (config) => {
   let __plugins = [
+       new CaseSensitivePathsPlugin(),
        new CleanWebpackPlugin({
            verbose: true,
            cleanOnceBeforeBuildPatterns: ['**/*', '!dll', '!dll/**/*']

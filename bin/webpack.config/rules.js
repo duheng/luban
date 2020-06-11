@@ -22,7 +22,7 @@ const rules = {
     return {
             test: /\.(js|jsx|ts|tsx)$/,
             use: [
-                {
+               {
                     loader: require.resolve('thread-loader')
                 },
                 {
