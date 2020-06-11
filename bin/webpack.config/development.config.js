@@ -35,7 +35,7 @@ module.exports = () => {
     plugins: plugins(),
     devServer: {
       contentBase: buildPath,
-      compress: false,
+      compress: true,
       host:'0.0.0.0',
       port: 9000,
       hot: true,

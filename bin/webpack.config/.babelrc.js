@@ -1,17 +1,17 @@
 const path = require('path')
 
 module.exports = function (api) {
-     api.cache(false)
+     api.cache(true)
     const presents = [
         [
             require.resolve('@babel/preset-env'),
             {
                 'targets': {
-                    'browsers': '> 0.5%, not dead'
+                     "ie": 9
                 },
-                'useBuiltIns': 'entry',
-                'corejs': 2,
-                'modules': false
+                "modules": false, // 推荐
+                "useBuiltIns": "entry", // 推荐
+                "corejs":  3,
             }
         ],
         require.resolve('@babel/preset-react'),

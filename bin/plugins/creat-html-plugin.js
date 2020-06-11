@@ -29,13 +29,13 @@ const HtmlWebpackPluginItem = (name) => {
               </body>
             </html>
           `
-        } 
+        }
     })
 }
 
 
 const CreatHtmlPlugin = (mode, config) => {
- 
+
    let __htmlPlugin = []
 
    if(!!Object.keys(config.entry) && Object.keys(config.entry).length > 0) {
