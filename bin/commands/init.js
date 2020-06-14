@@ -17,7 +17,7 @@ const spinner = ora({
 })
 
 const getOriginTmpl = (selectTmpl) => {
-  const __tmplOriginUtl = `https://github.com/duheng/tmpl_${selectTmpl}.git`
+  const __tmplOriginUtl = `git+ssh://git@github.com/duheng/tmpl_${selectTmpl}.git`
   if (!which('git')) {
     echo('检测到您还没有安装git，请先安装git');
     exit(1);

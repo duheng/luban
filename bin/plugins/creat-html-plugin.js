@@ -4,12 +4,14 @@ const fs = require('fs')
 const shell = require('shelljs')
 const child_process = require('child_process');
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const { getTemplate } = require('../utils/common')
 
 const nameReg = /^([^\@]*)\@([^\.]+)(\.(js|css))$/
 
 const crypto = require('crypto')
 
 const HtmlWebpackPluginItem = (name) => {
+  console.log('getTemplate---->', getTemplate())
     return new HtmlWebpackPlugin({
         inject: true, // 禁用自动注入
         filename: `${name}.html`,
@@ -17,18 +19,7 @@ const HtmlWebpackPluginItem = (name) => {
         templateContent: ({htmlWebpackPlugin}) => {
           const { js } = htmlWebpackPlugin.files
           console.log('htmlWebpackPlugin.tags.bodyTags--',htmlWebpackPlugin.tags.bodyTags)
-            return  `
-            <html>
-              <head>
-                ${htmlWebpackPlugin.tags.headTags}
-              </head>
-              <body>
-                <h1>Hello World</h1>
-                <div id="app"></div>
-                ${htmlWebpackPlugin.tags.bodyTags}
-              </body>
-            </html>
-          `
+            return  getTemplate()
         }
     })
 }

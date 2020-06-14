@@ -4,9 +4,21 @@ const fs = require("fs")
 const confman = require('confman')
 const CWD = process.cwd()
 const name = 'luban'
+
 const getConfig = () => {
    let configs = confman.load(`${CWD}/${name}`);
    return configs
+}
+
+const getTemplate = () => {
+   const __path = path.join(CWD,'template.html')
+   let templ = ''
+   if(fs.existsSync(__path)) {
+       templ = fs.readFileSync(__path, 'utf8')
+   } else {
+       templ = fs.readFileSync(path.join(__dirname,'..','config','template.html'), 'utf8')
+   }
+   return templ
 }
 
 const filterFile = (dir, pattern) => {
@@ -99,5 +111,6 @@ module.exports = {
     entry: getEntry(),
     dllReferencePlugin,
     loadDllAssets,
-    genAlias
+    genAlias,
+    getTemplate
 }
