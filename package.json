@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/duheng/houyi#readme",
   "dependencies": {
+    "blueimp-tmpl": "^3.17.0",
     "commander": "^5.1.0",
     "confman": "^0.2.10",
     "inquirer": "^7.1.0",

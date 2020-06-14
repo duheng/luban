@@ -4,23 +4,24 @@ const fs = require('fs')
 const shell = require('shelljs')
 const child_process = require('child_process');
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const  tmpl  = require('blueimp-tmpl')
 const { getTemplate } = require('../utils/common')
-
+console.log('tmpl----->',  tmpl)
 const nameReg = /^([^\@]*)\@([^\.]+)(\.(js|css))$/
 
 const crypto = require('crypto')
 
 const HtmlWebpackPluginItem = (name) => {
-  console.log('getTemplate---->', getTemplate())
+     console.log('html--',getTemplate())
+    const temp =  getTemplate()
     return new HtmlWebpackPlugin({
-        inject: true, // 禁用自动注入
+        inject: false, // 禁用自动注入
         filename: `${name}.html`,
         chunks:[`${name}`],
         templateContent: ({htmlWebpackPlugin}) => {
-          const { js } = htmlWebpackPlugin.files
-          console.log('htmlWebpackPlugin.tags.bodyTags--',htmlWebpackPlugin.tags.bodyTags)
-            return  getTemplate()
-        }
+          console.log('data+++++', htmlWebpackPlugin)
+      return tmpl(`${getTemplate()}`, htmlWebpackPlugin)
+    } 
     })
 }
 

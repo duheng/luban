@@ -1,7 +1,9 @@
 <html>			
     <head>
 	    <meta http-equiv="content-type" content="text/html; charset=utf-8">
-	    <meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui" name="viewport">
+	    <meta name="viewport" content="{%=o.options.viewport || 'width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' %}">
+	  	<meta name="keywords" content="{%=o.options.keywords %}"/>
+        <meta name="description" content="{%=o.options.description %}"/>
 	    <meta name="apple-mobile-web-app-capable" content="yes">
 	    <meta name="apple-mobile-web-app-status-bar-style" content="black">
 	    <!--<meta http-equiv="x-dns-prefetch-control" content="on">-->
@@ -16,11 +18,18 @@
 	    <meta name="x5-fullscreen" content="true">
 	    <meta name="x5-page-mode" content="app">
 	    <link rel="apple-touch-icon-precomposed" href="/qunar-touch.png">
-        <title></title>
-         ${htmlWebpackPlugin.tags.headTags}
+	    {% if (o.files.favicon) { %}
+	   		<link rel="shortcut icon" href="{%=o.files.favicon%}">
+	    {% } %}
+      	{% for (var css in o.files.css) { %}
+	   		<link href="{%=o.files.css[css] %}" rel="stylesheet">
+	    {% } %}
+	    <title>{%=o.options.title %}</title>
     </head>
     <body>
 	    <div id="app"></div>
-	    ${htmlWebpackPlugin.tags.bodyTags}
+	    {% for (var chunk in o.files.js) { %}
+   			<script type="text/javascript" src="{%=o.files.js[chunk]%}"></script>
+	    {% } %}
     </body>
 </html>
