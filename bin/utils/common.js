@@ -32,7 +32,7 @@ const filterFile = (dir, pattern) => {
 	const filenames = fs.readdirSync(dir);
 
     for (let i = 0; i < filenames.length; i++) {
-	
+
         if (new RegExp(pattern).test(filenames[i])) {
             return filenames[i];
         }
@@ -45,7 +45,7 @@ const getEntry = () => {
   if(Object.keys(__config.entry).length > 0) {
     return __config.entry
   } else {
-    const pageDir = path.join(CWD,__config.base,__config.pages)  
+    const pageDir = path.join(CWD,__config.base,__config.pages)
     try {
         if (!fs.existsSync(pageDir)) {
             console.error(`请设置项目配置文件入口entry字段`)
@@ -55,7 +55,7 @@ const getEntry = () => {
         console.error(`请设置项目配置文件入口entry字段`)
         return {}
     }
-   
+
     const loadPageDir = fs.readdirSync(pageDir);
     let __entry = {}
     for (let i = 0; i < loadPageDir.length; i++) {
@@ -90,7 +90,7 @@ const loadDllAssets = (config) => {
         .filter(filename => filename.match(/.js$/))
         .map(filename => {
             return {
-                filepath: path.join(CWD, config.build, config.dll,filename), 
+                filepath: path.join(CWD, config.build, config.dll,filename),
                 outputPath: 'dll',
                 publicPath: 'dll',
             }
