@@ -7,10 +7,10 @@ module.exports = function (api) {
             require.resolve('@babel/preset-env'),
             {
                 'targets': {
-                     "ie": 9
+                     'browsers': '> 0.5%, not dead'
                 },
                 "modules": false, // 推荐
-                "useBuiltIns": "entry", // 推荐
+                "useBuiltIns": 'usage', // 推荐
                 "corejs":  3,
             }
         ],
@@ -25,7 +25,7 @@ module.exports = function (api) {
         // 可选链式调用
         require.resolve('@babel/plugin-proposal-optional-chaining'),
         // 解析类的属性
-        require.resolve('@babel/plugin-proposal-class-properties'),
+        require.resolve('@babel/plugin-proposal-class-properties')
     ]
     return {
         presets: presents,

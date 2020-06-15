@@ -23,6 +23,7 @@
     "blueimp-tmpl": "^3.17.0",
     "commander": "^5.1.0",
     "confman": "^0.2.10",
+    "core-js": "^3.6.5",
     "inquirer": "^7.1.0",
     "sass": "^1.26.5",
     "shelljs": "^0.8.4"
