@@ -21,6 +21,7 @@ const rules = {
   js: () => {
     return {
             test: /\.(js|jsx|ts|tsx)$/,
+            exclude: /node_modules/,
             use: [
                {
                     loader: require.resolve('thread-loader')
