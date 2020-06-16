@@ -23,13 +23,15 @@
     "blueimp-tmpl": "^3.17.0",
     "commander": "^5.1.0",
     "confman": "^0.2.10",
-    "core-js": "^3.6.5",
     "inquirer": "^7.1.0",
     "sass": "^1.26.5",
     "shelljs": "^0.8.4"
   },
   "devDependencies": {
     "@babel/core": "^7.10.2",
+    "core-js": "^3.6.5",
+    "@babel/plugin-transform-runtime": "^7.10.1",
+    "@babel/runtime-corejs3": "^7.10.2",
     "@babel/plugin-proposal-class-properties": "^7.8.3",
     "@babel/plugin-proposal-decorators": "^7.8.3",
     "@babel/preset-env": "^7.9.6",
