@@ -92,7 +92,7 @@ const loadDllAssets = (config) => {
             return {
                 filepath: path.join(CWD, config.build, config.dll,filename),
                 outputPath: 'dll',
-                publicPath: 'dll',
+                publicPath: `${config.static[process.env.MODE]}/dll`,
             }
         })
 }

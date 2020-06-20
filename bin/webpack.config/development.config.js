@@ -5,6 +5,7 @@ const baseConfig = require('./base.config')
 const CreatHtmlPlugin = require('../plugins/creat-html-plugin')
 const { config } = require('../utils/common')
 const __baseConfig = baseConfig(config)
+const { port = 9000, host = '0.0.0.0' } = config
 
 const CWD = process.cwd()
 const buildPath =  path.resolve(CWD, config.build)
@@ -36,8 +37,8 @@ module.exports = () => {
     devServer: {
       contentBase: buildPath,
       compress: true,
-      host:'0.0.0.0',
-      port: 9000,
+      host: host,
+      port: port,
       hot: true,
       inline: true,
       historyApiFallback: true

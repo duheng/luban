@@ -46,7 +46,6 @@ const plugins = [
 
 
 module.exports = () => {
- console.log('__baseConfig----', __baseConfig)
   return merge(__baseConfig, {
     output: {
       path: buildPath,
@@ -59,12 +58,6 @@ module.exports = () => {
     plugins,
     performance: {
       hints: false,
-    },
-    devServer: {
-      contentBase: path.resolve(CWD, config.build),
-      compress: true,
-      port: 9000,
-      hot: true,
     }
   })
 }
