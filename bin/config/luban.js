@@ -6,6 +6,7 @@ module.exports = {
   "base": "src",
   "build": "dist",
   "dll": "dll",
+  "server": "", 
   "static": {
     "development": "",
     "production": "//api.luban.com/"
