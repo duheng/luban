@@ -15,8 +15,28 @@ module.exports = {
   entry: {'server':entryPath},
   output: {
     filename: jsName,
-    path: buildPath
+    path: buildPath,
+    libraryTarget: 'commonjs2'
   },
-  module: rules(),
-  externals: [webpackNodeExternals()]
+  resolve: {
+    extensions: ['.js', '.jsx']
+  },
+  module: {
+    rules: [{
+      test: /\.(js|jsx|ts|tsx)$/,
+      exclude: /node_modules/,
+      use: [
+          {
+              loader: require.resolve('babel-loader'),
+              options: {
+                presets: [
+                  require.resolve('@babel/preset-react')
+                ]
+              }
+          }
+      ]
+  }]
+  }
+  //  ,
+  //  externals: [webpackNodeExternals()]
 }

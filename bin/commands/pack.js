@@ -34,8 +34,8 @@ module.exports = async (options) => {
     }
 
     if(options.prod) { //生产环境
-      process.env.NODE_ENV = 'production'
-      process.env.MODE = 'production'
+      process.env.NODE_ENV = 'development'
+      process.env.MODE = 'development'
       webpackConfig = webpackProd
     } else {
       process.env.NODE_ENV = 'development'
