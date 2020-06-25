@@ -30,13 +30,25 @@ module.exports = {
               loader: require.resolve('babel-loader'),
               options: {
                 presets: [
+                  require.resolve('@babel/preset-env'),
                   require.resolve('@babel/preset-react')
+                ],
+                plugins: [
+                   // 装饰器
+                  [
+                      require.resolve("@babel/plugin-proposal-decorators"), { "legacy": true }
+                  ],
+                  // 可选链式调用
+                  require.resolve('@babel/plugin-proposal-optional-chaining'),
+                  // 解析类的属性
+                  require.resolve('@babel/plugin-proposal-class-properties'),
+                  require.resolve('@babel/plugin-transform-runtime')
                 ]
               }
           }
       ]
   }]
   }
-  //  ,
-  //  externals: [webpackNodeExternals()]
+   ,
+   externals: [webpackNodeExternals()]
 }
