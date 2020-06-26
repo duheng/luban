@@ -1,5 +1,8 @@
 const path = require('path')
-
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+//const devMode = process.env.NODE_ENV !== 'production';
+const devMode = false
+//process.env.NODE_ENV = 'development'
 const postCssLoader = () => {
     return {
         loader: require.resolve('postcss-loader'),
@@ -40,8 +43,12 @@ const rules = {
   	let loaders = {
             test: /\.css$/,
             use: [
-	            require.resolve('style-loader'),
-	            require.resolve('css-loader'),
+                {
+                    loader: devMode ? require.resolve('style-loader') : MiniCssExtractPlugin.loader // 将 JS 字符串生成为 style 节点
+                },
+                {
+                    loader: require.resolve("css-loader") 
+                },
 	            postCssLoader()
 	        ].filter(Boolean)
         }
@@ -51,23 +58,26 @@ const rules = {
   	return {
 	    test: /\.less$/,
 	    use: [
-	        {
-	           loader: require.resolve('less-loader')
-	        }
+            {
+                loader: devMode ? require.resolve('style-loader') : MiniCssExtractPlugin.loader // 将 JS 字符串生成为 style 节点
+            },
+            {
+                loader: require.resolve("less-loader") 
+            }
 	    ].filter(Boolean)
     }
   },
   scss: () => {
   	return {
-	    test: /\.scss$/,
+	    test: /\.(sa|sc)ss$/,
 	    use: [
-        {
-          loader: "style-loader" // 将 JS 字符串生成为 style 节点
-        }, {
-            loader: "css-loader" // 将 CSS 转化成 CommonJS 模块
-        }, {
-            loader: "sass-loader" // 将 Sass 编译成 CSS
-        }
+              {
+                  loader: devMode ? require.resolve('style-loader') : MiniCssExtractPlugin.loader // 将 JS 字符串生成为 style 节点
+              }, {
+                  loader: require.resolve("css-loader") // 将 CSS 转化成 CommonJS 模块
+              }, {
+                  loader: require.resolve("sass-loader") // 将 Sass 编译成 CSS
+              }
 	    ].filter(Boolean)
     }
   }

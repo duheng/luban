@@ -46,6 +46,7 @@ const plugins = [
 
 
 module.exports = () => {
+  console.log('PUG-----',plugins)
   return merge(__baseConfig, {
     output: {
       path: buildPath,
