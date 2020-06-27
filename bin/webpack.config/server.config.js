@@ -19,7 +19,7 @@ module.exports = {
     libraryTarget: 'commonjs2'
   },
   resolve: {
-    extensions: ['.js', '.jsx', '.scss']
+    extensions: ['.js', '.vue', '.json', '.jsx', '.scss', '.sass', '.css', '.less']
   },
   module: {
     rules: [
