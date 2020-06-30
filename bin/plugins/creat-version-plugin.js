@@ -3,7 +3,7 @@ const path = require('path')
 const fs = require('fs')
 const shell = require('shelljs')
 const child_process = require('child_process');
-
+const { config } = require('../utils/common')
 const nameReg = /^([^\@]*)\@([^\.]+)(\.(js|css))$/
 
 const crypto = require('crypto')
@@ -32,8 +32,10 @@ class VersionCompilerPlugin {
                 if (matchInfo) {
                      const name = matchInfo[1] + matchInfo[3]
                      const version = matchInfo[2]
-                     const __verPath = path.resolve('ver', name + '.ver')
+                     const __verPath = path.resolve(`${config.base}/ver`, name + '.ver')
                      const __verDir = path.dirname(__verPath)
+                     console.log('__verPath+++++', __verPath)
+                     console.log('__verDir+++++', __verDir)
                      if(!fs.existsSync(__verDir)) {
                        shell.mkdir('-p', __verDir)
                      }
@@ -59,7 +61,7 @@ class VersionCompilerPlugin {
             chunks.push(`//q.qunarzz.com/${projectName}/prd/${baseName}@${version}${ext}`)
           }
           
-          const verDirs = path.resolve('ver')
+          const verDirs = path.resolve(`${config.base}/ver`)
 
           const mapDIr = (verDirs, callback) => {
               if(!fs.statSync(verDirs).isDirectory()) {
@@ -87,10 +89,10 @@ class VersionCompilerPlugin {
     
         
         const chunkMd5 = toMd5(mappings.join('\n'))
-        fs.writeFileSync(path.resolve('ver', 'chunk.json.ver'), chunkMd5, 'utf-8')
+        fs.writeFileSync(path.resolve(`${config.base}/ver`, 'chunk.json.ver'), chunkMd5, 'utf-8')
         mappings.push(`chunk.json#${chunkMd5}`)
-        fs.writeFileSync(path.resolve('ver', 'versions.mapping'), mappings.join('\n'), 'utf-8')
-        fs.writeFileSync(path.resolve(`dist/chunk@${chunkMd5}.json`), JSON.stringify(chunks), 'utf-8')
+        fs.writeFileSync(path.resolve(`${config.base}/ver`, 'versions.mapping'), mappings.join('\n'), 'utf-8')
+        fs.writeFileSync(path.resolve(`${config.build}/chunk@${chunkMd5}.json`), JSON.stringify(chunks), 'utf-8')
     }
 }
 
