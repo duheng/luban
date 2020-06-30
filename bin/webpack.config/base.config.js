@@ -3,6 +3,7 @@ const TransferWebpackPlugin = require('transfer-webpack-plugin')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const AddAssetHtmlPlugin = require('add-asset-html-webpack-plugin')
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
+const fs = require("fs")
 const path = require('path')
 const CWD = process.cwd()
 
@@ -26,24 +27,24 @@ const plugins = (config) => {
           React: 'react',
        }),
        new VueLoaderPlugin()
-      // new TransferWebpackPlugin(
-      //   [
-      //     {
-      //       from: path.join(config.base, config.assets || 'assets'),
-      //       to: path.join(config.assets || 'assets'),
-      //     },
-      //   ],
-      //   path.resolve(CWD),
-      // ),
     ]
 
     if(!!config.library && Object.keys(config.library).length > 0) {
       __plugins.push(...dllReferencePlugin(config))
       __plugins.push(new AddAssetHtmlPlugin(loadDllAssets(config)))
     }
-
-
-
+    const __assetsDir = path.join(config.base, config.assets || 'assets')
+    if(fs.statSync(__assetsDir).isDirectory()) {
+      __plugins.push(new TransferWebpackPlugin(
+        [
+          {
+            from: __assetsDir,
+            to: path.join(config.assets || 'assets'),
+          },
+        ],
+        path.resolve(CWD),
+      ))
+    }
     return __plugins
 }
 const webpackConfig = config => {

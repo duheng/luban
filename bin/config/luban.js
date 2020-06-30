@@ -32,5 +32,6 @@ module.exports = {
   "components": "components",
   "scss": "scss",
   "cpmode": "react",
+  "assets": "assets",
   "base64_image_limit": 10240
 }
