@@ -1,7 +1,7 @@
 const path = require('path')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 //const devMode = process.env.NODE_ENV !== 'production';
-const devMode = false
+const devMode = true
 //process.env.NODE_ENV = 'development'
 const postCssLoader = () => {
     return {
@@ -39,9 +39,19 @@ const rules = {
             ].filter(Boolean)
         }
   },
+  vue: () => {
+    return  {
+        test: /\.vue$/,
+        exclude: /node_modules/,
+        use: {
+            loader: require.resolve("vue-loader") 
+        }
+      }
+  },
   css: () => {
   	let loaders = {
             test: /\.css$/,
+            exclude: /node_modules/,
             use: [
                 {
                     loader: devMode ? require.resolve('style-loader') : MiniCssExtractPlugin.loader // 将 JS 字符串生成为 style 节点
@@ -56,7 +66,8 @@ const rules = {
   },
   less: () => {
   	return {
-	    test: /\.less$/,
+        test: /\.less$/,
+        exclude: /node_modules/,
 	    use: [
             {
                 loader: devMode ? require.resolve('style-loader') : MiniCssExtractPlugin.loader // 将 JS 字符串生成为 style 节点
@@ -69,7 +80,8 @@ const rules = {
   },
   scss: () => {
   	return {
-	    test: /\.(sa|sc)ss$/,
+        test: /\.(sa|sc)ss$/,
+        exclude: /node_modules/,
 	    use: [
               {
                   loader: devMode ? require.resolve('style-loader') : MiniCssExtractPlugin.loader // 将 JS 字符串生成为 style 节点

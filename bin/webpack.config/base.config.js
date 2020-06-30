@@ -2,7 +2,7 @@ const webpack = require('webpack')
 const TransferWebpackPlugin = require('transfer-webpack-plugin')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const AddAssetHtmlPlugin = require('add-asset-html-webpack-plugin')
-
+const VueLoaderPlugin = require('vue-loader/lib/plugin')
 const path = require('path')
 const CWD = process.cwd()
 
@@ -24,7 +24,8 @@ const plugins = (config) => {
         }),
        new webpack.ProvidePlugin({
           React: 'react',
-       })
+       }),
+       new VueLoaderPlugin()
       // new TransferWebpackPlugin(
       //   [
       //     {
@@ -46,6 +47,7 @@ const plugins = (config) => {
     return __plugins
 }
 const webpackConfig = config => {
+  console.log('config---->', config)
   return {
     context: path.join(CWD),
     entry: entry,
@@ -58,7 +60,7 @@ const webpackConfig = config => {
         'node_modules',
         'bower_components',
       ],
-      alias: genAlias(path.join(CWD,config.base),config),
+      alias: {'vue$': 'vue/dist/vue.esm.js',...genAlias(path.join(CWD,config.base),config)},
       extensions: ['.js', '.vue', '.json', '.jsx', '.scss', '.css', '.less'],
     },
     resolveLoader: {
