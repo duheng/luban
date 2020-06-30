@@ -21,11 +21,12 @@ const postCssLoader = () => {
     }
 }
 
-const common_css_rules = [
+const common_css_rule = [
     {
         loader: devMode ? require.resolve('style-loader') : MiniCssExtractPlugin.loader // 将 JS 字符串生成为 style 节点
-    }, {
-        loader: require.resolve("css-loader") // 将 CSS 转化成 CommonJS 模块
+    },
+    {
+        loader: require.resolve("css-loader") 
     }
 ]
 
@@ -60,9 +61,8 @@ const rules = {
   css: () => {
   	let loaders = {
             test: /\.css$/,
-            exclude: /node_modules/,
             use: [
-                ...common_css_rules,
+                ...common_css_rule,
 	            postCssLoader()
 	        ].filter(Boolean)
         }
@@ -73,7 +73,7 @@ const rules = {
         test: /\.less$/,
         exclude: /node_modules/,
 	    use: [
-            ...common_css_rules,
+            ...common_css_rule,
             {
                 loader: require.resolve("less-loader") 
             }
@@ -85,10 +85,10 @@ const rules = {
         test: /\.(sa|sc)ss$/,
         exclude: /node_modules/,
 	    use: [
-            ...common_css_rules,
-            {
-                loader: require.resolve("sass-loader") // 将 Sass 编译成 CSS
-            }
+              ...common_css_rule,
+              {
+                  loader: require.resolve("sass-loader") // 将 Sass 编译成 CSS
+              }
 	    ].filter(Boolean)
     }
   },
