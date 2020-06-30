@@ -1,4 +1,5 @@
 const webpack = require('webpack')
+const ProgressBarPlugin = require('progress-bar-webpack-plugin')
 const TransferWebpackPlugin = require('transfer-webpack-plugin')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const AddAssetHtmlPlugin = require('add-asset-html-webpack-plugin')
@@ -48,7 +49,6 @@ const plugins = (config) => {
     return __plugins
 }
 const webpackConfig = config => {
-  console.log('config---->', config)
   return {
     context: path.join(CWD),
     entry: entry,

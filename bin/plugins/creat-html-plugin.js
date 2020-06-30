@@ -17,7 +17,6 @@ const HtmlWebpackPluginItem = (name) => {
         filename: `${name}.html`,
         chunks:[`${name}`],
         templateContent: ({htmlWebpackPlugin}) => {
-          console.log('data+++++', htmlWebpackPlugin)
       return tmpl(`${getTemplate()}`, htmlWebpackPlugin)
     }
     })

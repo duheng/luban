@@ -34,8 +34,6 @@ class VersionCompilerPlugin {
                      const version = matchInfo[2]
                      const __verPath = path.resolve(`${config.base}/ver`, name + '.ver')
                      const __verDir = path.dirname(__verPath)
-                     console.log('__verPath+++++', __verPath)
-                     console.log('__verDir+++++', __verDir)
                      if(!fs.existsSync(__verDir)) {
                        shell.mkdir('-p', __verDir)
                      }
