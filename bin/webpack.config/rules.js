@@ -1,5 +1,6 @@
 const path = require('path')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const { config } = require('../utils/common')
 //const devMode = process.env.NODE_ENV !== 'production';
 const devMode = true
 //process.env.NODE_ENV = 'development'
@@ -19,6 +20,14 @@ const postCssLoader = () => {
         }
     }
 }
+
+const common_css_rules = [
+    {
+        loader: devMode ? require.resolve('style-loader') : MiniCssExtractPlugin.loader // 将 JS 字符串生成为 style 节点
+    }, {
+        loader: require.resolve("css-loader") // 将 CSS 转化成 CommonJS 模块
+    }
+]
 
 const rules = {
   js: () => {
@@ -53,12 +62,7 @@ const rules = {
             test: /\.css$/,
             exclude: /node_modules/,
             use: [
-                {
-                    loader: devMode ? require.resolve('style-loader') : MiniCssExtractPlugin.loader // 将 JS 字符串生成为 style 节点
-                },
-                {
-                    loader: require.resolve("css-loader") 
-                },
+                ...common_css_rules,
 	            postCssLoader()
 	        ].filter(Boolean)
         }
@@ -69,9 +73,7 @@ const rules = {
         test: /\.less$/,
         exclude: /node_modules/,
 	    use: [
-            {
-                loader: devMode ? require.resolve('style-loader') : MiniCssExtractPlugin.loader // 将 JS 字符串生成为 style 节点
-            },
+            ...common_css_rules,
             {
                 loader: require.resolve("less-loader") 
             }
@@ -83,14 +85,30 @@ const rules = {
         test: /\.(sa|sc)ss$/,
         exclude: /node_modules/,
 	    use: [
-              {
-                  loader: devMode ? require.resolve('style-loader') : MiniCssExtractPlugin.loader // 将 JS 字符串生成为 style 节点
-              }, {
-                  loader: require.resolve("css-loader") // 将 CSS 转化成 CommonJS 模块
-              }, {
-                  loader: require.resolve("sass-loader") // 将 Sass 编译成 CSS
-              }
+            ...common_css_rules,
+            {
+                loader: require.resolve("sass-loader") // 将 Sass 编译成 CSS
+            }
 	    ].filter(Boolean)
+    }
+  },
+  image: () => {
+    return {
+        test: /\.(jpe?g|png|gif|ico)$/,
+        loader:  require.resolve("url-loader"),
+        options: {
+            limit: config.image_limit, // 20k以内的图片用base64，可配置
+            name: config.assets + '/images/[name]-[hash:8].[ext]',
+        }
+    }
+  },
+  media: () => {
+    return {
+        test: /\.(eot|woff|otf|svg|ttf|woff2|appcache|mp3|mp4|pdf)(\?|$)/,
+        loader:  require.resolve("url-loader"),
+        options: {
+            name:  "[name]-[hash:8].[ext]"
+        }
     }
   }
 
