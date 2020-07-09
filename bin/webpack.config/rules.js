@@ -2,7 +2,7 @@ const path = require('path')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const { config } = require('../utils/common')
 //const devMode = process.env.NODE_ENV !== 'production';
-const devMode = true
+const devMode = false
 //process.env.NODE_ENV = 'development'
 const postCssLoader = () => {
     return {
@@ -26,7 +26,7 @@ const common_css_rule = [
         loader: devMode ? require.resolve('style-loader') : MiniCssExtractPlugin.loader // 将 JS 字符串生成为 style 节点
     },
     {
-        loader: require.resolve("css-loader") 
+        loader: require.resolve("css-loader")
     }
 ]
 
@@ -54,7 +54,7 @@ const rules = {
         test: /\.vue$/,
         exclude: /node_modules/,
         use: {
-            loader: require.resolve("vue-loader") 
+            loader: require.resolve("vue-loader")
         }
       }
   },
@@ -75,7 +75,7 @@ const rules = {
 	    use: [
             ...common_css_rule,
             {
-                loader: require.resolve("less-loader") 
+                loader: require.resolve("less-loader")
             }
 	    ].filter(Boolean)
     }

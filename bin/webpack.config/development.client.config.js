@@ -41,7 +41,10 @@ module.exports = () => {
       port: port,
       hot: true,
       inline: true,
-      historyApiFallback: true
+      historyApiFallback: true,
+      proxy: {
+            '/LinkPage/pageDetail': 'http://l-marmot3.wap.beta.cn0:8060'
+        }
 
     }
   })
