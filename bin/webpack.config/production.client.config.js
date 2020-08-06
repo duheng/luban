@@ -1,14 +1,13 @@
 const webpack = require('webpack')
 const merge = require('webpack-merge')
 const path = require('path')
-const CWD = process.cwd()
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const baseConfig = require('./base.config')
 const CreatVersionPlugin = require('../plugins/creat-version-plugin')
 const CreatHtmlPlugin = require('../plugins/creat-html-plugin')
 const { config } = require('../utils/common')
 let __baseConfig = baseConfig(config)
-
+const CWD = process.cwd()
 
 const buildPath =  path.resolve(CWD, config.build)
 

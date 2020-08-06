@@ -19,9 +19,6 @@ app.use(devMiddleware(compiler, {
 //     reload:true
 // }));
 
-app.use(serve(__dirname + '/src/', {
-    extensions: ['html']
-}));
 
 app.listen(3000, () => {
     console.log('Example app listening om port 3000!\n');
