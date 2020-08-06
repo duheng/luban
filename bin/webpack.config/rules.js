@@ -1,8 +1,8 @@
 const path = require('path')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const { config } = require('../utils/common')
-//const devMode = process.env.NODE_ENV !== 'production';
-const devMode = false
+const devMode = process.env.NODE_ENV !== 'production';
+//const devMode = true
 //process.env.NODE_ENV = 'development'
 const postCssLoader = () => {
     return {

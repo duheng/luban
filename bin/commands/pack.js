@@ -7,9 +7,9 @@ const CWD = process.cwd()
 const { config } = require('../utils/common')
 //主: webpack4之后需 webpack命令被抽取到webpack-cli中，如果webpack-cli安装在本地则需要用当前node_modules中的webpack才能找到cli
 const webpack = path.resolve(__dirname, '..', '..', 'node_modules', '.bin', 'webpack')
-const webpackDev = path.resolve(__dirname, '..', 'webpack.config', 'development.client.config') 
-const webpackProd = path.resolve(__dirname, '..', 'webpack.config', 'production.client.config') 
-const webpackServer = path.resolve(__dirname, '..', 'webpack.config', 'server.config') 
+const webpackDev = path.resolve(__dirname, '..', 'webpack.config', 'development.client.config')
+const webpackProd = path.resolve(__dirname, '..', 'webpack.config', 'production.client.config')
+const webpackServer = path.resolve(__dirname, '..', 'webpack.config', 'server.config')
 
 const pack = (options, action) => {
   return new Promise((resolve, reject) => {
@@ -37,14 +37,17 @@ module.exports = async (options) => {
       process.env.NODE_ENV = 'development'
       process.env.MODE = 'development'
       webpackConfig = webpackProd
+        console.log(1)
     } else {
       process.env.NODE_ENV = 'development'
       process.env.MODE = 'development'
       webpackConfig = webpackDev
+      console.log(2)
     }
   }
 
 
   const wbpackAction = `${webpack} --config ${webpackConfig} --mode=${process.env.NODE_ENV} --colors`
+  console.log('3--',wbpackAction)
   await pack(options, wbpackAction)
 }

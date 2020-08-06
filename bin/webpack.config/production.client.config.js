@@ -1,22 +1,21 @@
 const webpack = require('webpack')
 const merge = require('webpack-merge')
-const MiniCssExtractPlugin = require('mini-css-extract-plugin')
-const CreatVersionPlugin = require('../plugins/creat-version-plugin')
-const CreatHtmlPlugin = require('../plugins/creat-html-plugin')
-
-const baseConfig = require('./base.config')
-
-const { config } = require('../utils/common')
-
 const path = require('path')
 const CWD = process.cwd()
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const baseConfig = require('./base.config')
+const CreatVersionPlugin = require('../plugins/creat-version-plugin')
+const CreatHtmlPlugin = require('../plugins/creat-html-plugin')
+const { config } = require('../utils/common')
+let __baseConfig = baseConfig(config)
+
 
 const buildPath =  path.resolve(CWD, config.build)
 
 const jsName  = 'js/[name]@[chunkhash].js'
 const cssName = 'css/[name]@[chunkhash].css'
 
-let __baseConfig = baseConfig(config)
+
 __baseConfig.module.rules.map(item => {
   if (/css|sass|less/.test(item.use)) {
     item.use.shift()
