@@ -9,12 +9,12 @@ const hotMiddleware = (compiler, opts) => {
         await middleware(ctx.req, {
             write: stream.write.bind(stream),
             writeHead: (status, headers) => {
-                ctx.status = status
+               ctx.status = status
                 ctx.set(headers)
             }
         }, next)
     }
-    
+
 }
 
 module.exports = hotMiddleware;

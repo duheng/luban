@@ -208,6 +208,13 @@
   dependencies:
     "@babel/types" "^7.10.1"
 
+"@babel/helper-module-imports@^7.10.4":
+  version "7.10.4"
+  resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/@babel/helper-module-imports/download/@babel/helper-module-imports-7.10.4.tgz#4c5c54be04bd31670a7382797d75b9fa2e5b5620"
+  integrity sha1-TFxUvgS9MWcKc4J5fXW5+i5bViA=
+  dependencies:
+    "@babel/types" "^7.10.4"
+
 "@babel/helper-module-imports@^7.8.3":
   version "7.8.3"
   resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/@babel/helper-module-imports/download/@babel/helper-module-imports-7.8.3.tgz#7fe39589b39c016331b6b8c3f441e8f0b1419498"
@@ -259,6 +266,11 @@
   version "7.8.3"
   resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/@babel/helper-plugin-utils/download/@babel/helper-plugin-utils-7.8.3.tgz#9ea293be19babc0f52ff8ca88b34c3611b208670"
   integrity sha1-nqKTvhm6vA9S/4yoizTDYRsghnA=
+
+"@babel/helper-plugin-utils@^7.10.4":
+  version "7.10.4"
+  resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/@babel/helper-plugin-utils/download/@babel/helper-plugin-utils-7.10.4.tgz#2f75a831269d4f677de49986dff59927533cf375"
+  integrity sha1-L3WoMSadT2d95JmG3/WZJ1M883U=
 
 "@babel/helper-regex@^7.8.3":
   version "7.8.3"
@@ -332,6 +344,11 @@
   version "7.10.1"
   resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/@babel/helper-validator-identifier/download/@babel/helper-validator-identifier-7.10.1.tgz#5770b0c1a826c4f53f5ede5e153163e0318e94b5"
   integrity sha1-V3CwwagmxPU/Xt5eFTFj4DGOlLU=
+
+"@babel/helper-validator-identifier@^7.10.4":
+  version "7.10.4"
+  resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/@babel/helper-validator-identifier/download/@babel/helper-validator-identifier-7.10.4.tgz#a78c7a7251e01f616512d31b10adcf52ada5e0d2"
+  integrity sha1-p4x6clHgH2FlEtMbEK3PUq2l4NI=
 
 "@babel/helper-validator-identifier@^7.9.0", "@babel/helper-validator-identifier@^7.9.5":
   version "7.9.5"
@@ -801,6 +818,16 @@
   dependencies:
     "@babel/helper-plugin-utils" "^7.8.3"
 
+"@babel/plugin-transform-runtime@^7.10.1":
+  version "7.11.0"
+  resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/@babel/plugin-transform-runtime/download/@babel/plugin-transform-runtime-7.11.0.tgz#e27f78eb36f19448636e05c33c90fd9ad9b8bccf"
+  integrity sha1-4n946zbxlEhjbgXDPJD9mtm4vM8=
+  dependencies:
+    "@babel/helper-module-imports" "^7.10.4"
+    "@babel/helper-plugin-utils" "^7.10.4"
+    resolve "^1.8.1"
+    semver "^5.5.1"
+
 "@babel/plugin-transform-shorthand-properties@^7.8.3":
   version "7.8.3"
   resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/@babel/plugin-transform-shorthand-properties/download/@babel/plugin-transform-shorthand-properties-7.8.3.tgz#28545216e023a832d4d3a1185ed492bcfeac08c8"
@@ -952,6 +979,14 @@
     "@babel/helper-plugin-utils" "^7.8.3"
     "@babel/plugin-transform-typescript" "^7.9.0"
 
+"@babel/runtime-corejs3@^7.10.2":
+  version "7.11.2"
+  resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/@babel/runtime-corejs3/download/@babel/runtime-corejs3-7.11.2.tgz#02c3029743150188edeb66541195f54600278419"
+  integrity sha1-AsMCl0MVAYjt62ZUEZX1RgAnhBk=
+  dependencies:
+    core-js-pure "^3.0.0"
+    regenerator-runtime "^0.13.4"
+
 "@babel/runtime@^7.8.4":
   version "7.9.6"
   resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/@babel/runtime/download/@babel/runtime-7.9.6.tgz#a9102eb5cadedf3f31d08a9ecf294af7827ea29f"
@@ -1016,6 +1051,15 @@
     lodash "^4.17.13"
     to-fast-properties "^2.0.0"
 
+"@babel/types@^7.10.4":
+  version "7.11.0"
+  resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/@babel/types/download/@babel/types-7.11.0.tgz#2ae6bf1ba9ae8c3c43824e5861269871b206e90d"
+  integrity sha1-Kua/G6mujDxDgk5YYSaYcbIG6Q0=
+  dependencies:
+    "@babel/helper-validator-identifier" "^7.10.4"
+    lodash "^4.17.19"
+    to-fast-properties "^2.0.0"
+
 "@babel/types@^7.4.4", "@babel/types@^7.8.3", "@babel/types@^7.8.6", "@babel/types@^7.9.0", "@babel/types@^7.9.5", "@babel/types@^7.9.6":
   version "7.9.6"
   resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/@babel/types/download/@babel/types-7.9.6.tgz#2c5502b427251e9de1bd2dff95add646d95cc9f7"
@@ -1024,6 +1068,38 @@
     "@babel/helper-validator-identifier" "^7.9.5"
     lodash "^4.17.13"
     to-fast-properties "^2.0.0"
+
+"@hapi/address@2.x.x":
+  version "2.1.4"
+  resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/@hapi/address/download/@hapi/address-2.1.4.tgz#5d67ed43f3fd41a69d4b9ff7b56e7c0d1d0a81e5"
+  integrity sha1-XWftQ/P9QaadS5/3tW58DR0KgeU=
+
+"@hapi/bourne@1.x.x":
+  version "1.3.2"
+  resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/@hapi/bourne/download/@hapi/bourne-1.3.2.tgz#0a7095adea067243ce3283e1b56b8a8f453b242a"
+  integrity sha1-CnCVreoGckPOMoPhtWuKj0U7JCo=
+
+"@hapi/hoek@8.x.x", "@hapi/hoek@^8.3.0":
+  version "8.5.1"
+  resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/@hapi/hoek/download/@hapi/hoek-8.5.1.tgz#fde96064ca446dec8c55a8c2f130957b070c6e06"
+  integrity sha1-/elgZMpEbeyMVajC8TCVewcMbgY=
+
+"@hapi/joi@^15.0.0":
+  version "15.1.1"
+  resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/@hapi/joi/download/@hapi/joi-15.1.1.tgz#c675b8a71296f02833f8d6d243b34c57b8ce19d7"
+  integrity sha1-xnW4pxKW8Cgz+NbSQ7NMV7jOGdc=
+  dependencies:
+    "@hapi/address" "2.x.x"
+    "@hapi/bourne" "1.x.x"
+    "@hapi/hoek" "8.x.x"
+    "@hapi/topo" "3.x.x"
+
+"@hapi/topo@3.x.x":
+  version "3.1.6"
+  resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/@hapi/topo/download/@hapi/topo-3.1.6.tgz#68d935fa3eae7fdd5ab0d7f953f3205d8b2bfc29"
+  integrity sha1-aNk1+j6uf91asNf5U/MgXYsr/Ck=
+  dependencies:
+    "@hapi/hoek" "^8.3.0"
 
 "@mrmlnc/readdir-enhanced@^2.2.1":
   version "2.2.1"
@@ -1126,6 +1202,22 @@
     "@types/uglify-js" "*"
     "@types/webpack-sources" "*"
     source-map "^0.6.0"
+
+"@vue/component-compiler-utils@^3.1.0":
+  version "3.2.0"
+  resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/@vue/component-compiler-utils/download/@vue/component-compiler-utils-3.2.0.tgz#8f85182ceed28e9b3c75313de669f83166d11e5d"
+  integrity sha1-j4UYLO7Sjps8dTE95mn4MWbRHl0=
+  dependencies:
+    consolidate "^0.15.1"
+    hash-sum "^1.0.2"
+    lru-cache "^4.1.2"
+    merge-source-map "^1.1.0"
+    postcss "^7.0.14"
+    postcss-selector-parser "^6.0.2"
+    source-map "~0.6.1"
+    vue-template-es2015-compiler "^1.9.0"
+  optionalDependencies:
+    prettier "^1.18.2"
 
 "@webassemblyjs/ast@1.9.0":
   version "1.9.0"
@@ -1272,6 +1364,18 @@
     "@webassemblyjs/wast-parser" "1.9.0"
     "@xtuc/long" "4.2.2"
 
+"@webpack-contrib/schema-utils@^1.0.0-beta.0":
+  version "1.0.0-beta.0"
+  resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/@webpack-contrib/schema-utils/download/@webpack-contrib/schema-utils-1.0.0-beta.0.tgz#bf9638c9464d177b48209e84209e23bee2eb4f65"
+  integrity sha1-v5Y4yUZNF3tIIJ6EIJ4jvuLrT2U=
+  dependencies:
+    ajv "^6.1.0"
+    ajv-keywords "^3.1.0"
+    chalk "^2.3.2"
+    strip-ansi "^4.0.0"
+    text-table "^0.2.0"
+    webpack-log "^1.1.2"
+
 "@xtuc/ieee754@^1.2.0":
   version "1.2.0"
   resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/@xtuc/ieee754/download/@xtuc/ieee754-1.2.0.tgz#eef014a3145ae477a1cbc00cd1e552336dceb790"
@@ -1282,7 +1386,7 @@
   resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/@xtuc/long/download/@xtuc/long-4.2.2.tgz#d291c6a4e97989b5c61d9acf396ae4fe133a718d"
   integrity sha1-0pHGpOl5ibXGHZrPOWrk/hM6cY0=
 
-accepts@~1.3.4, accepts@~1.3.5, accepts@~1.3.7:
+accepts@^1.3.5, accepts@~1.3.4, accepts@~1.3.5, accepts@~1.3.7:
   version "1.3.7"
   resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/accepts/download/accepts-1.3.7.tgz#531bc726517a3b2b41f850021c6cc15eaab507cd"
   integrity sha1-UxvHJlF6OytB+FACHGzBXqq1B80=
@@ -1346,6 +1450,11 @@ ansi-regex@^2.0.0:
   resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/ansi-regex/download/ansi-regex-2.1.1.tgz#c3b33ab5ee360d86e0e628f0468ae7ef27d654df"
   integrity sha1-w7M6te42DYbg5ijwRorn7yfWVN8=
 
+ansi-regex@^3.0.0:
+  version "3.0.0"
+  resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/ansi-regex/download/ansi-regex-3.0.0.tgz#ed0317c322064f79466c02966bddb605ab37d998"
+  integrity sha1-7QMXwyIGT3lGbAKWa922Bas32Zg=
+
 ansi-regex@^4.1.0:
   version "4.1.0"
   resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/ansi-regex/download/ansi-regex-4.1.0.tgz#8b9f8f08cf1acb843756a839ca8c7e3168c51997"
@@ -1371,6 +1480,11 @@ ansi-styles@^4.1.0:
     "@types/color-name" "^1.1.1"
     color-convert "^2.0.1"
 
+any-promise@^1.1.0:
+  version "1.3.0"
+  resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/any-promise/download/any-promise-1.3.0.tgz#abc6afeedcea52e809cdc0376aed3ce39635d17f"
+  integrity sha1-q8av7tzqUugJzcA3au0845Y10X8=
+
 anymatch@^1.3.0:
   version "1.3.2"
   resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/anymatch/download/anymatch-1.3.2.tgz#553dcb8f91e3c889845dfdba34c77721b90b9d7a"
@@ -1394,6 +1508,11 @@ anymatch@~3.1.1:
   dependencies:
     normalize-path "^3.0.0"
     picomatch "^2.0.4"
+
+app-root-path@^2.0.1:
+  version "2.2.1"
+  resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/app-root-path/download/app-root-path-2.2.1.tgz#d0df4a682ee408273583d43f6f79e9892624bc9a"
+  integrity sha1-0N9KaC7kCCc1g9Q/b3npiSYkvJo=
 
 aproba@^1.1.1:
   version "1.2.0"
@@ -1428,6 +1547,11 @@ arr-union@^3.1.0:
   version "3.1.0"
   resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/arr-union/download/arr-union-3.1.0.tgz#e39b09aea9def866a8f206e288af63919bae39c4"
   integrity sha1-45sJrqne+Gao8gbiiK9jkZuuOcQ=
+
+array-find-index@^1.0.1:
+  version "1.0.2"
+  resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/array-find-index/download/array-find-index-1.0.2.tgz#df010aa1287e164bbda6f9723b0a96a1ec4187a1"
+  integrity sha1-3wEKoSh+Fku9pvlyOwqWoexBh6E=
 
 array-flatten@1.1.1:
   version "1.1.1"
@@ -1568,21 +1692,6 @@ babel-plugin-dynamic-import-node@^2.3.3:
   dependencies:
     object.assign "^4.1.0"
 
-babel-plugin-transform-runtime@^6.23.0:
-  version "6.23.0"
-  resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/babel-plugin-transform-runtime/download/babel-plugin-transform-runtime-6.23.0.tgz#88490d446502ea9b8e7efb0fe09ec4d99479b1ee"
-  integrity sha1-iEkNRGUC6puOfvsP4J7E2ZR5se4=
-  dependencies:
-    babel-runtime "^6.22.0"
-
-babel-runtime@^6.22.0:
-  version "6.26.0"
-  resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/babel-runtime/download/babel-runtime-6.26.0.tgz#965c7058668e82b55d7bfe04ff2337bc8b5647fe"
-  integrity sha1-llxwWGaOgrVde/4E/yM3vItWR/4=
-  dependencies:
-    core-js "^2.4.0"
-    regenerator-runtime "^0.11.0"
-
 balanced-match@^1.0.0:
   version "1.0.0"
   resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/balanced-match/download/balanced-match-1.0.0.tgz#89b4d199ab2bee49de164ea02b89ce462d71b767"
@@ -1645,7 +1754,7 @@ bindings@^1.5.0:
   dependencies:
     file-uri-to-path "1.0.0"
 
-bluebird@^3.5.5:
+bluebird@^3.1.1, bluebird@^3.5.5:
   version "3.7.2"
   resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/bluebird/download/bluebird-3.7.2.tgz#9f229c15be272454ffa973ace0dbee79a1b0c36f"
   integrity sha1-nyKcFb4nJFT/qXOs4NvueaGww28=
@@ -1889,6 +1998,14 @@ cache-base@^1.0.1:
     union-value "^1.0.0"
     unset-value "^1.0.0"
 
+cache-content-type@^1.0.0:
+  version "1.0.1"
+  resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/cache-content-type/download/cache-content-type-1.0.1.tgz#035cde2b08ee2129f4a8315ea8f00a00dba1453c"
+  integrity sha1-A1zeKwjuISn0qDFeqPAKANuhRTw=
+  dependencies:
+    mime-types "^2.1.18"
+    ylru "^1.2.0"
+
 call-me-maybe@^1.0.1:
   version "1.0.1"
   resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/call-me-maybe/download/call-me-maybe-1.0.1.tgz#26d208ea89e37b5cbde60250a15f031c16a4d66b"
@@ -1936,7 +2053,7 @@ caseless@~0.12.0:
   resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/caseless/download/caseless-0.12.0.tgz#1b681c21ff84033c826543090689420d187151dc"
   integrity sha1-G2gcIf+EAzyCZUMJBolCDRhxUdw=
 
-chalk@2.4.2, chalk@^2.0.0, chalk@^2.4.2:
+chalk@2.4.2, chalk@^2.0.0, chalk@^2.0.1, chalk@^2.1.0, chalk@^2.3.2, chalk@^2.4.2:
   version "2.4.2"
   resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/chalk/download/chalk-2.4.2.tgz#cd42541677a54333cf541a49108c1432b44c9424"
   integrity sha1-zUJUFnelQzPPVBpJEIwUMrRMlCQ=
@@ -2110,6 +2227,11 @@ clone@^2.1.2:
   resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/clone/download/clone-2.1.2.tgz#1b7f4b9f591f1e8f83670401600345a02887435f"
   integrity sha1-G39Ln1kfHo+DZwQBYANFoCiHQ18=
 
+co@^4.6.0:
+  version "4.6.0"
+  resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/co/download/co-4.6.0.tgz#6ea6bdf3d853ae54ccb8e47bfa0bf3f9031fb184"
+  integrity sha1-bqa989hTrlTMuOR7+gvz+QMfsYQ=
+
 coffee-script@^1.10.0:
   version "1.12.7"
   resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/coffee-script/download/coffee-script-1.12.7.tgz#c05dae0cb79591d05b3070a8433a98c9a89ccc53"
@@ -2240,19 +2362,26 @@ console-browserify@^1.1.0:
   resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/console-browserify/download/console-browserify-1.2.0.tgz#67063cef57ceb6cf4993a2ab3a55840ae8c49336"
   integrity sha1-ZwY871fOts9Jk6KrOlWECujEkzY=
 
+consolidate@^0.15.1:
+  version "0.15.1"
+  resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/consolidate/download/consolidate-0.15.1.tgz#21ab043235c71a07d45d9aad98593b0dba56bab7"
+  integrity sha1-IasEMjXHGgfUXZqtmFk7DbpWurc=
+  dependencies:
+    bluebird "^3.1.1"
+
 constants-browserify@^1.0.0:
   version "1.0.0"
   resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/constants-browserify/download/constants-browserify-1.0.0.tgz#c20b96d8c617748aaf1c16021760cd27fcb8cb75"
   integrity sha1-wguW2MYXdIqvHBYCF2DNJ/y4y3U=
 
-content-disposition@0.5.3:
+content-disposition@0.5.3, content-disposition@~0.5.2:
   version "0.5.3"
   resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/content-disposition/download/content-disposition-0.5.3.tgz#e130caf7e7279087c5616c2007d0485698984fbd"
   integrity sha1-4TDK9+cnkIfFYWwgB9BIVpiYT70=
   dependencies:
     safe-buffer "5.1.2"
 
-content-type@~1.0.4:
+content-type@^1.0.4, content-type@~1.0.4:
   version "1.0.4"
   resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/content-type/download/content-type-1.0.4.tgz#e138cc75e040c727b1966fe5e5f8c9aee256fe3b"
   integrity sha1-4TjMdeBAxyexlm/l5fjJruJW/js=
@@ -2273,6 +2402,14 @@ cookie@0.4.0:
   version "0.4.0"
   resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/cookie/download/cookie-0.4.0.tgz#beb437e7022b3b6d49019d088665303ebe9c14ba"
   integrity sha1-vrQ35wIrO21JAZ0IhmUwPr6cFLo=
+
+cookies@~0.8.0:
+  version "0.8.0"
+  resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/cookies/download/cookies-0.8.0.tgz#1293ce4b391740a8406e3c9870e828c4b54f3f90"
+  integrity sha1-EpPOSzkXQKhAbjyYcOgoxLVPP5A=
+  dependencies:
+    depd "~2.0.0"
+    keygrip "~1.1.0"
 
 copy-concurrently@^1.0.0:
   version "1.0.5"
@@ -2299,10 +2436,10 @@ core-js-compat@^3.6.2:
     browserslist "^4.8.5"
     semver "7.0.0"
 
-core-js@^2.4.0:
-  version "2.6.11"
-  resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/core-js/download/core-js-2.6.11.tgz#38831469f9922bded8ee21c9dc46985e0399308c"
-  integrity sha1-OIMUafmSK97Y7iHJ3EaYXgOZMIw=
+core-js-pure@^3.0.0:
+  version "3.6.5"
+  resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/core-js-pure/download/core-js-pure-3.6.5.tgz#c79e75f5e38dbc85a662d91eea52b8256d53b813"
+  integrity sha1-x5519eONvIWmYtke6lK4JW1TuBM=
 
 core-js@^3.6.5:
   version "3.6.5"
@@ -2434,10 +2571,25 @@ cssesc@^3.0.0:
   resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/cssesc/download/cssesc-3.0.0.tgz#37741919903b868565e1c09ea747445cd18983ee"
   integrity sha1-N3QZGZA7hoVl4cCep0dEXNGJg+4=
 
+currently-unhandled@^0.4.1:
+  version "0.4.1"
+  resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/currently-unhandled/download/currently-unhandled-0.4.1.tgz#988df33feab191ef799a61369dd76c17adf957ea"
+  integrity sha1-mI3zP+qxke95mmE2nddsF635V+o=
+  dependencies:
+    array-find-index "^1.0.1"
+
 cyclist@^1.0.1:
   version "1.0.1"
   resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/cyclist/download/cyclist-1.0.1.tgz#596e9698fd0c80e12038c2b82d6eb1b35b6224d9"
   integrity sha1-WW6WmP0MgOEgOMK4LW6xs1tiJNk=
+
+d@1, d@^1.0.1:
+  version "1.0.1"
+  resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/d/download/d-1.0.1.tgz#8698095372d58dbee346ffd0c7093f99f8f9eb5a"
+  integrity sha1-hpgJU3LVjb7jRv/Qxwk/mfj561o=
+  dependencies:
+    es5-ext "^0.10.50"
+    type "^1.0.1"
 
 dashdash@^1.12.0:
   version "1.14.1"
@@ -2446,6 +2598,11 @@ dashdash@^1.12.0:
   dependencies:
     assert-plus "^1.0.0"
 
+de-indent@^1.0.2:
+  version "1.0.2"
+  resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/de-indent/download/de-indent-1.0.2.tgz#b2038e846dc33baa5796128d0804b455b8c1e21d"
+  integrity sha1-sgOOhG3DO6pXlhKNCAS0VbjB4h0=
+
 debug@2.6.9, debug@^2.2.0, debug@^2.3.3:
   version "2.6.9"
   resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/debug/download/debug-2.6.9.tgz#5d128515df134ff327e90a4c93f4e077a536341f"
@@ -2453,7 +2610,7 @@ debug@2.6.9, debug@^2.2.0, debug@^2.3.3:
   dependencies:
     ms "2.0.0"
 
-debug@^3.0.0, debug@^3.1.1, debug@^3.2.5:
+debug@^3.0.0, debug@^3.1.0, debug@^3.1.1, debug@^3.2.5:
   version "3.2.6"
   resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/debug/download/debug-3.2.6.tgz#e83d17de16d8a7efb7717edbe5fb10135eee629b"
   integrity sha1-6D0X3hbYp++3cX7b5fsQE17uYps=
@@ -2466,6 +2623,13 @@ debug@^4.1.0, debug@^4.1.1:
   integrity sha1-O3ImAlUQnGtYnO4FDx1RYTlmR5E=
   dependencies:
     ms "^2.1.1"
+
+debug@~3.1.0:
+  version "3.1.0"
+  resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/debug/download/debug-3.1.0.tgz#5bb5a0672628b64149566ba16819e61518c67261"
+  integrity sha1-W7WgZyYotkFJVmuhaBnmFRjGcmE=
+  dependencies:
+    ms "2.0.0"
 
 decamelize@^1.2.0:
   version "1.2.0"
@@ -2488,6 +2652,11 @@ deep-equal@^1.0.1:
     object-is "^1.0.1"
     object-keys "^1.1.1"
     regexp.prototype.flags "^1.2.0"
+
+deep-equal@~1.0.1:
+  version "1.0.1"
+  resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/deep-equal/download/deep-equal-1.0.1.tgz#f5d260292b660e084eff4cdbc9f08ad3247448b5"
+  integrity sha1-9dJgKStmDghO/0zbyfCK0yR0SLU=
 
 default-gateway@^4.2.0:
   version "4.2.0"
@@ -2551,10 +2720,20 @@ delayed-stream@~1.0.0:
   resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/delayed-stream/download/delayed-stream-1.0.0.tgz#df3ae199acadfb7d440aaae0b29e2272b24ec619"
   integrity sha1-3zrhmayt+31ECqrgsp4icrJOxhk=
 
-depd@~1.1.2:
+delegates@^1.0.0:
+  version "1.0.0"
+  resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/delegates/download/delegates-1.0.0.tgz#84c6e159b81904fdca59a0ef44cd870d31250f9a"
+  integrity sha1-hMbhWbgZBP3KWaDvRM2HDTElD5o=
+
+depd@^1.1.2, depd@~1.1.2:
   version "1.1.2"
   resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/depd/download/depd-1.1.2.tgz#9bcd52e14c097763e749b274c4346ed2e560b5a9"
   integrity sha1-m81S4UwJd2PnSbJ0xDRu0uVgtak=
+
+depd@~2.0.0:
+  version "2.0.0"
+  resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/depd/download/depd-2.0.0.tgz#b696163cc757560d09cf22cc8fad1571b79e76df"
+  integrity sha1-tpYWPMdXVg0JzyLMj60Vcbeedt8=
 
 des.js@^1.0.0:
   version "1.0.1"
@@ -2564,7 +2743,7 @@ des.js@^1.0.0:
     inherits "^2.0.1"
     minimalistic-assert "^1.0.0"
 
-destroy@~1.0.4:
+destroy@^1.0.4, destroy@~1.0.4:
   version "1.0.4"
   resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/destroy/download/destroy-1.0.4.tgz#978857442c44749e4206613e37946205826abd80"
   integrity sha1-l4hXRCxEdJ5CBmE+N5RiBYJqvYA=
@@ -2737,7 +2916,7 @@ emojis-list@^3.0.0:
   resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/emojis-list/download/emojis-list-3.0.0.tgz#5570662046ad29e2e916e71aae260abdff4f6a78"
   integrity sha1-VXBmIEatKeLpFucariYKvf9Pang=
 
-encodeurl@~1.0.2:
+encodeurl@^1.0.2, encodeurl@~1.0.2:
   version "1.0.2"
   resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/encodeurl/download/encodeurl-1.0.2.tgz#ad3ff4c86ec2d029322f5a02c3a9a606c95b3f59"
   integrity sha1-rT/0yG7C0CkyL1oCw6mmBslbP1k=
@@ -2817,7 +2996,33 @@ es-to-primitive@^1.2.1:
     is-date-object "^1.0.1"
     is-symbol "^1.0.2"
 
-escape-html@~1.0.3:
+es5-ext@^0.10.35, es5-ext@^0.10.50:
+  version "0.10.53"
+  resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/es5-ext/download/es5-ext-0.10.53.tgz#93c5a3acfdbef275220ad72644ad02ee18368de1"
+  integrity sha1-k8WjrP2+8nUiCtcmRK0C7hg2jeE=
+  dependencies:
+    es6-iterator "~2.0.3"
+    es6-symbol "~3.1.3"
+    next-tick "~1.0.0"
+
+es6-iterator@~2.0.3:
+  version "2.0.3"
+  resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/es6-iterator/download/es6-iterator-2.0.3.tgz#a7de889141a05a94b0854403b2d0a0fbfa98f3b7"
+  integrity sha1-p96IkUGgWpSwhUQDstCg+/qY87c=
+  dependencies:
+    d "1"
+    es5-ext "^0.10.35"
+    es6-symbol "^3.1.1"
+
+es6-symbol@^3.1.1, es6-symbol@~3.1.3:
+  version "3.1.3"
+  resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/es6-symbol/download/es6-symbol-3.1.3.tgz#bad5d3c1bcdac28269f4cb331e431c78ac705d18"
+  integrity sha1-utXTwbzawoJp9MszHkMceKxwXRg=
+  dependencies:
+    d "^1.0.1"
+    ext "^1.1.2"
+
+escape-html@^1.0.3, escape-html@~1.0.3:
   version "1.0.3"
   resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/escape-html/download/escape-html-1.0.3.tgz#0258eae4d3d0c0974de1c169188ef0051d1d1988"
   integrity sha1-Aljq5NPQwJdN4cFpGI7wBR0dGYg=
@@ -2969,6 +3174,13 @@ express@^4.17.1:
     type-is "~1.6.18"
     utils-merge "1.0.1"
     vary "~1.1.2"
+
+ext@^1.1.2:
+  version "1.4.0"
+  resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/ext/download/ext-1.4.0.tgz#89ae7a07158f79d35517882904324077e4379244"
+  integrity sha1-ia56BxWPedNVF4gpBDJAd+Q3kkQ=
+  dependencies:
+    type "^2.0.0"
 
 extend-shallow@^2.0.1:
   version "2.0.1"
@@ -3215,7 +3427,7 @@ fragment-cache@^0.2.1:
   dependencies:
     map-cache "^0.2.2"
 
-fresh@0.5.2:
+fresh@0.5.2, fresh@~0.5.2:
   version "0.5.2"
   resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/fresh/download/fresh-0.5.2.tgz#3d8cadd90d976569fa835ab1f8e4b23a105605a7"
   integrity sha1-PYyt2Q2XZWn6g1qx+OSyOhBWBac=
@@ -3488,6 +3700,11 @@ hash-base@^3.0.0:
     readable-stream "^3.6.0"
     safe-buffer "^5.2.0"
 
+hash-sum@^1.0.2:
+  version "1.0.2"
+  resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/hash-sum/download/hash-sum-1.0.2.tgz#33b40777754c6432573c120cc3808bbd10d47f04"
+  integrity sha1-M7QHd3VMZDJXPBIMw4CLvRDUfwQ=
+
 hash.js@^1.0.0, hash.js@^1.0.3:
   version "1.1.7"
   resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/hash.js/download/hash.js-1.1.7.tgz#0babca538e8d4ee4a0f8988d68866537a003cf42"
@@ -3496,7 +3713,7 @@ hash.js@^1.0.0, hash.js@^1.0.3:
     inherits "^2.0.3"
     minimalistic-assert "^1.0.1"
 
-he@^1.2.0:
+he@^1.1.0, he@^1.2.0:
   version "1.2.0"
   resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/he/download/he-1.2.0.tgz#84ae65fa7eafb165fddb61566ae14baf05664f0f"
   integrity sha1-hK5l+n6vsWX922FWauFLrwVmTw8=
@@ -3527,7 +3744,7 @@ hpack.js@^2.1.6:
     readable-stream "^2.0.1"
     wbuf "^1.1.0"
 
-html-entities@^1.3.1:
+html-entities@^1.2.0, html-entities@^1.3.1:
   version "1.3.1"
   resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/html-entities/download/html-entities-1.3.1.tgz#fb9a1a4b5b14c5daba82d3e34c6ae4fe701a0e44"
   integrity sha1-+5oaS1sUxdq6gtPjTGrk/nAaDkQ=
@@ -3572,6 +3789,14 @@ htmlparser2@^3.3.0:
     inherits "^2.0.1"
     readable-stream "^3.1.1"
 
+http-assert@^1.3.0:
+  version "1.4.1"
+  resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/http-assert/download/http-assert-1.4.1.tgz#c5f725d677aa7e873ef736199b89686cceb37878"
+  integrity sha1-xfcl1neqfoc+9zYZm4lobM6zeHg=
+  dependencies:
+    deep-equal "~1.0.1"
+    http-errors "~1.7.2"
+
 http-deceiver@^1.2.7:
   version "1.2.7"
   resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/http-deceiver/download/http-deceiver-1.2.7.tgz#fa7168944ab9a519d337cb0bec7284dc3e723d87"
@@ -3585,6 +3810,17 @@ http-errors@1.7.2:
     depd "~1.1.2"
     inherits "2.0.3"
     setprototypeof "1.1.1"
+    statuses ">= 1.5.0 < 2"
+    toidentifier "1.0.0"
+
+http-errors@^1.6.3, http-errors@^1.7.3:
+  version "1.8.0"
+  resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/http-errors/download/http-errors-1.8.0.tgz#75d1bbe497e1044f51e4ee9e704a62f28d336507"
+  integrity sha1-ddG75JfhBE9R5O6ecEpi8o0zZQc=
+  dependencies:
+    depd "~1.1.2"
+    inherits "2.0.4"
+    setprototypeof "1.2.0"
     statuses ">= 1.5.0 < 2"
     toidentifier "1.0.0"
 
@@ -3957,6 +4193,11 @@ is-fullwidth-code-point@^3.0.0:
   resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/is-fullwidth-code-point/download/is-fullwidth-code-point-3.0.0.tgz#f116f8064fe90b3f7844a38997c0b75051269f1d"
   integrity sha1-8Rb4Bk/pCz94RKOJl8C3UFEmnx0=
 
+is-generator-function@^1.0.7:
+  version "1.0.7"
+  resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/is-generator-function/download/is-generator-function-1.0.7.tgz#d2132e529bb0000a7f80794d4bdf5cd5e5813522"
+  integrity sha1-0hMuUpuwAAp/gHlNS99c1eWBNSI=
+
 is-glob@^2.0.0, is-glob@^2.0.1:
   version "2.0.1"
   resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/is-glob/download/is-glob-2.0.1.tgz#d096f926a3ded5600f3fdfd91198cb0888c2d863"
@@ -4026,7 +4267,7 @@ is-path-inside@^2.1.0:
   dependencies:
     path-is-inside "^1.0.2"
 
-is-plain-obj@^1.0.0:
+is-plain-obj@^1.0.0, is-plain-obj@^1.1:
   version "1.1.0"
   resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/is-plain-obj/download/is-plain-obj-1.1.0.tgz#71a50c8429dfca773c92a390a4a03b39fcd51d3e"
   integrity sha1-caUMhCnfync8kqOQpKA7OfzVHT4=
@@ -4152,7 +4393,7 @@ json-schema@0.2.3:
   resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/json-schema/download/json-schema-0.2.3.tgz#b480c892e59a2f05954ce727bd3f2a4e882f9e13"
   integrity sha1-tIDIkuWaLwWVTOcnvT8qTogvnhM=
 
-json-stringify-safe@~5.0.1:
+json-stringify-safe@^5.0.1, json-stringify-safe@~5.0.1:
   version "5.0.1"
   resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/json-stringify-safe/download/json-stringify-safe-5.0.1.tgz#1296a2d58fd45f19a0f6ce01d65701e2c735b6eb"
   integrity sha1-Epai1Y/UXxmg9s4B1lcB4sc1tus=
@@ -4186,6 +4427,13 @@ jsprim@^1.2.2:
     json-schema "0.2.3"
     verror "1.10.0"
 
+keygrip@~1.1.0:
+  version "1.1.0"
+  resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/keygrip/download/keygrip-1.1.0.tgz#871b1681d5e159c62a445b0c74b615e0917e7226"
+  integrity sha1-hxsWgdXhWcYqRFsMdLYV4JF+ciY=
+  dependencies:
+    tsscmp "1.0.6"
+
 killable@^1.0.1:
   version "1.0.1"
   resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/killable/download/killable-1.0.1.tgz#4c8ce441187a061c7474fb87ca08e2a638194892"
@@ -4214,6 +4462,94 @@ kind-of@^6.0.0, kind-of@^6.0.2:
   version "6.0.3"
   resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/kind-of/download/kind-of-6.0.3.tgz#07c05034a6c349fa06e24fa35aa76db4580ce4dd"
   integrity sha1-B8BQNKbDSfoG4k+jWqdttFgM5N0=
+
+koa-compose@^3.0.0:
+  version "3.2.1"
+  resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/koa-compose/download/koa-compose-3.2.1.tgz#a85ccb40b7d986d8e5a345b3a1ace8eabcf54de7"
+  integrity sha1-qFzLQLfZhtjlo0Wzoazo6rz1Tec=
+  dependencies:
+    any-promise "^1.1.0"
+
+koa-compose@^4.1.0:
+  version "4.1.0"
+  resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/koa-compose/download/koa-compose-4.1.0.tgz#507306b9371901db41121c812e923d0d67d3e877"
+  integrity sha1-UHMGuTcZAdtBEhyBLpI9DWfT6Hc=
+
+koa-convert@^1.2.0:
+  version "1.2.0"
+  resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/koa-convert/download/koa-convert-1.2.0.tgz#da40875df49de0539098d1700b50820cebcd21d0"
+  integrity sha1-2kCHXfSd4FOQmNFwC1CCDOvNIdA=
+  dependencies:
+    co "^4.6.0"
+    koa-compose "^3.0.0"
+
+koa-send@^5.0.0:
+  version "5.0.1"
+  resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/koa-send/download/koa-send-5.0.1.tgz#39dceebfafb395d0d60beaffba3a70b4f543fe79"
+  integrity sha1-Odzuv6+zldDWC+r/ujpwtPVD/nk=
+  dependencies:
+    debug "^4.1.1"
+    http-errors "^1.7.3"
+    resolve-path "^1.4.0"
+
+koa-static@^5.0.0:
+  version "5.0.0"
+  resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/koa-static/download/koa-static-5.0.0.tgz#5e92fc96b537ad5219f425319c95b64772776943"
+  integrity sha1-XpL8lrU3rVIZ9CUxnJW2R3J3aUM=
+  dependencies:
+    debug "^3.1.0"
+    koa-send "^5.0.0"
+
+koa-webpack-middleware@^1.0.7:
+  version "1.0.7"
+  resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/koa-webpack-middleware/download/koa-webpack-middleware-1.0.7.tgz#9d1cbf4455ae989614eef37e304978b024067f11"
+  integrity sha1-nRy/RFWumJYU7vN+MEl4sCQGfxE=
+  dependencies:
+    regenerator-runtime "0.10.5"
+    webpack-dev-middleware "1.12.0"
+    webpack-hot-middleware "2.18.2"
+
+koa-webpack@^5.3.0:
+  version "5.3.0"
+  resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/koa-webpack/download/koa-webpack-5.3.0.tgz#b95bd83283ff665088f0ebdd10d47fc6857a9cbc"
+  integrity sha1-uVvYMoP/ZlCI8OvdENR/xoV6nLw=
+  dependencies:
+    "@hapi/joi" "^15.0.0"
+    app-root-path "^2.0.1"
+    chalk "^2.4.2"
+    loud-rejection "^2.1.0"
+    merge-options "^1.0.0"
+    webpack-dev-middleware "^3.0.0"
+    webpack-hot-client "^4.1.0"
+
+koa@^2.13.0:
+  version "2.13.0"
+  resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/koa/download/koa-2.13.0.tgz#25217e05efd3358a7e5ddec00f0a380c9b71b501"
+  integrity sha1-JSF+Be/TNYp+Xd7ADwo4DJtxtQE=
+  dependencies:
+    accepts "^1.3.5"
+    cache-content-type "^1.0.0"
+    content-disposition "~0.5.2"
+    content-type "^1.0.4"
+    cookies "~0.8.0"
+    debug "~3.1.0"
+    delegates "^1.0.0"
+    depd "^1.1.2"
+    destroy "^1.0.4"
+    encodeurl "^1.0.2"
+    escape-html "^1.0.3"
+    fresh "~0.5.2"
+    http-assert "^1.3.0"
+    http-errors "^1.6.3"
+    is-generator-function "^1.0.7"
+    koa-compose "^4.1.0"
+    koa-convert "^1.2.0"
+    on-finished "^2.3.0"
+    only "~0.0.2"
+    parseurl "^1.3.2"
+    statuses "^1.5.0"
+    type-is "^1.6.16"
+    vary "^1.1.2"
 
 lcid@^2.0.0:
   version "2.0.0"
@@ -4275,7 +4611,7 @@ loader-utils@1.2.3:
     emojis-list "^2.0.0"
     json5 "^1.0.1"
 
-loader-utils@^1.1.0, loader-utils@^1.2.3, loader-utils@^1.4.0:
+loader-utils@^1.0.2, loader-utils@^1.1.0, loader-utils@^1.2.3, loader-utils@^1.4.0:
   version "1.4.0"
   resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/loader-utils/download/loader-utils-1.4.0.tgz#c579b5e34cb34b1a74edc6c1fb36bfa371d5a613"
   integrity sha1-xXm140yzSxp07cbB+za/o3HVphM=
@@ -4319,6 +4655,18 @@ lodash@^4.17.11, lodash@^4.17.13, lodash@^4.17.14, lodash@^4.17.15:
   resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/lodash/download/lodash-4.17.15.tgz#b447f6670a0455bbfeedd11392eff330ea097548"
   integrity sha1-tEf2ZwoEVbv+7dETku/zMOoJdUg=
 
+lodash@^4.17.19:
+  version "4.17.19"
+  resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/lodash/download/lodash-4.17.19.tgz#e48ddedbe30b3321783c5b4301fbd353bc1e4a4b"
+  integrity sha1-5I3e2+MLMyF4PFtDAfvTU7weSks=
+
+log-symbols@^2.1.0:
+  version "2.2.0"
+  resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/log-symbols/download/log-symbols-2.2.0.tgz#5740e1c5d6f0dfda4ad9323b5332107ef6b4c40a"
+  integrity sha1-V0Dhxdbw39pK2TI7UzIQfva0xAo=
+  dependencies:
+    chalk "^2.0.1"
+
 log-symbols@^3.0.0:
   version "3.0.0"
   resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/log-symbols/download/log-symbols-3.0.0.tgz#f3a08516a5dea893336a7dee14d18a1cfdab77c4"
@@ -4331,6 +4679,14 @@ loglevel@^1.6.8:
   resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/loglevel/download/loglevel-1.6.8.tgz#8a25fb75d092230ecd4457270d80b54e28011171"
   integrity sha1-iiX7ddCSIw7NRFcnDYC1TigBEXE=
 
+loglevelnext@^1.0.1, loglevelnext@^1.0.2:
+  version "1.0.5"
+  resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/loglevelnext/download/loglevelnext-1.0.5.tgz#36fc4f5996d6640f539ff203ba819641680d75a2"
+  integrity sha1-NvxPWZbWZA9Tn/IDuoGWQWgNdaI=
+  dependencies:
+    es6-symbol "^3.1.1"
+    object.assign "^4.1.0"
+
 loose-envify@^1.0.0:
   version "1.4.0"
   resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/loose-envify/download/loose-envify-1.4.0.tgz#71ee51fa7be4caec1a63839f7e682d8132d30caf"
@@ -4338,12 +4694,28 @@ loose-envify@^1.0.0:
   dependencies:
     js-tokens "^3.0.0 || ^4.0.0"
 
+loud-rejection@^2.1.0:
+  version "2.2.0"
+  resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/loud-rejection/download/loud-rejection-2.2.0.tgz#4255eb6e9c74045b0edc021fa7397ab655a8517c"
+  integrity sha1-QlXrbpx0BFsO3AIfpzl6tlWoUXw=
+  dependencies:
+    currently-unhandled "^0.4.1"
+    signal-exit "^3.0.2"
+
 lower-case@^2.0.1:
   version "2.0.1"
   resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/lower-case/download/lower-case-2.0.1.tgz#39eeb36e396115cc05e29422eaea9e692c9408c7"
   integrity sha1-Oe6zbjlhFcwF4pQi6uqeaSyUCMc=
   dependencies:
     tslib "^1.10.0"
+
+lru-cache@^4.1.2:
+  version "4.1.5"
+  resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/lru-cache/download/lru-cache-4.1.5.tgz#8bbe50ea85bed59bc9e33dcab8235ee9bcf443cd"
+  integrity sha1-i75Q6oW+1ZvJ4z3KuCNe6bz0Q80=
+  dependencies:
+    pseudomap "^1.0.2"
+    yallist "^2.1.2"
 
 lru-cache@^5.1.1:
   version "5.1.1"
@@ -4416,7 +4788,7 @@ mem@^4.0.0:
     mimic-fn "^2.0.0"
     p-is-promise "^2.0.0"
 
-memory-fs@^0.4.0, memory-fs@^0.4.1:
+memory-fs@^0.4.0, memory-fs@^0.4.1, memory-fs@~0.4.1:
   version "0.4.1"
   resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/memory-fs/download/memory-fs-0.4.1.tgz#3a9a20b8462523e447cfbc7e8bb80ed667bfc552"
   integrity sha1-OpoguEYlI+RHz7x+i7gO1me/xVI=
@@ -4436,6 +4808,20 @@ merge-descriptors@1.0.1:
   version "1.0.1"
   resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/merge-descriptors/download/merge-descriptors-1.0.1.tgz#b00aaa556dd8b44568150ec9d1b953f3f90cbb61"
   integrity sha1-sAqqVW3YtEVoFQ7J0blT8/kMu2E=
+
+merge-options@^1.0.0, merge-options@^1.0.1:
+  version "1.0.1"
+  resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/merge-options/download/merge-options-1.0.1.tgz#2a64b24457becd4e4dc608283247e94ce589aa32"
+  integrity sha1-KmSyRFe+zU5NxggoMkfpTOWJqjI=
+  dependencies:
+    is-plain-obj "^1.1"
+
+merge-source-map@^1.1.0:
+  version "1.1.0"
+  resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/merge-source-map/download/merge-source-map-1.1.0.tgz#2fdde7e6020939f70906a68f2d7ae685e4c8c646"
+  integrity sha1-L93n5gIJOfcJBqaPLXrmheTIxkY=
+  dependencies:
+    source-map "^0.6.1"
 
 merge2@^1.2.3:
   version "1.4.1"
@@ -4498,14 +4884,14 @@ mime-db@1.44.0, "mime-db@>= 1.43.0 < 2":
   resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/mime-db/download/mime-db-1.44.0.tgz#fa11c5eb0aca1334b4233cb4d52f10c5a6272f92"
   integrity sha1-+hHF6wrKEzS0Izy01S8QxaYnL5I=
 
-mime-types@^2.1.12, mime-types@~2.1.17, mime-types@~2.1.19, mime-types@~2.1.24:
+mime-types@^2.1.12, mime-types@^2.1.18, mime-types@^2.1.26, mime-types@~2.1.17, mime-types@~2.1.19, mime-types@~2.1.24:
   version "2.1.27"
   resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/mime-types/download/mime-types-2.1.27.tgz#47949f98e279ea53119f5722e0f34e529bec009f"
   integrity sha1-R5SfmOJ56lMRn1ci4PNOUpvsAJ8=
   dependencies:
     mime-db "1.44.0"
 
-mime@1.6.0, mime@^1.4.1:
+mime@1.6.0, mime@^1.3.4, mime@^1.4.1:
   version "1.6.0"
   resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/mime/download/mime-1.6.0.tgz#32cd9e5c64553bd58d19a568af452acff04981b1"
   integrity sha1-Ms2eXGRVO9WNGaVor0Uqz/BJgbE=
@@ -4659,6 +5045,11 @@ neo-async@^2.5.0, neo-async@^2.6.0, neo-async@^2.6.1:
   version "2.6.1"
   resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/neo-async/download/neo-async-2.6.1.tgz#ac27ada66167fa8849a6addd837f6b189ad2081c"
   integrity sha1-rCetpmFn+ohJpq3dg39rGJrSCBw=
+
+next-tick@~1.0.0:
+  version "1.0.0"
+  resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/next-tick/download/next-tick-1.0.0.tgz#ca86d1fe8828169b0120208e3dc8424b9db8342c"
+  integrity sha1-yobR/ogoFpsBICCOPchCS524NCw=
 
 nice-try@^1.0.4:
   version "1.0.5"
@@ -4857,7 +5248,7 @@ obuf@^1.0.0, obuf@^1.1.2:
   resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/obuf/download/obuf-1.1.2.tgz#09bea3343d41859ebd446292d11c9d4db619084e"
   integrity sha1-Cb6jND1BhZ69RGKS0RydTbYZCE4=
 
-on-finished@~2.3.0:
+on-finished@^2.3.0, on-finished@~2.3.0:
   version "2.3.0"
   resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/on-finished/download/on-finished-2.3.0.tgz#20f1336481b083cd75337992a16971aa2d906947"
   integrity sha1-IPEzZIGwg811M3mSoWlxqi2QaUc=
@@ -4882,6 +5273,11 @@ onetime@^5.1.0:
   integrity sha1-//DzyRYX/mK7UBiWNumayKbfe+U=
   dependencies:
     mimic-fn "^2.1.0"
+
+only@~0.0.2:
+  version "0.0.2"
+  resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/only/download/only-0.0.2.tgz#2afde84d03e50b9a8edc444e30610a70295edfb4"
+  integrity sha1-Kv3oTQPlC5qO3EROMGEKcCle37Q=
 
 opn@^5.5.0:
   version "5.5.0"
@@ -5064,7 +5460,7 @@ parse-passwd@^1.0.0:
   resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/parse-passwd/download/parse-passwd-1.0.0.tgz#6d5b934a456993b23d37f40a382d6f1666a8e5c6"
   integrity sha1-bVuTSkVpk7I9N/QKOC1vFmao5cY=
 
-parseurl@~1.3.2, parseurl@~1.3.3:
+parseurl@^1.3.2, parseurl@~1.3.2, parseurl@~1.3.3:
   version "1.3.3"
   resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/parseurl/download/parseurl-1.3.3.tgz#9da19e7bee8d12dff0513ed5b76957793bc2e8d4"
   integrity sha1-naGee+6NEt/wUT7Vt2lXeTvC6NQ=
@@ -5097,7 +5493,7 @@ path-exists@^3.0.0:
   resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/path-exists/download/path-exists-3.0.0.tgz#ce0ebeaa5f78cb18925ea7d810d7b59b010fd515"
   integrity sha1-zg6+ql94yxiSXqfYENe1mwEP1RU=
 
-path-is-absolute@^1.0.0:
+path-is-absolute@1.0.1, path-is-absolute@^1.0.0:
   version "1.0.1"
   resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/path-is-absolute/download/path-is-absolute-1.0.1.tgz#174b9268735534ffbc7ace6bf53a5a9e1b5c5f5f"
   integrity sha1-F0uSaHNVNP+8es5r9TpanhtcX18=
@@ -5304,6 +5700,11 @@ preserve@^0.2.0:
   resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/preserve/download/preserve-0.2.0.tgz#815ed1f6ebc65926f865b310c0713bcb3315ce4b"
   integrity sha1-gV7R9uvGWSb4ZbMQwHE7yzMVzks=
 
+prettier@^1.18.2:
+  version "1.19.1"
+  resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/prettier/download/prettier-1.19.1.tgz#f7d7f5ff8a9cd872a7be4ca142095956a60797cb"
+  integrity sha1-99f1/4qc2HKnvkyhQglZVqYHl8s=
+
 pretty-error@^2.1.1:
   version "2.1.1"
   resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/pretty-error/download/pretty-error-2.1.1.tgz#5f4f87c8f91e5ae3f3ba87ab4cf5e03b1a17f1a3"
@@ -5326,6 +5727,19 @@ process@^0.11.10:
   version "0.11.10"
   resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/process/download/process-0.11.10.tgz#7332300e840161bda3e69a1d1d91a7d4bc16f182"
   integrity sha1-czIwDoQBYb2j5podHZGn1LwW8YI=
+
+progress-bar-webpack-plugin@^2.1.0:
+  version "2.1.0"
+  resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/progress-bar-webpack-plugin/download/progress-bar-webpack-plugin-2.1.0.tgz#f7f8c8c461f40b87a8ff168443f494289b07ee65"
+  integrity sha1-9/jIxGH0C4eo/xaEQ/SUKJsH7mU=
+  dependencies:
+    chalk "^3.0.0"
+    progress "^2.0.3"
+
+progress@^2.0.3:
+  version "2.0.3"
+  resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/progress/download/progress-2.0.3.tgz#7e8cf8d8f5b8f239c1bc68beb4eb78567d572ef8"
+  integrity sha1-foz42PW48jnBvGi+tOt4Vn1XLvg=
 
 promise-inflight@^1.0.1:
   version "1.0.1"
@@ -5356,6 +5770,11 @@ prr@~1.0.1:
   version "1.0.1"
   resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/prr/download/prr-1.0.1.tgz#d3fc114ba06995a45ec6893f484ceb1d78f5f476"
   integrity sha1-0/wRS6BplaRexok/SEzrHXj19HY=
+
+pseudomap@^1.0.2:
+  version "1.0.2"
+  resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/pseudomap/download/pseudomap-1.0.2.tgz#f052a28da70e618917ef0a8ac34c1ae5a68286b3"
+  integrity sha1-8FKijacOYYkX7wqKw0wa5aaChrM=
 
 psl@^1.1.28:
   version "1.8.0"
@@ -5437,7 +5856,7 @@ querystring-es3@^0.2.0:
   resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/querystring-es3/download/querystring-es3-0.2.1.tgz#9ec61f79049875707d69414596fd907a4d711e73"
   integrity sha1-nsYfeQSYdXB9aUFFlv2Qek1xHnM=
 
-querystring@0.2.0:
+querystring@0.2.0, querystring@^0.2.0:
   version "0.2.0"
   resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/querystring/download/querystring-0.2.0.tgz#b209849203bb25df820da756e747005878521620"
   integrity sha1-sgmEkgO7Jd+CDadW50cAWHhSFiA=
@@ -5471,7 +5890,7 @@ randomfill@^1.0.3:
     randombytes "^2.0.5"
     safe-buffer "^5.1.0"
 
-range-parser@^1.2.1, range-parser@~1.2.1:
+range-parser@^1.0.3, range-parser@^1.2.1, range-parser@~1.2.1:
   version "1.2.1"
   resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/range-parser/download/range-parser-1.2.1.tgz#3cf37023d199e1c24d1a55b84800c2f3e6468031"
   integrity sha1-PPNwI9GZ4cJNGlW4SADC8+ZGgDE=
@@ -5543,10 +5962,10 @@ regenerate@^1.4.0:
   resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/regenerate/download/regenerate-1.4.0.tgz#4a856ec4b56e4077c557589cae85e7a4c8869a11"
   integrity sha1-SoVuxLVuQHfFV1icroXnpMiGmhE=
 
-regenerator-runtime@^0.11.0:
-  version "0.11.1"
-  resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/regenerator-runtime/download/regenerator-runtime-0.11.1.tgz#be05ad7f9bf7d22e056f9726cee5017fbf19e2e9"
-  integrity sha1-vgWtf5v30i4Fb5cmzuUBf78Z4uk=
+regenerator-runtime@0.10.5:
+  version "0.10.5"
+  resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/regenerator-runtime/download/regenerator-runtime-0.10.5.tgz#336c3efc1220adcedda2c9fab67b5a7955a33658"
+  integrity sha1-M2w+/BIgrc7dosn6tntaeVWjNlg=
 
 regenerator-runtime@^0.13.4:
   version "0.13.5"
@@ -5700,12 +6119,20 @@ resolve-from@^3.0.0:
   resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/resolve-from/download/resolve-from-3.0.0.tgz#b22c7af7d9d6881bc8b6e653335eebcb0a188748"
   integrity sha1-six699nWiBvItuZTM17rywoYh0g=
 
+resolve-path@^1.4.0:
+  version "1.4.0"
+  resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/resolve-path/download/resolve-path-1.4.0.tgz#c4bda9f5efb2fce65247873ab36bb4d834fe16f7"
+  integrity sha1-xL2p9e+y/OZSR4c6s2u02DT+Fvc=
+  dependencies:
+    http-errors "~1.6.2"
+    path-is-absolute "1.0.1"
+
 resolve-url@^0.2.1:
   version "0.2.1"
   resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/resolve-url/download/resolve-url-0.2.1.tgz#2c637fe77c893afd2a663fe21aa9080068e2052a"
   integrity sha1-LGN/53yJOv0qZj/iGqkIAGjiBSo=
 
-resolve@^1.1.6, resolve@^1.3.2:
+resolve@^1.1.6, resolve@^1.3.2, resolve@^1.8.1:
   version "1.17.0"
   resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/resolve/download/resolve-1.17.0.tgz#b25941b54968231cc2d1bb76a79cb7f2c0bf8444"
   integrity sha1-sllBtUloIxzC0bt2p5y38sC/hEQ=
@@ -5838,7 +6265,7 @@ semver@7.0.0:
   resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/semver/download/semver-7.0.0.tgz#5f3ca35761e47e05b206c6daff2cf814f0316b8e"
   integrity sha1-XzyjV2HkfgWyBsba/yz4FPAxa44=
 
-semver@^5.4.1, semver@^5.5.0, semver@^5.6.0:
+semver@^5.4.1, semver@^5.5.0, semver@^5.5.1, semver@^5.6.0:
   version "5.7.1"
   resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/semver/download/semver-5.7.1.tgz#a954f931aeba508d307bbf069eff0c01c96116f7"
   integrity sha1-qVT5Ma66UI0we78Gnv8MAclhFvc=
@@ -5924,6 +6351,11 @@ setprototypeof@1.1.1:
   version "1.1.1"
   resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/setprototypeof/download/setprototypeof-1.1.1.tgz#7e95acb24aa92f5885e0abef5ba131330d4ae683"
   integrity sha1-fpWsskqpL1iF4KvvW6ExMw1K5oM=
+
+setprototypeof@1.2.0:
+  version "1.2.0"
+  resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/setprototypeof/download/setprototypeof-1.2.0.tgz#66c9a24a73f9fc28cbe66b09fed3d33dcaf1b424"
+  integrity sha1-ZsmiSnP5/CjL5msJ/tPTPcrxtCQ=
 
 sha.js@^2.4.0, sha.js@^2.4.8:
   version "2.4.11"
@@ -6133,7 +6565,7 @@ static-extend@^0.1.1:
     define-property "^0.2.5"
     object-copy "^0.1.0"
 
-"statuses@>= 1.4.0 < 2", "statuses@>= 1.5.0 < 2", statuses@~1.5.0:
+"statuses@>= 1.4.0 < 2", "statuses@>= 1.5.0 < 2", statuses@^1.5.0, statuses@~1.5.0:
   version "1.5.0"
   resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/statuses/download/statuses-1.5.0.tgz#161c7dac177659fd9811f43771fa99381478628c"
   integrity sha1-Fhx9rBd2Wf2YEfQ3cfqZOBR4Yow=
@@ -6230,6 +6662,13 @@ strip-ansi@^3.0.0, strip-ansi@^3.0.1:
   dependencies:
     ansi-regex "^2.0.0"
 
+strip-ansi@^4.0.0:
+  version "4.0.0"
+  resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/strip-ansi/download/strip-ansi-4.0.0.tgz#a8479022eb1ac368a871389b635262c505ee368f"
+  integrity sha1-qEeQIusaw2iocTibY1JixQXuNo8=
+  dependencies:
+    ansi-regex "^3.0.0"
+
 strip-ansi@^5.0.0, strip-ansi@^5.1.0, strip-ansi@^5.2.0:
   version "5.2.0"
   resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/strip-ansi/download/strip-ansi-5.2.0.tgz#8c9a536feb6afc962bdfa5b104a5091c1ad9c0ae"
@@ -6307,6 +6746,11 @@ terser@^4.1.2, terser@^4.6.3:
     source-map "~0.6.1"
     source-map-support "~0.5.12"
 
+text-table@^0.2.0:
+  version "0.2.0"
+  resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/text-table/download/text-table-0.2.0.tgz#7f5ee823ae805207c00af2df4a84ec3fcfa570b4"
+  integrity sha1-f17oI66AUgfACvLfSoTsP8+lcLQ=
+
 thread-loader@^2.1.3:
   version "2.1.3"
   resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/thread-loader/download/thread-loader-2.1.3.tgz#cbd2c139fc2b2de6e9d28f62286ab770c1acbdda"
@@ -6333,6 +6777,11 @@ thunky@^1.0.2:
   version "1.1.0"
   resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/thunky/download/thunky-1.1.0.tgz#5abaf714a9405db0504732bbccd2cedd9ef9537d"
   integrity sha1-Wrr3FKlAXbBQRzK7zNLO3Z75U30=
+
+time-stamp@^2.0.0:
+  version "2.2.0"
+  resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/time-stamp/download/time-stamp-2.2.0.tgz#917e0a66905688790ec7bbbde04046259af83f57"
+  integrity sha1-kX4KZpBWiHkOx7u94EBGJZr4P1c=
 
 timers-browserify@^2.0.4:
   version "2.0.11"
@@ -6421,6 +6870,11 @@ tslib@^1.10.0, tslib@^1.9.0:
   resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/tslib/download/tslib-1.13.0.tgz#c881e13cc7015894ed914862d276436fa9a47043"
   integrity sha1-yIHhPMcBWJTtkUhi0nZDb6mkcEM=
 
+tsscmp@1.0.6:
+  version "1.0.6"
+  resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/tsscmp/download/tsscmp-1.0.6.tgz#85b99583ac3589ec4bfef825b5000aa911d605eb"
+  integrity sha1-hbmVg6w1iexL/vgltQAKqRHWBes=
+
 tty-browserify@0.0.0:
   version "0.0.0"
   resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/tty-browserify/download/tty-browserify-0.0.0.tgz#a157ba402da24e9bf957f9aa69d524eed42901a6"
@@ -6443,13 +6897,23 @@ type-fest@^0.11.0:
   resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/type-fest/download/type-fest-0.11.0.tgz#97abf0872310fed88a5c466b25681576145e33f1"
   integrity sha1-l6vwhyMQ/tiKXEZrJWgVdhReM/E=
 
-type-is@~1.6.17, type-is@~1.6.18:
+type-is@^1.6.16, type-is@~1.6.17, type-is@~1.6.18:
   version "1.6.18"
   resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/type-is/download/type-is-1.6.18.tgz#4e552cd05df09467dcbc4ef739de89f2cf37c131"
   integrity sha1-TlUs0F3wlGfcvE73Od6J8s83wTE=
   dependencies:
     media-typer "0.3.0"
     mime-types "~2.1.24"
+
+type@^1.0.1:
+  version "1.2.0"
+  resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/type/download/type-1.2.0.tgz#848dd7698dafa3e54a6c479e759c4bc3f18847a0"
+  integrity sha1-hI3XaY2vo+VKbEeedZxLw/GIR6A=
+
+type@^2.0.0:
+  version "2.0.0"
+  resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/type/download/type-2.0.0.tgz#5f16ff6ef2eb44f260494dae271033b29c09a9c3"
+  integrity sha1-Xxb/bvLrRPJgSU2uJxAzspwJqcM=
 
 typedarray@^0.0.6:
   version "0.0.6"
@@ -6538,6 +7002,15 @@ urix@^0.1.0:
   resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/urix/download/urix-0.1.0.tgz#da937f7a62e21fec1fd18d49b35c2935067a6c72"
   integrity sha1-2pN/emLiH+wf0Y1Js1wpNQZ6bHI=
 
+url-loader@^4.1.0:
+  version "4.1.0"
+  resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/url-loader/download/url-loader-4.1.0.tgz#c7d6b0d6b0fccd51ab3ffc58a78d32b8d89a7be2"
+  integrity sha1-x9aw1rD8zVGrP/xYp40yuNiae+I=
+  dependencies:
+    loader-utils "^2.0.0"
+    mime-types "^2.1.26"
+    schema-utils "^2.6.5"
+
 url-parse@^1.4.3:
   version "1.4.7"
   resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/url-parse/download/url-parse-1.4.7.tgz#a8a83535e8c00a316e403a5db4ac1b9b853ae278"
@@ -6596,7 +7069,7 @@ utils-merge@1.0.1:
   resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/utils-merge/download/utils-merge-1.0.1.tgz#9f95710f50a267947b2ccc124741c1028427e713"
   integrity sha1-n5VxD1CiZ5R7LMwSR0HBAoQn5xM=
 
-uuid@^3.3.2, uuid@^3.4.0:
+uuid@^3.1.0, uuid@^3.3.2, uuid@^3.4.0:
   version "3.4.0"
   resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/uuid/download/uuid-3.4.0.tgz#b23e4358afa8a202fe7a100af1f5f883f02007ee"
   integrity sha1-sj5DWK+oogL+ehAK8fX4g/AgB+4=
@@ -6606,7 +7079,7 @@ v8-compile-cache@2.0.3:
   resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/v8-compile-cache/download/v8-compile-cache-2.0.3.tgz#00f7494d2ae2b688cfe2899df6ed2c54bef91dbe"
   integrity sha1-APdJTSritojP4omd9u0sVL75Hb4=
 
-vary@~1.1.2:
+vary@^1.1.2, vary@~1.1.2:
   version "1.1.2"
   resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/vary/download/vary-1.1.2.tgz#2299f02c6ded30d4a5961b0b9f74524a18f634fc"
   integrity sha1-IpnwLG3tMNSllhsLn3RSShj2NPw=
@@ -6638,6 +7111,43 @@ vow@^0.4.9:
   version "0.4.20"
   resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/vow/download/vow-0.4.20.tgz#77ca6ef0828e0043a93e55dc37030226519ce711"
   integrity sha1-d8pu8IKOAEOpPlXcNwMCJlGc5xE=
+
+vue-hot-reload-api@^2.3.0:
+  version "2.3.4"
+  resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/vue-hot-reload-api/download/vue-hot-reload-api-2.3.4.tgz#532955cc1eb208a3d990b3a9f9a70574657e08f2"
+  integrity sha1-UylVzB6yCKPZkLOp+acFdGV+CPI=
+
+vue-loader@^15.9.3:
+  version "15.9.3"
+  resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/vue-loader/download/vue-loader-15.9.3.tgz#0de35d9e555d3ed53969516cac5ce25531299dda"
+  integrity sha1-DeNdnlVdPtU5aVFsrFziVTEpndo=
+  dependencies:
+    "@vue/component-compiler-utils" "^3.1.0"
+    hash-sum "^1.0.2"
+    loader-utils "^1.1.0"
+    vue-hot-reload-api "^2.3.0"
+    vue-style-loader "^4.1.0"
+
+vue-style-loader@^4.1.0, vue-style-loader@^4.1.2:
+  version "4.1.2"
+  resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/vue-style-loader/download/vue-style-loader-4.1.2.tgz#dedf349806f25ceb4e64f3ad7c0a44fba735fcf8"
+  integrity sha1-3t80mAbyXOtOZPOtfApE+6c1/Pg=
+  dependencies:
+    hash-sum "^1.0.2"
+    loader-utils "^1.0.2"
+
+vue-template-compiler@^2.6.11:
+  version "2.6.11"
+  resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/vue-template-compiler/download/vue-template-compiler-2.6.11.tgz#c04704ef8f498b153130018993e56309d4698080"
+  integrity sha1-wEcE749JixUxMAGJk+VjCdRpgIA=
+  dependencies:
+    de-indent "^1.0.2"
+    he "^1.1.0"
+
+vue-template-es2015-compiler@^1.9.0:
+  version "1.9.1"
+  resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/vue-template-es2015-compiler/download/vue-template-es2015-compiler-1.9.1.tgz#1ee3bc9a16ecbf5118be334bb15f9c46f82f5825"
+  integrity sha1-HuO8mhbsv1EYvjNLsV+cRvgvWCU=
 
 watchpack-chokidar2@^2.0.0:
   version "2.0.0"
@@ -6688,7 +7198,18 @@ webpack-cli@^3.3.11:
     v8-compile-cache "2.0.3"
     yargs "13.2.4"
 
-webpack-dev-middleware@^3.7.2:
+webpack-dev-middleware@1.12.0:
+  version "1.12.0"
+  resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/webpack-dev-middleware/download/webpack-dev-middleware-1.12.0.tgz#d34efefb2edda7e1d3b5dbe07289513219651709"
+  integrity sha1-007++y7dp+HTtdvgcolRMhllFwk=
+  dependencies:
+    memory-fs "~0.4.1"
+    mime "^1.3.4"
+    path-is-absolute "^1.0.0"
+    range-parser "^1.0.3"
+    time-stamp "^2.0.0"
+
+webpack-dev-middleware@^3.0.0, webpack-dev-middleware@^3.7.2:
   version "3.7.2"
   resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/webpack-dev-middleware/download/webpack-dev-middleware-3.7.2.tgz#0019c3db716e3fa5cecbf64f2ab88a74bab331f3"
   integrity sha1-ABnD23FuP6XOy/ZPKriKdLqzMfM=
@@ -6738,6 +7259,50 @@ webpack-dev-server@^3.11.0:
     ws "^6.2.1"
     yargs "^13.3.2"
 
+webpack-hot-client@^4.1.0:
+  version "4.1.2"
+  resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/webpack-hot-client/download/webpack-hot-client-4.1.2.tgz#3088c5533e021dd579fce8428235955248ed6a6c"
+  integrity sha1-MIjFUz4CHdV5/OhCgjWVUkjtamw=
+  dependencies:
+    "@webpack-contrib/schema-utils" "^1.0.0-beta.0"
+    json-stringify-safe "^5.0.1"
+    loglevelnext "^1.0.2"
+    merge-options "^1.0.1"
+    strip-ansi "^4.0.0"
+    uuid "^3.1.0"
+    webpack-log "^1.1.1"
+    ws "^4.0.0"
+
+webpack-hot-middleware@2.18.2:
+  version "2.18.2"
+  resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/webpack-hot-middleware/download/webpack-hot-middleware-2.18.2.tgz#84dee643f037c3d59c9de142548430371aa8d3b2"
+  integrity sha1-hN7mQ/A3w9WcneFCVIQwNxqo07I=
+  dependencies:
+    ansi-html "0.0.7"
+    html-entities "^1.2.0"
+    querystring "^0.2.0"
+    strip-ansi "^3.0.0"
+
+webpack-hot-middleware@^2.25.0:
+  version "2.25.0"
+  resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/webpack-hot-middleware/download/webpack-hot-middleware-2.25.0.tgz#4528a0a63ec37f8f8ef565cf9e534d57d09fe706"
+  integrity sha1-RSigpj7Df4+O9WXPnlNNV9Cf5wY=
+  dependencies:
+    ansi-html "0.0.7"
+    html-entities "^1.2.0"
+    querystring "^0.2.0"
+    strip-ansi "^3.0.0"
+
+webpack-log@^1.1.1, webpack-log@^1.1.2:
+  version "1.2.0"
+  resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/webpack-log/download/webpack-log-1.2.0.tgz#a4b34cda6b22b518dbb0ab32e567962d5c72a43d"
+  integrity sha1-pLNM2msitRjbsKsy5WeWLVxypD0=
+  dependencies:
+    chalk "^2.1.0"
+    log-symbols "^2.1.0"
+    loglevelnext "^1.0.1"
+    uuid "^3.1.0"
+
 webpack-log@^2.0.0:
   version "2.0.0"
   resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/webpack-log/download/webpack-log-2.0.0.tgz#5b7928e0637593f119d32f6227c1e0ac31e1b47f"
@@ -6752,6 +7317,11 @@ webpack-merge@^4.2.2:
   integrity sha1-onxS6ng9E5iv0gh/VH17nS9DY00=
   dependencies:
     lodash "^4.17.15"
+
+webpack-node-externals@^1.7.2:
+  version "1.7.2"
+  resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/webpack-node-externals/download/webpack-node-externals-1.7.2.tgz#6e1ee79ac67c070402ba700ef033a9b8d52ac4e3"
+  integrity sha1-bh7nmsZ8BwQCunAO8DOpuNUqxOM=
 
 webpack-sources@^1.1.0, webpack-sources@^1.4.0, webpack-sources@^1.4.1:
   version "1.4.3"
@@ -6844,6 +7414,14 @@ wrappy@1:
   resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/wrappy/download/wrappy-1.0.2.tgz#b5243d8f3ec1aa35f1364605bc0d1036e30ab69f"
   integrity sha1-tSQ9jz7BqjXxNkYFvA0QNuMKtp8=
 
+ws@^4.0.0:
+  version "4.1.0"
+  resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/ws/download/ws-4.1.0.tgz#a979b5d7d4da68bf54efe0408967c324869a7289"
+  integrity sha1-qXm119TaaL9U7+BAiWfDJIaacok=
+  dependencies:
+    async-limiter "~1.0.0"
+    safe-buffer "~5.1.0"
+
 ws@^6.2.1:
   version "6.2.1"
   resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/ws/download/ws-6.2.1.tgz#442fdf0a47ed64f59b6a5d8ff130f4748ed524fb"
@@ -6872,6 +7450,11 @@ y18n@^4.0.0:
   version "4.0.0"
   resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/y18n/download/y18n-4.0.0.tgz#95ef94f85ecc81d007c264e190a120f0a3c8566b"
   integrity sha1-le+U+F7MgdAHwmThkKEg8KPIVms=
+
+yallist@^2.1.2:
+  version "2.1.2"
+  resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/yallist/download/yallist-2.1.2.tgz#1c11f9218f076089a47dd512f93c6699a6a81d52"
+  integrity sha1-HBH5IY8HYImkfdUS+TxmmaaoHVI=
 
 yallist@^3.0.2:
   version "3.1.1"
@@ -6918,3 +7501,8 @@ yargs@^13.3.2:
     which-module "^2.0.0"
     y18n "^4.0.0"
     yargs-parser "^13.1.2"
+
+ylru@^1.2.0:
+  version "1.2.1"
+  resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/ylru/download/ylru-1.2.1.tgz#f576b63341547989c1de7ba288760923b27fe84f"
+  integrity sha1-9Xa2M0FUeYnB3nuiiHYJI7J/6E8=
