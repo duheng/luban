@@ -25,10 +25,13 @@ const formatConfig = (config) => {
 }
 
 const config = formatConfig(__config)
-const compile = Webpack(config);
-const middleware = await koaWebpack({ compile });
+const compiler = Webpack(config);
+// const middleware =  koaWebpack({ config });
 
-app.use(middleware)
+app.use(async (ctx, next) => {
+  await koaWebpack({ compiler });
+  next()
+})
 //
 // app.use(
 //   devMiddleware(compile, {
