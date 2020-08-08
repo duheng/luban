@@ -27,7 +27,7 @@ module.exports = async (options) => {
   } else {
     try {
       if (!fs.existsSync(path.join(CWD, config.build, config.dll))) {
-      await require('./dll')(options)
+         await require('./dll')(options)
         }
     } catch (e) {
       console.log('打包dll失败：',e)

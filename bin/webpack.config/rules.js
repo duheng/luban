@@ -1,6 +1,8 @@
 const path = require('path')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const { config } = require('../utils/common')
+const CWD = process.cwd()
+
 const devMode = process.env.NODE_ENV !== 'production';
 //const devMode = true
 //process.env.NODE_ENV = 'development'
@@ -43,8 +45,15 @@ const rules = {
                     // }
                 },
                 {
+                    loader: require.resolve('cache-loader'),
+                    options:{
+                      cacheDirectory:path.resolve(CWD, '.cache-loader')
+                    }
+                },
+                {
                     loader: require.resolve('babel-loader'),
                     options: {
+                        cacheDirectory: true,
                         babelrc: false,
                         configFile: path.resolve(__dirname, '.babelrc.js')
                     }

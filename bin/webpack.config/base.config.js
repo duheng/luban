@@ -27,7 +27,8 @@ const plugins = (config) => {
        new webpack.ProvidePlugin({
           React: 'react',
        }),
-       new VueLoaderPlugin()
+       new VueLoaderPlugin(),
+       new webpack.optimize.ModuleConcatenationPlugin()
     ]
 
     if(!!config.library && Object.keys(config.library).length > 0) {
@@ -68,7 +69,38 @@ const webpackConfig = config => {
       modules: [path.resolve(__dirname, '..', '..', 'node_modules')],
       moduleExtensions: ['-loader'],
     },
-    plugins: plugins(config)
+    plugins: plugins(config),
+    optimization: {
+        // runtimeChunk: {
+        //     name: 'runtime'
+        // },
+        splitChunks: {
+            minSize: 1,
+            maxAsyncRequests: 100000,
+            maxInitialRequests: 100000,
+            cacheGroups: {
+                default: false,
+                vendors: false
+            }
+        },
+        // 用模块路劲名字作为webpack的模块名
+        namedModules: true,
+        minimize: false,
+        // https://github.com/webpack-contrib/terser-webpack-plugin#terseroptions
+        minimizer: [
+            process.env.NODE_ENV === 'production' ? new TerserPlugin({
+                cache: true,
+                // cache: path.resolve(__dirname, 'ugCache'),
+                parallel: true,
+                extractComments: true, // 提取license文件
+                terserOptions: {// https://github.com/webpack-contrib/terser-webpack-plugin#terseroptions
+                    // mangle: true, // Note `mangle.properties` is `false` by default.
+                    // ie8: true,
+                    // safari10: false,
+                }
+            }) : null
+        ].filter(Boolean)
+    }
   }
 }
 module.exports = webpackConfig
