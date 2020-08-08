@@ -42,6 +42,9 @@ const filterFile = (dir, pattern) => {
 
 const getEntry = () => {
   const __config = getConfig()
+  if(typeof(__config.entry) != 'object') {
+    throw new Error('entry必须object类型\n 例如："entry": {"main":"./src/pages/index.js"}\r\n')
+  }
   if(Object.keys(__config.entry).length > 0) {
     return __config.entry
   } else {
@@ -64,6 +67,7 @@ const getEntry = () => {
             __entry[loadPageDir[i]] = `./${__config.base}/${__config.pages}/${loadPageDir[i]}/index.js`
         }
     }
+    consolelog('__entry++++',__entry)
     return __entry
   }
 }
