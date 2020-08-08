@@ -37,7 +37,10 @@ const rules = {
             exclude: /node_modules/,
             use: [
                 {
-                    loader: require.resolve('thread-loader')
+                    loader: require.resolve('thread-loader'),
+                    // options: {
+                    //   workers: 4
+                    // }
                 },
                 {
                     loader: require.resolve('babel-loader'),
