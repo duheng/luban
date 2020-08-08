@@ -1,4 +1,5 @@
 const path = require('path')
+const fs = require('fs')
 const Webpack = require('webpack');
 const { devMiddleware, hotMiddleware } = require('koa-webpack-middleware')
 const __config = require('../webpack.config/development.client.config')();
@@ -13,7 +14,13 @@ const formatConfig = (config) => {
   if(typeof(__entry) != 'object') {
     throw new Error('entry必须object类型\n 例如："entry": {"main":"./src/pages/index.js"}\r\n')
   }
+
   for(let i in __entry){
+    const __entryFile= String(fs.readFileSync(path.resolve(__entry[i])))
+    if(!/\bmodule.hot\b/.test(__entryFile)){
+      console.log('\n系统检测到入口文件缺少热更新必须的module.hot，系统已为您自动添加\n')
+      fs.appendFileSync(path.resolve(__entry[i]), ';if (module.hot) {module.hot.accept()};')
+    }
     __entryNew[i] = [__entry[i],'webpack-hot-middleware/client?reload=false&path=/__webpack_hmr&timeout=20000']
   }
   __config.entry = __entryNew
@@ -35,9 +42,11 @@ const indexHtml = (url) => { // 页面重定向匹配
 const config = formatConfig(__config)
 const compile = Webpack(config);
 
+
 app.use(
   devMiddleware(compile, {
     noInfo: false,
+    hot:false,
     publicPath: config.output.publicPath,
     stats: {
       colors: true,

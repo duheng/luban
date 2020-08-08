@@ -36,7 +36,7 @@ const rules = {
             test: /\.(js|jsx|ts|tsx)$/,
             exclude: /node_modules/,
             use: [
-               {
+                {
                     loader: require.resolve('thread-loader')
                 },
                 {
@@ -45,7 +45,7 @@ const rules = {
                         babelrc: false,
                         configFile: path.resolve(__dirname, '.babelrc.js')
                     }
-                }
+                 }
             ].filter(Boolean)
         }
   },
