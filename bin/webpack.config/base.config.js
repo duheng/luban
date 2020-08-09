@@ -21,7 +21,7 @@ const plugins = (config) => {
   let __plugins = [
     new SimpleProgressWebpackPlugin(),
     new CleanWebpackPlugin({
-      verbose: true,
+      verbose: false,
       cleanOnceBeforeBuildPatterns: ["**/*", "!dll", "!dll/**/*"],
     }),
     new webpack.DefinePlugin({
