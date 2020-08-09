@@ -1,6 +1,4 @@
 const webpack = require("webpack");
-const ProgressBarPlugin = require("progress-bar-webpack-plugin");
-const WebpackBar = require("webpackbar");
 const TerserPlugin = require("terser-webpack-plugin");
 const TransferWebpackPlugin = require("transfer-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
