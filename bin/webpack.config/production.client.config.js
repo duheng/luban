@@ -1,62 +1,58 @@
-const webpack = require('webpack')
-const merge = require('webpack-merge')
-const path = require('path')
-const MiniCssExtractPlugin = require('mini-css-extract-plugin')
-const baseConfig = require('./base.config')
-const CreatVersionPlugin = require('../plugins/creat-version-plugin')
-const CreatHtmlPlugin = require('../plugins/creat-html-plugin')
-const { config } = require('../utils/common')
-let __baseConfig = baseConfig(config)
-const CWD = process.cwd()
+const webpack = require("webpack");
+const merge = require("webpack-merge");
+const path = require("path");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const baseConfig = require("./base.config");
+const CreatVersionPlugin = require("../plugins/creat-version-plugin");
+const CreatHtmlPlugin = require("../plugins/creat-html-plugin");
+const { config } = require("../utils/common");
+let __baseConfig = baseConfig(config);
+const CWD = process.cwd();
 
-const buildPath =  path.resolve(CWD, config.build)
+const buildPath = path.resolve(CWD, config.build);
 
-const jsName  = 'js/[name]@[chunkhash].js'
-const cssName = 'css/[name]@[chunkhash].css'
+const jsName = "js/[name]@[chunkhash].js";
+const cssName = "css/[name]@[chunkhash].css";
 
-
-__baseConfig.module.rules.map(item => {
+__baseConfig.module.rules.map((item) => {
   if (/css|sass|less/.test(item.use)) {
-    item.use.shift()
+    item.use.shift();
     item.use = {
-        loader: MiniCssExtractPlugin.loader,
-        options: {
-            hmr: true
-        }
-    }
+      loader: MiniCssExtractPlugin.loader,
+      options: {
+        hmr: true,
+      },
+    };
   }
-})
+});
 
 const plugins = [
   new MiniCssExtractPlugin({
-      // Options similar to the same options in webpackOptions.output
-      // all options are optional
-      // filename: 'f_[name].css',
-      filename: cssName,
-      chunkFilename: cssName,
-      ignoreOrder: true // Enable to remove warnings about conflicting order
+    // Options similar to the same options in webpackOptions.output
+    // all options are optional
+    // filename: 'f_[name].css',
+    filename: cssName,
+    chunkFilename: cssName,
+    ignoreOrder: true, // Enable to remove warnings about conflicting order
   }),
   new webpack.HashedModuleIdsPlugin(),
   new CreatVersionPlugin(),
-  ...CreatHtmlPlugin('production',__baseConfig)
-]
-
-
-
+  ...CreatHtmlPlugin("production", __baseConfig),
+];
 
 module.exports = () => {
   return merge(__baseConfig, {
     output: {
       path: buildPath,
       publicPath: config.static[process.env.MODE],
-      chunkFilename: 'js/[name]-[chunkhash:8].js',
-      filename: jsName
+      chunkFilename: "js/[name]-[chunkhash:8].js",
+      filename: jsName,
     },
-    mode: 'production',
-    devtool: 'source-map',
+    mode: "production",
+    devtool: "source-map",
     plugins,
     performance: {
       hints: false,
-    }
-  })
-}
+    },
+  });
+};
