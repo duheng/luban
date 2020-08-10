@@ -3885,7 +3885,7 @@ koa@^2.13.0:
     type-is "^1.6.16"
     vary "^1.1.2"
 
-less-loader@^6.1.0:
+less-loader@^6.2.0:
   version "6.2.0"
   resolved "https://repo.corp.qunar.com/artifactory/api/npm/npm-qunar/less-loader/download/less-loader-6.2.0.tgz#8b26f621c155b342eefc24f5bd6e9dc40c42a719"
   integrity sha1-iyb2IcFVs0Lu/CT1vW6dxAxCpxk=
