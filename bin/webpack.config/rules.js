@@ -89,6 +89,11 @@ const rules = {
         ...common_css_rule,
         {
           loader: require.resolve("less-loader"),
+          options: {
+            lessOptions: {
+              javascriptEnabled: true,
+            },
+          },
         },
       ].filter(Boolean),
     };
