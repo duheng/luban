@@ -27,12 +27,8 @@ const askProductName = async () => {
         }
     ])
     if(__productName) {
-        if(!__productName.name){
-            console.log('项目名称不能为空')
-            exit(1)
-        }
       return __productName.name
-    } else {
+    } else {  
       console.log('askProductName函数出错')
     }
 }
@@ -43,7 +39,6 @@ const askReplayDir = async (target_name) => {
             type:"confirm",
             message:`检测到您的目录已存在${target_name}文件夹，是否替换:`,
             name:"replay",
-         
         }
     ])
     if(__isReplayDir) {

@@ -66,11 +66,11 @@ const installPackage = (pakDir) => {
 }
 
 module.exports = async (options) => {
-      
-      const __isCur = await askCurrentDir()
-      const __name = __isCur ? CWD.split('/').pop() : await askProductName()
-       // 是否已存在项目
-      if(fs.existsSync(`${CWD}/${__name}`)) {
+      const __name = await askProductName() || ''       // 如果没有输入项目名则用当前所在文件夹名
+      const __distName = `${CWD}/${__name}`
+      const __existDir = fs.existsSync(__distName)      // 是否已存在项目
+
+      if(__existDir && !!__name ) { // 已存在，并且输入了文件名的时候需要走这个逻辑，没有输入文件名默认在当前文件夹创建，此时当前文件夹名就是项目名
         const __isreplay = await askReplayDir(__name)
         if(!__isreplay) {
           console.log('好的，请重新创建并设置一个项目名称')
@@ -83,19 +83,13 @@ module.exports = async (options) => {
       spinner.start()
        // 下载对应模版
       pullTmpl(__selectTmpl)
-
-     
        // 拷贝模版到业务目录
       const __source = `${tmplDir}/tmpl_${__selectTmpl}/*`
       try {
-        if(__isCur) {
-          cp('-Rf',__source,`${CWD}`) 
-        }else {
-          mkdir('-p',`${CWD}/${__name}`)
-          cp('-Rf',__source,`${CWD}/${__name}`)
-        }
+        !__existDir && mkdir('-p',__distName)
+        cp('-Rf',__source,__distName)
         spinner.succeed(`项目 ${__name} 已创建\r`)
-        installPackage(__isCur ? CWD : `${CWD}/${__name}`)
+        installPackage(__distName)
       }catch(err) {
         spinner.fail(`项目 ${__name} 已创建失败\r\n${err}`)
       }
