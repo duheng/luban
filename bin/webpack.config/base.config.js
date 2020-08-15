@@ -4,7 +4,7 @@ const TransferWebpackPlugin = require("transfer-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const AddAssetHtmlPlugin = require("add-asset-html-webpack-plugin");
 const VueLoaderPlugin = require("vue-loader/lib/plugin");
-const SimpleProgressWebpackPlugin = require("simple-progress-webpack-plugin");
+const FormatProgressPlugin = require("../plugins/format-progress-plugin");
 
 const fs = require("fs");
 const path = require("path");
@@ -19,7 +19,7 @@ const {
 const rules = require("./rules");
 const plugins = (config) => {
   let __plugins = [
-    new SimpleProgressWebpackPlugin(),
+    new webpack.ProgressPlugin(FormatProgressPlugin),
     new CleanWebpackPlugin({
       verbose: false,
       cleanOnceBeforeBuildPatterns: ["**/*", "!dll", "!dll/**/*"],
