@@ -16,6 +16,7 @@ const getTemplate = () => {
   if (fs.existsSync(__path)) {
     templ = fs.readFileSync(__path, "utf8");
   } else {
+    console.log('没有在您的项目中加载到模版文件，将使用默认模版')
     templ = fs.readFileSync(
       path.join(__dirname, "..", "config", "template.html"),
       "utf8"
@@ -65,7 +66,7 @@ const getEntry = () => {
 
     const loadPageDir = fs.readdirSync(pageDir);
     let __entry = {};
-    for (let i = 0; i < loadPageDir.length; i++) {
+    for (let i = 0; i < loadPageDir.length; i++) { // 如果没有配置entry字段，则以pages下具体页面文件夹下index.js为入口页面，可能是多个入口页面
       const __pageDirItem = path.join(pageDir, loadPageDir[i]);
       if (fs.statSync(__pageDirItem).isDirectory()) {
         __entry[
@@ -73,7 +74,6 @@ const getEntry = () => {
         ] = `./${__config.base}/${__config.pages}/${loadPageDir[i]}/index.js`;
       }
     }
-    consolelog("__entry++++", __entry);
     return __entry;
   }
 };

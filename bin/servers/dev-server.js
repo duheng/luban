@@ -66,7 +66,7 @@ const compile = Webpack(config);
 app.use(
   devMiddleware(compile, {
     noInfo: false,
-    hot: false,
+    hot: true,
     publicPath: config.output.publicPath,
     stats: {
       colors: true,

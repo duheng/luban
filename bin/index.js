@@ -3,6 +3,22 @@
 const commander = require("commander");
 const packages = require("../package.json");
 
+const printLogo = () => {
+  console.log(
+    '\n\n\n',
+    [
+      '    ████             █████ ',
+      '   ░░███            ░░███   ',
+      '    ░███  █████ ████ ░███████   ██████   ████████  ',
+      '    ░███ ░░███ ░███  ░███░░███ ░░░░░███ ░░███░░███ ',
+      '    ░███  ░███ ░███  ░███ ░███  ███████  ░███ ░███ ',
+      '    ░███  ░███ ░███  ░███ ░███ ███░░███  ░███ ░███ ',
+      '    █████ ░░████████ ████████ ░░████████ ████ █████',
+      '   ░░░░░   ░░░░░░░░ ░░░░░░░░   ░░░░░░░░ ░░░░ ░░░░░ ',
+    ].join('\n'),
+    '\n\n\n',
+  )
+}
 commander.version(packages.version);
 
 commander
@@ -18,21 +34,24 @@ commander
   .description("打包💼")
   .option("-p --prod", "打包线上版本")
   .option("-m --min", "压缩优化")
-  .option("-n --node", "打包node server工程")
+  .option("-n --node", "打包node serve工程")
   .allowUnknownOption()
   .action(async (options) => {
+    printLogo()
     await require("./commands/pack")(options);
   });
 
 commander
   .command("server")
   .description("本地开发服务🐆")
+  .option("-s --static", "打包线上版本")
   .allowUnknownOption()
   .action(async (options) => {
     try {
+      printLogo()
       await require("./commands/server")(options);
     } catch (err) {
-      console.log("启动server失败 \r\n", err);
+      console.log("启动serve失败 \r\n", err);
     }
   });
 
@@ -42,6 +61,7 @@ commander
   .allowUnknownOption()
   .action(async (options) => {
     try {
+      printLogo()
       await require("./commands/dll")(options);
     } catch (err) {
       console.log("dll打包失败\r\n", err);

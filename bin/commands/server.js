@@ -8,12 +8,18 @@ const { config } = require("../utils/common");
 module.exports = async (options) => {
     process.env.NODE_ENV = "development";
     process.env.MODE = "development";
-    try {
-        if (!fs.existsSync(path.join(CWD, config.build, config.dll))) {
-            await require("./dll")(options);
+
+    if(!options.static) {
+        try {
+            if (!fs.existsSync(path.join(CWD, config.build, config.dll))) {
+                await require("./dll")(options);
+            }
+        } catch (e) {
+            console.log("打包dll失败：", e);
         }
-    } catch (e) {
-        console.log("打包dll失败：", e);
+        await require("../servers/dev-server");
+    } else {
+        await require("../servers/static-server");
     }
-    await require("../dev.server");
+    
 };

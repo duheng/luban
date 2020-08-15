@@ -61,7 +61,6 @@ const plugins = (config) => {
   return __plugins;
 };
 const webpackConfig = (config) => {
-  console.log("alias---", genAlias(path.join(CWD, config.base), config));
   return {
     context: path.join(CWD),
     entry: entry,
