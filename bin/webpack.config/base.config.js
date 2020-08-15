@@ -1,6 +1,6 @@
 const webpack = require("webpack");
 const TerserPlugin = require("terser-webpack-plugin");
-const TransferWebpackPlugin = require("transfer-webpack-plugin");
+const CopyWebpackPlugin = require("copy-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const AddAssetHtmlPlugin = require("add-asset-html-webpack-plugin");
 const VueLoaderPlugin = require("vue-loader/lib/plugin");
@@ -47,15 +47,14 @@ const plugins = (config) => {
 
   if (fs.existsSync(__assetsDir) && fs.statSync(__assetsDir).isDirectory()) {
     __plugins.push(
-      new TransferWebpackPlugin(
-        [
+      new CopyWebpackPlugin({
+        patterns: [
           {
             from: __assetsDir,
-            to: config.assets || "assets",
-          },
-        ],
-        path.resolve(CWD)
-      )
+            to: config.assets || "assets"
+          }
+        ]
+      })
     );
   }
   return __plugins;
