@@ -51,7 +51,7 @@ const plugins = (config) => {
         [
           {
             from: __assetsDir,
-            to: path.resolve(config.assets || "assets"),
+            to: config.assets || "assets",
           },
         ],
         path.resolve(CWD)

@@ -40,6 +40,6 @@ app.use(
   }
 );
 
-app.listen(3000, () => {
-  console.log("app listening on port 3000!\n");
+app.listen(config.port, () => {
+  console.log(`🌍 start service at http://${config.host}:${config.port}\n`);
 });
