@@ -2,11 +2,11 @@
 
 const commander = require("commander");
 const packages = require("../package.json");
-
+const chalk = require('chalk');
 const printLogo = () => {
   console.log(
     '\n\n\n',
-    [
+    chalk.hex('5bc2e7').bold([
       '    ████             █████ ',
       '   ░░███            ░░███   ',
       '    ░███  █████ ████ ░███████   ██████   ████████  ',
@@ -15,7 +15,8 @@ const printLogo = () => {
       '    ░███  ░███ ░███  ░███ ░███ ███░░███  ░███ ░███ ',
       '    █████ ░░████████ ████████ ░░████████ ████ █████',
       '   ░░░░░   ░░░░░░░░ ░░░░░░░░   ░░░░░░░░ ░░░░ ░░░░░ ',
-    ].join('\n'),
+    ].join('\n'))
+    ,
     '\n\n\n',
   )
 }

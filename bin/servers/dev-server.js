@@ -79,7 +79,7 @@ app.use(
 app.use(hotMiddleware(compile));
 
 app.use(
-  //重定向到首页，
+  //重定向到首页
   async (ctx, next) => {
     const __indexHtml = indexHtml(ctx.url);
     const filename = path.join(compile.outputPath, __indexHtml);
