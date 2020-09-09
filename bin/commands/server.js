@@ -17,9 +17,9 @@ module.exports = async (options) => {
         } catch (e) {
             console.log("打包dll失败：", e);
         }
-        await require("../servers/dev-server");
+        await require("../servers/dev-server")(config);
     } else {
         await require("../servers/static-server");
     }
-    
+
 };

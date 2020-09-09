@@ -1,5 +1,6 @@
 const path = require("path");
 const fs = require("fs");
+const proxy = require('koa-proxies');
 const Webpack = require("webpack");
 const { devMiddleware, hotMiddleware } = require("koa-webpack-middleware");
 const __config = require("../webpack.config/development.client.config")();
@@ -63,41 +64,60 @@ const indexHtml = (url) => {
 const config = formatConfig(__config);
 const compile = Webpack(config);
 
-app.use(
-  devMiddleware(compile, {
-    noInfo: false,
-    hot: true,
-    publicPath: config.output.publicPath,
-    stats: {
-      colors: true,
-      cached: true,
-      exclude: [/node_modules[\\\/]/],
-    },
-  })
-);
+module.exports = (targetConfig) => {
 
-app.use(hotMiddleware(compile));
-
-app.use(
-  //重定向到首页
-  async (ctx, next) => {
-    const __indexHtml = indexHtml(ctx.url);
-    const filename = path.join(compile.outputPath, __indexHtml);
-    const htmlFile = await new Promise(function(resolve, reject) {
-      compile.outputFileSystem.readFile(filename, (err, result) => {
-        if (err) {
-          reject(err);
-        } else {
-          resolve(result);
-        }
-      });
-    });
-    ctx.type = "html";
-    ctx.body = htmlFile;
-    await next();
+  const __proxy = targetConfig.proxy
+  if(__proxy && __proxy.length > 0) {
+    console.log(`[luban] 已为您初始化以下 ${__proxy.length} 个代理 \n`)
+    __proxy.map(item=>{
+      console.log(`${item.path} -> ${item.target}/${item.path}\n`)
+      app.use(
+        proxy(item.path, {
+          target: item.target,
+          changeOrigin: true,
+          rewrite: path,
+          logs: true,
+        }),
+      )
+    })
   }
-);
 
-app.listen(3000, () => {
-  console.log("Example app listening om port 3000!\n");
-});
+  app.use(
+    devMiddleware(compile, {
+      noInfo: false,
+      hot: true,
+      publicPath: config.output.publicPath,
+      stats: {
+        colors: true,
+        cached: true,
+        exclude: [/node_modules[\\\/]/],
+      },
+    })
+  );
+
+  app.use(hotMiddleware(compile));
+
+  app.use(
+    //重定向到首页
+    async (ctx, next) => {
+      const __indexHtml = indexHtml(ctx.url);
+      const filename = path.join(compile.outputPath, __indexHtml);
+      const htmlFile = await new Promise(function(resolve, reject) {
+        compile.outputFileSystem.readFile(filename, (err, result) => {
+          if (err) {
+            reject(err);
+          } else {
+            resolve(result);
+          }
+        });
+      });
+      ctx.type = "html";
+      ctx.body = htmlFile;
+      await next();
+    }
+  );
+
+  app.listen(targetConfig.port, () => {
+    console.log(`🌍 start service at http://${targetConfig.host}:${targetConfig.port}\n`);
+  });
+}
