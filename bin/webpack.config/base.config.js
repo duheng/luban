@@ -26,11 +26,10 @@ const plugins = (config) => {
     }),
     new webpack.DefinePlugin({
       "process.env": {
-        MODE: JSON.stringify(process.env.MODE),
         NODE_ENV: JSON.stringify(process.env.NODE_ENV),
       },
-      API: JSON.stringify(config.api[process.env.MODE]),
-      STATIC: JSON.stringify(config.static[process.env.MODE]),
+      API: JSON.stringify(config.api[process.env.NODE_ENV]),
+      STATIC: JSON.stringify(config.static[process.env.NODE_ENV]),
     }),
     new webpack.ProvidePlugin({
       React: "react",

@@ -44,7 +44,6 @@ module.exports = async (options) => {
   let webpackConfig = webpackDev;
   if (options.node) {
     process.env.NODE_ENV = "development";
-    process.env.MODE = "development";
     webpackConfig = webpackServer;
   } else {
     try {
@@ -58,11 +57,9 @@ module.exports = async (options) => {
     if (options.prod) {
       //生产环境
       process.env.NODE_ENV = "production";
-      process.env.MODE = "production";
       webpackConfig = webpackProd;
     } else {
       process.env.NODE_ENV = "development";
-      process.env.MODE = "development";
       webpackConfig = webpackDev;
     }
   }

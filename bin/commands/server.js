@@ -7,8 +7,6 @@ const { config } = require("../utils/common");
 
 module.exports = async (options) => {
     process.env.NODE_ENV = "development";
-    process.env.MODE = "development";
-
     if(!options.static) {
         try {
             if (!fs.existsSync(path.join(CWD, config.build, config.dll))) {
