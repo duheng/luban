@@ -4,34 +4,27 @@ module.exports = {
   "platform": "react",
   "ui_plug":"antd",
   "base": "src",
-  "build": "dist",
+  "build": "prd",
   "dll": "dll",
-  "server": "", 
   "static": {
     "development": "",
-    "production": "//api.luban.com/"
+    "production": "//q.qunarzz.com/"
   },
   "api": {
     "development": "",
     "production": "//api.luban.com/"
   },
-  "entry": {},
-  "library": {},
+  "entry": {'main':'./src/pages/index.js'},
+  "library": {
+     "vendor": ['react', 'react-dom']
+  },
   "alias": {},
   "devtool": "source-map",
   "css_modules": false,
-  "template": {
-    "title": "鲁班",
-    "keywords": "后裔",
-    "description": "",
-    "viewport": "",
-    "favicon": "",
-    "path": "template.html"
-  },
+  "proxy": [],
   "pages": "pages",
   "components": "components",
   "scss": "scss",
-  "cpmode": "react",
   "assets": "assets",
   "base64_image_limit": 10240
 }

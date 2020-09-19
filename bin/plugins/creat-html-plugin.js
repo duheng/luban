@@ -6,9 +6,7 @@ const HtmlWebpackPluginItem = (name, getTemplate) => {
     inject: false, // 禁用自动注入
     filename: `${name}.html`,
     chunks: [`${name}`],
-    templateContent: ({ htmlWebpackPlugin }) => {
-      return tmpl(`${getTemplate()}`, htmlWebpackPlugin);
-    },
+    templateContent: ({ htmlWebpackPlugin }) =>  tmpl(`${getTemplate()}`, htmlWebpackPlugin),
   });
 };
 
