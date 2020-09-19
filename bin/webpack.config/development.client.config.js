@@ -3,7 +3,7 @@ const merge = require("webpack-merge");
 const path = require("path");
 const baseConfig = require("./base.config");
 const CreatHtmlPlugin = require("../plugins/creat-html-plugin");
-const { config } = require("../utils/common");
+const { config, getTemplate } = require("../utils/common");
 const __baseConfig = baseConfig(config);
 const CWD = process.cwd();
 
@@ -15,7 +15,7 @@ const cssName = "css/[name]@dev.css";
 
 const plugins = () => {
   let __plugins = [
-    ...CreatHtmlPlugin("development", __baseConfig),
+    ...CreatHtmlPlugin("development", __baseConfig, getTemplate),
     new webpack.HotModuleReplacementPlugin(),
   ];
   return __plugins;

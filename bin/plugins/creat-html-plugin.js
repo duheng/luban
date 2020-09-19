@@ -1,13 +1,7 @@
-const path = require("path");
-const fs = require("fs");
-const shell = require("shelljs");
-const child_process = require("child_process");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const tmpl = require("blueimp-tmpl");
-const { getTemplate } = require("../utils/common");
-const nameReg = /^([^\@]*)\@([^\.]+)(\.(js|css))$/;
 
-const HtmlWebpackPluginItem = (name) => {
+const HtmlWebpackPluginItem = (name, getTemplate) => {
   const temp = getTemplate();
   return new HtmlWebpackPlugin({
     inject: false, // 禁用自动注入
@@ -19,12 +13,12 @@ const HtmlWebpackPluginItem = (name) => {
   });
 };
 
-const CreatHtmlPlugin = (mode, config) => {
+const CreatHtmlPlugin = (mode, config, getTemplate) => {
   let __htmlPlugin = [];
 
   if (!!Object.keys(config.entry) && Object.keys(config.entry).length > 0) {
     for (let name in config.entry) {
-      __htmlPlugin.push(HtmlWebpackPluginItem(name));
+      __htmlPlugin.push(HtmlWebpackPluginItem(name, getTemplate));
     }
   } else {
     console.error("creat-html-plugin没有找到入口");
