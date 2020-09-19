@@ -36,7 +36,7 @@ const plugins = [
     ignoreOrder: true, // Enable to remove warnings about conflicting order
   }),
   new webpack.HashedModuleIdsPlugin(),
-  new CreatVersionPlugin(),
+  new CreatVersionPlugin(config),
   ...CreatHtmlPlugin("production", __baseConfig),
 ];
 
