@@ -1,6 +1,6 @@
 require('shelljs/global')
 const inquirer = require('inquirer')
-
+const { printLog } = require('./common')
 const askCurrentDir = async () => {
     const __isCurrentDir = await inquirer.prompt([
         {
@@ -13,7 +13,7 @@ const askCurrentDir = async () => {
     if(__isCurrentDir) {
       return __isCurrentDir.iscur
     } else {
-      console.log('askCurrentDir函数出错')
+      printLog({type:'error',text:'askCurrentDir函数出错'})
     }
 }
 
@@ -29,7 +29,7 @@ const askProductName = async () => {
     if(__productName) {
       return __productName.name
     } else {  
-      console.log('askProductName函数出错')
+      printLog({type:'error',text:'askProductName函数出错'})
     }
 }
 
@@ -44,7 +44,7 @@ const askReplayDir = async (target_name) => {
     if(__isReplayDir) {
       return __isReplayDir.replay
     } else {
-      console.log('askReplayDir函数出错')
+      printLog({type:'error',text:'askReplayDir函数出错'})
     }
 }
 
@@ -85,7 +85,7 @@ const selectTmpl = async () => {
     if(__tmpl) {
       return __tmpl.tmpl
     } else {
-      console.log('selectTmpl出错')
+      printLog({type:'error',text:'selectTmpl出错'})
     }
   }
 

@@ -4,11 +4,38 @@ const fs = require("fs");
 const confman = require("confman");
 const CWD = process.cwd();
 const name = "luban";
+const chalk = require('chalk');
+const printLog = ({name = '', type='default', text = ''}) => {
+  const __color = {
+    default: {
+      title: '5bc2e7',
+      text: '70dfdf'
+    },
+    error: {
+      title: '800080',
+      text: '9932CC'
+    }
+  }
+  const __nameStyle = chalk.hex(__color[type].title).bold
+  const __textStyle = chalk.hex(__color[type].text).bold
+  const __name = name || getUtilName()
+  console.log(__nameStyle(`[${__name}]`),__textStyle(text))
+}
+
+const getUtilName = () => {
+  const __package = confman.load(path.join(__dirname,"..","..","package.json"));
+  return Object.keys(__package.bin)[0]
+}
 
 const getConfig = () => {
-  let configs = confman.load(`${CWD}/${name}`);
-  return configs;
-};
+    const __name = getUtilName()
+    const configs = confman.load(`${CWD}/${__name}`);
+    if(Object.keys(configs).length > 0) {
+      return configs;
+    } else {
+      printLog({type:'error',text:`没有加载到配置文件${__name}.*`})
+    }
+}
 
 const getTemplate = () => {
   const __path = path.join(CWD, "template.html");
@@ -16,14 +43,14 @@ const getTemplate = () => {
   if (fs.existsSync(__path)) {
     templ = fs.readFileSync(__path, "utf8");
   } else {
-    console.log('没有在您的项目中加载到模版文件，将使用默认模版')
+    printLog({text:'没有在您的项目中加载到模版文件，将使用默认模版'})
     templ = fs.readFileSync(
       path.join(__dirname, "..", "config", "template.html"),
       "utf8"
     );
   }
   return templ;
-};
+}
 
 const filterFile = (dir, pattern) => {
   try {
@@ -46,9 +73,7 @@ const filterFile = (dir, pattern) => {
 const getEntry = () => {
   const __config = getConfig();
   if (typeof __config.entry != "object") {
-    throw new Error(
-      'entry必须object类型\n 例如："entry": {"main":"./src/pages/index.js"}\r\n'
-    );
+    return printLog({type:'error',text:'entry必须object类型\n 例如："entry": {"main":"./src/pages/index.js"}\r\n'})
   }
   if (Object.keys(__config.entry).length > 0) {
     return __config.entry;
@@ -56,11 +81,11 @@ const getEntry = () => {
     const pageDir = path.join(CWD, __config.base, __config.pages);
     try {
       if (!fs.existsSync(pageDir)) {
-        console.error(`请设置项目配置文件入口entry字段`);
+        printLog({type:'error',text:'请设置项目配置文件入口entry字段'})
         return {};
       }
     } catch (e) {
-      console.error(`请设置项目配置文件入口entry字段`);
+      printLog({type:'error',text:'请设置项目配置文件入口entry字段'})
       return {};
     }
 
@@ -86,7 +111,7 @@ const dllReferencePlugin = (config) => {
       `${name}[^.]*\\.manifest\\.json`
     );
     if (!__fileName) {
-      console.error(`没有找到${name}对应的dll manifest.json 文件`);
+      printLog({type:'error',text:`没有找到${name}对应的dll manifest.json 文件`})
       return null;
     }
     return new webpack.DllReferencePlugin({
@@ -133,4 +158,5 @@ module.exports = {
   loadDllAssets,
   genAlias,
   getTemplate,
+  printLog,
 };
