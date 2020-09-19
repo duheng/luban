@@ -2,7 +2,6 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const tmpl = require("blueimp-tmpl");
 
 const HtmlWebpackPluginItem = (name, getTemplate) => {
-  const temp = getTemplate();
   return new HtmlWebpackPlugin({
     inject: false, // 禁用自动注入
     filename: `${name}.html`,

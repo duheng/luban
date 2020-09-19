@@ -63,7 +63,7 @@ const webpackConfig = (config) => {
     context: path.join(CWD),
     entry: entry,
     externals: config.externals || {},
-    module: rules(),
+    module: rules(config),
     resolve: {
       modules: [
         CWD,

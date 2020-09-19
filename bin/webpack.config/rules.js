@@ -1,6 +1,5 @@
 const path = require("path");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const { config } = require("../utils/common");
 const CWD = process.cwd();
 
 const devMode = process.env.NODE_ENV !== "production";
@@ -110,13 +109,13 @@ const rules = {
       ].filter(Boolean),
     };
   },
-  image: () => {
+  image: (config) => {
     return {
       test: /\.(jpe?g|png|gif|ico)$/,
       loader: require.resolve("url-loader"),
       options: {
-        limit: config.image_limit, // 20k以内的图片用base64，可配置
-        name: config.assets + "/images/[name]-[hash:8].[ext]",
+        limit: config.base64_image_limit, // 20k以内的图片用base64，可配置
+        name: `${path.resolve(CWD, config.base)}/${config.assets}/images/[name]-[hash:8].[ext]`,
       },
     };
   },
@@ -131,10 +130,10 @@ const rules = {
   },
 };
 
-module.exports = () => {
+module.exports = (config) => {
   let rule = [];
   for (let key in rules) {
-    rule.push(rules[key]());
+    rule.push(rules[key](config));
   }
   return {
     rules: rule,
