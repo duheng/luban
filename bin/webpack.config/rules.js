@@ -48,16 +48,17 @@ const rules = {
           // }
         },
         {
-          loader: require.resolve("cache-loader"),
+          loader: require.resolve("cache-loader-hash"),
           options: {
+            mode:'hash',
             cacheDirectory: path.resolve(CWD, ".cache-loader"),
           },
         },
         {
           loader: require.resolve("babel-loader"),
           options: {
-            cacheDirectory: true,
             babelrc: false,
+            compact: false,
             configFile: path.resolve(__dirname, ".babelrc.js"),
           },
         },

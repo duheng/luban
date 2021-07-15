@@ -33,7 +33,7 @@
     "babel-loader": "^8.1.0",
     "babel-plugin-import": "^1.13.1",
     "blueimp-tmpl": "^3.17.0",
-    "cache-loader": "^4.1.0",
+    "cache-loader-hash": "^4.1.6",
     "chalk": "^4.1.0",
     "clean-webpack-plugin": "^3.0.0",
     "commander": "^5.1.0",
