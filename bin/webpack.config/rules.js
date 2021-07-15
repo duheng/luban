@@ -119,15 +119,26 @@ const rules = {
       },
     };
   },
-  media: () => {
+   media: () => {
     return {
       test: /\.(eot|woff|otf|svg|ttf|woff2|appcache|mp3|mp4|pdf)(\?|$)/,
-      loader: require.resolve("url-loader"),
-      options: {
-        name: "[name]-[hash:8].[ext]",
-      },
+      use: [
+        {
+          loader: require.resolve("url-loader"),
+          options: {
+            name: "[name]-[hash:8].[ext]",
+          },
+        },
+        {
+          loader: require.resolve("file-loader"),
+          options: {
+             name: '[name][hash:8].[ext]'
+          }
+        }
+      ],
     };
   },
+
 };
 
 module.exports = (config) => {

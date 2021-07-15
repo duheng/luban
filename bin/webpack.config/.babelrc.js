@@ -33,7 +33,24 @@ module.exports = function (api) {
              "corejs": 3,
              "helpers": true
           }
-        ]
+        ],
+        [
+            require.resolve('babel-plugin-import'),
+            {
+              "libraryName":  "antd",
+              "libraryDirectory": "es",
+              "style": "css"
+            },
+          ],
+              [
+            require.resolve('babel-plugin-import'),
+            {
+              "libraryName": "@ant-design",
+              "libraryDirectory": "icons",
+              "camel2DashComponentName": false,  // default: true
+            },
+            "@ant-design/icons"
+          ]
     ]
     return {
         presets: presents,

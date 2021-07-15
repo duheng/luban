@@ -1,6 +1,7 @@
 require('shelljs/global')
 const inquirer = require('inquirer')
-const { printLog } = require('./common')
+const { printLog } = require('./base')
+
 const askCurrentDir = async () => {
     const __isCurrentDir = await inquirer.prompt([
         {
@@ -60,11 +61,15 @@ const selectTmpl = async () => {
             choices:[
               {
                 name : 'egg+react+redux的前后端结合的ssr项目(推荐)',
-                value : "Koa_React_redux"
+                value : "Egg_React_Redux"
+              },
+              {
+                name : 'react+redux+antd的前后端结合的client项目',
+                value : "React_Redux_Antd"
               },
               {
                 name : 'koa+react+redux的前后端结合的ssr项目',
-                value : "Koa_React_redux"
+                value : "Koa_React_Redux"
               },
               {
                 name : 'react项目',

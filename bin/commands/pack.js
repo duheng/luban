@@ -5,46 +5,40 @@ const fs = require("fs");
 const path = require("path");
 const CWD = process.cwd();
 const { config } = require("../utils/common");
-//主: webpack4之后需 webpack命令被抽取到webpack-cli中，如果webpack-cli安装在本地则需要用当前node_modules中的webpack才能找到cli
-const webpack = path.resolve(
-  __dirname,
-  "..",
-  "..",
-  "node_modules",
-  ".bin",
-  "webpack"
-);
-const webpackDev = path.resolve(
-  __dirname,
-  "..",
-  "webpack.config",
-  "development.client.config"
-);
-const webpackProd = path.resolve(
-  __dirname,
-  "..",
-  "webpack.config",
-  "production.client.config"
-);
-const webpackServer = path.resolve(
-  __dirname,
-  "..",
-  "webpack.config",
-  "server.config"
-);
-
-const pack = (options, action) => {
+const {  getWebpackConfig } = require("../utils/webpackConfig");
+const webpack = require("webpack");
+const pack = (webpackConfig) => {
   return new Promise((resolve, reject) => {
-    exec(action);
-    resolve();
+    webpack({...webpackConfig}, (err, stats) => {
+      if (err) {
+        console.error(err.stack || err);
+        if (err.details) {
+          console.error(err.details);
+        }
+        return;
+      }
+    
+      const info = stats.toJson();
+    
+      if (stats.hasErrors()) {
+        console.error(info.errors);
+      }
+    
+      if (stats.hasWarnings()) {
+        console.warn(info.warnings);
+      }
+      resolve();
+    });
+
+    
   });
 };
 
 module.exports = async (options) => {
-  let webpackConfig = webpackDev;
+  let webpackConfig = null;
   if (options.node) {
     process.env.NODE_ENV = "development";
-    webpackConfig = webpackServer;
+    webpackConfig = getWebpackConfig('server');
   } else {
     try {
       if (!fs.existsSync(path.join(CWD, config.build, config.dll))) {
@@ -57,13 +51,12 @@ module.exports = async (options) => {
     if (options.prod) {
       //生产环境
       process.env.NODE_ENV = "production";
-      webpackConfig = webpackProd;
+      webpackConfig = getWebpackConfig('production');
     } else {
       process.env.NODE_ENV = "development";
-      webpackConfig = webpackDev;
+      webpackConfig = getWebpackConfig('development');
     }
   }
-
-  const wbpackAction = `${webpack} --config ${webpackConfig} --mode=${process.env.NODE_ENV} --colors`;
-  await pack(options, wbpackAction);
+ // const wbpackAction = `${webpackCommand} --config ${webpackConfig()} --mode=${process.env.NODE_ENV} --colors`;
+  await pack(webpackConfig);
 };

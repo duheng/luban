@@ -6,7 +6,6 @@ const { config } = require('../utils/common')
 
 const dllPath = path.join(CWD, config.build, config.dll || 'dll')
 const library = '[name]_[chunkhash]'
-
 module.exports = {
     mode: "production",
     entry:{

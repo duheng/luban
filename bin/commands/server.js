@@ -7,7 +7,8 @@ const { config } = require("../utils/common");
 
 module.exports = async (options) => {
     process.env.NODE_ENV = "development";
-    if(!options.static) {
+  
+    if(!options.static) { 
         try {
             if (!fs.existsSync(path.join(CWD, config.build, config.dll))) {
                 await require("./dll")(options);
@@ -16,7 +17,7 @@ module.exports = async (options) => {
             console.log("打包dll失败：", e);
         }
         await require("../servers/dev-server")(config);
-    } else {
+    } else { // 启动静态服务
         await require("../servers/static-server");
     }
 

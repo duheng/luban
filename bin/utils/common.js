@@ -3,38 +3,24 @@ const path = require("path");
 const fs = require("fs");
 const confman = require("confman");
 const CWD = process.cwd();
-const name = "luban";
-const chalk = require('chalk');
-const printLog = ({name = '', type='default', text = ''}) => {
-  const __color = {
-    default: {
-      title: '5bc2e7',
-      text: '70dfdf'
-    },
-    error: {
-      title: '800080',
-      text: '9932CC'
-    }
-  }
-  const __nameStyle = chalk.hex(__color[type].title).bold
-  const __textStyle = chalk.hex(__color[type].text).bold
-  const __name = name || getUtilName()
-  console.log(__nameStyle(`[${__name}]`),__textStyle(text))
-}
-
-const getUtilName = () => {
-  const __package = confman.load(path.join(__dirname,"..","..","package.json"));
-  return Object.keys(__package.bin)[0]
-}
+const { printLog, getUtilName } = require('./base');
 
 const getConfig = () => {
     const __name = getUtilName()
     const configs = confman.load(`${CWD}/${__name}`);
+   console.log('configs-----',   configs)
     if(Object.keys(configs).length > 0) {
       return configs;
     } else {
       printLog({type:'error',text:`没有加载到配置文件${__name}.*`})
     }
+}
+
+const getWebpackCommand = () => {
+  //注: webpack4之后需 webpack命令被抽取到webpack-cli中，如果webpack-cli安装在本地则需要用当前node_modules中的webpack才能找到cli
+  const __webpack = path.resolve(__dirname, '..', '..', 'node_modules', '.bin', 'webpack')
+  const webpackCommand = fs.existsSync(__webpack) ? __webpack : 'webpack'
+  return webpackCommand
 }
 
 const getTemplate = () => {
@@ -148,15 +134,18 @@ const genAlias = (projectDir, config) => {
       map[name] = path.join(CWD,__alias[name]) 
     });
   }
+  console.log('AA-------',  map)
   return { ...map };
 };
 
+
+
 module.exports = {
+  webpackCommand: getWebpackCommand(),
   config: getConfig(),
   entry: getEntry(),
   dllReferencePlugin,
   loadDllAssets,
   genAlias,
   getTemplate,
-  printLog,
 };

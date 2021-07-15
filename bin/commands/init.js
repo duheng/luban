@@ -17,11 +17,13 @@ const spinner = ora({
 })
 
 const getOriginTmpl = (selectTmpl) => {
-  const __tmplOriginUtl = `git+ssh://git@github.com/duheng/tmpl_${selectTmpl}.git`
+  const __tmplOriginUtl = `https://github.com/duheng/tmpl_${selectTmpl}.git -b master`
+  console.log('模版仓库地址:',__tmplOriginUtl)
   if (!which('git')) {
     echo('检测到您还没有安装git，请先安装git');
     exit(1);
   }
+  exec(`git config http.sslVerify false`)
   echo(`模版 ${selectTmpl} 下载中...\r`);
   if (exec(`git clone ${__tmplOriginUtl}`).code !== 0) {
     echo('Error: Git clone failed');
@@ -32,7 +34,6 @@ const getOriginTmpl = (selectTmpl) => {
 
 const pullOriginTmpl = (selectTmpl) => {
    echo(`检测模版 ${selectTmpl} 的变更...\r`);
-   const __tmplOriginUtl = `https://github.com/duheng/tmpl_${selectTmpl}.git`
   if (!which('git')) {
     spinner.fail('检测到您还没有安装git，请先安装git');
     exit(1);
@@ -90,6 +91,7 @@ module.exports = async (options) => {
         cp('-Rf',__source,__distName)
         spinner.succeed(`项目 ${__name} 已创建\r`)
         installPackage(__distName)
+        spinner.succeed(`请执行: cd ${__name} && luban server \r`)
       }catch(err) {
         spinner.fail(`项目 ${__name} 已创建失败\r\n${err}`)
       }

@@ -7,7 +7,6 @@ const { config, getTemplate } = require("../utils/common");
 const __baseConfig = baseConfig(config);
 const CWD = process.cwd();
 
-const { port = 9000, host = "0.0.0.0" } = config;
 const buildPath = path.resolve(CWD, config.build);
 
 const jsName = "js/[name]@dev.js";

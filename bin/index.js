@@ -1,5 +1,4 @@
 #!/usr/bin/env node
-
 const commander = require("commander");
 const packages = require("../package.json");
 const chalk = require('chalk');

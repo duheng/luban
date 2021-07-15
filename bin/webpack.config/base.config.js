@@ -20,10 +20,28 @@ const rules = require("./rules");
 const plugins = (config) => {
   let __plugins = [
     new webpack.ProgressPlugin(FormatProgressPlugin),
+
     new CleanWebpackPlugin({
       verbose: false,
       cleanOnceBeforeBuildPatterns: ["**/*", "!dll", "!dll/**/*"],
     }),
+    // new webpack.ContextReplacementPlugin(/^\.\/locale$/, (context) => {
+    //   if (!/\/moment\//.test(context.context)) return;
+
+    //   Object.assign(context, {
+    //       regExp: /^\.\/\w+/,
+    //       request: '../locale', // resolved relatively
+    //   });
+    // }),
+    new webpack.IgnorePlugin(/\.\/locale/, /moment/),
+    // new webpack.IgnorePlugin(/\.\/locale/, /moment/,/(en|zh-cn)\.js/),
+//   new webpack.ContextReplacementPlugin(
+//     // 需要被处理的文件目录位置
+//     /moment[\/\\]locale/,
+//     // 正则匹配需要被包括进来的文件
+//     /(en|zh-cn)\.js/
+// ),
+
     new webpack.DefinePlugin({
       "process.env": {
         NODE_ENV: JSON.stringify(process.env.NODE_ENV),
@@ -56,6 +74,8 @@ const plugins = (config) => {
       })
     );
   }
+
+  
   return __plugins;
 };
 const webpackConfig = (config) => {
@@ -63,6 +83,7 @@ const webpackConfig = (config) => {
     context: path.join(CWD),
     entry: entry,
     externals: config.externals || {},
+    target: 'web', 
     module: rules(config),
     resolve: {
       modules: [
@@ -75,7 +96,7 @@ const webpackConfig = (config) => {
         vue$: "vue/dist/vue.esm.js",
         ...genAlias(path.join(CWD, config.base), config),
       },
-      extensions: [".js", ".vue", ".json", ".jsx", ".scss", ".css", ".less"],
+      extensions: [".js", ".jsx", ".scss", ".css",  ".vue", ".json", ".less",".ts", ".tsx"],
     },
     resolveLoader: {
       modules: [path.resolve(__dirname, "..", "..", "node_modules")],

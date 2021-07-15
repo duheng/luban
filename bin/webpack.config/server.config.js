@@ -1,12 +1,18 @@
-const path = require('path')
+const path = require("path");
 const webpackNodeExternals = require('webpack-node-externals')
+const { printLog } = require('../utils/base')
 const { config } = require('../utils/common')
 const CWD = process.cwd()
-const entryPath =  path.join(CWD, config.server,'index.js')
+
+try {
+  const entryPath =  path.join(CWD, config.server,'index.js')
+}catch(err){
+  printLog({type:'error',text:`没有找到项目中服务端入口\n`})
+}
+
 const buildPath =  path.resolve(CWD, config.build)
 const jsName  = 'js/[name].js'
-
-module.exports = {
+module.exports = () => ({
   target: 'node',
   mode: 'development',
   entry: {'server':entryPath},
@@ -58,4 +64,4 @@ module.exports = {
   }
    ,
    externals: [webpackNodeExternals()]
-}
+})
