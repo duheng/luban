@@ -69,7 +69,6 @@ const indexHtml = (url) => {
 };
 
 const config = formatConfig(__config);
-console.log("config--------", config);
 const compile = Webpack(config);
 
 module.exports = (targetConfig) => {
@@ -108,8 +107,6 @@ module.exports = (targetConfig) => {
 		//重定向到首页
 		async (ctx, next) => {
 			const __instans = [".html", ".htm", ""];
-			console.log("filename-------", ctx.url);
-			console.log("filename-1------", indexHtml(ctx.url));
 			if (__instans.indexOf(path.extname(ctx.url)) > -1) {
 				const __indexHtml = indexHtml(ctx.url);
 				const filename = path.join(compile.outputPath, __indexHtml);

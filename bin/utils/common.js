@@ -8,7 +8,6 @@ const { printLog, getUtilName } = require('./base');
 const getConfig = () => {
     const __name = getUtilName()
     const configs = confman.load(`${CWD}/${__name}`);
-   console.log('configs-----',   configs)
     if(Object.keys(configs).length > 0) {
       return configs;
     } else {
@@ -134,7 +133,6 @@ const genAlias = (projectDir, config) => {
       map[name] = path.join(CWD,__alias[name]) 
     });
   }
-  console.log('AA-------',  map)
   return { ...map };
 };
 
