@@ -36,7 +36,8 @@ const common_css_rule = [
 ];
 
 const rules = {
-  js: () => {
+  js: (config) => {
+    console.log('config---',config)
     return {
       test: /\.(js|jsx|ts|tsx)$/,
       exclude: /node_modules/,
@@ -62,6 +63,7 @@ const rules = {
             configFile: path.resolve(__dirname, ".babelrc.js"),
           },
         },
+        require.resolve('./loader/add-hot-code-loader.js')
       ].filter(Boolean),
     };
   },
