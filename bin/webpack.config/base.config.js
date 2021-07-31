@@ -55,8 +55,8 @@ const plugins = (config) => {
     new VueLoaderPlugin(),
     new webpack.optimize.ModuleConcatenationPlugin(),
   ];
-
-  if (!!config.library && Object.keys(config.library).length > 0) {
+  //fs.existsSync(path.join(CWD, config.build, config.dll)
+  if (!!config.library && Object.keys(config.library).length > 0 && fs.existsSync(path.join(CWD, config.build, config.dll)) ) {
     __plugins.push(...dllReferencePlugin(config));
     __plugins.push(new AddAssetHtmlPlugin(loadDllAssets(config)));
   }

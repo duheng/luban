@@ -2,7 +2,7 @@
 const fs = require("fs");
 const path = require("path");
 const CWD = process.cwd();
-const { config } = require("../utils/common");
+const { config } = require("../utils/common"); 
 //主: webpack4之后需 webpack命令被抽取到webpack-cli中，如果webpack-cli安装在本地则需要用当前node_modules中的webpack才能找到cli
 
 module.exports = async (options) => {

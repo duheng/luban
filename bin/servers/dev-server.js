@@ -91,7 +91,8 @@ module.exports = (targetConfig) => {
 	app.use(
 		devMiddleware(compile, {
 			noInfo: false,
-			hot: true,
+			hot: false,
+			writeToDisk: true,
 			publicPath: config.output.publicPath,
 			stats: {
 				colors: true,
