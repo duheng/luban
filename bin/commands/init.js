@@ -24,7 +24,8 @@ const getOriginTmpl = (selectTmpl) => {
     exit(1);
   }
   exec(`git config http.sslVerify false`)
-  echo(`模版 ${selectTmpl} 下载中...\r`);
+  exec(`git config https.sslVerify false`)
+  echo(`🔗 模版 ${selectTmpl} 下载中...\r`);
   if (exec(`git clone ${__tmplOriginUtl}`).code !== 0) {
     echo('Error: Git clone failed');
     exit(1);
