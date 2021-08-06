@@ -1,4 +1,4 @@
-const { chalk } = require('@qnpm/ykit3-shared-utils')
+const chalk = require('chalk');
 
 const defaultMessage = chalk`
     {cyan.bold ykit3} 只支持两种启动模式： {yellow 单工程模式（single mode）}和 {yellow 多工程模式 （multiple mode）}

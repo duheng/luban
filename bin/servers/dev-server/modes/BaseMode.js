@@ -1,9 +1,9 @@
 const path = require('path')
+const fs = require('fs')
 const NoImplementionError = require('../errors/NoImplementionError')
-const {
-    chalk,
-    fse
-} = require('@qnpm/ykit3-shared-utils')
+const chalk = require('chalk');
+const { printLog } = require('../../../utils/base')
+
 
 /**
  * 启动模式的状态类（状态模式）
@@ -16,7 +16,7 @@ module.exports = class BaseMode {
         this.modeInfo = modeInfo
         this.utils = {
             chalk,
-            fse
+            fs
         }
         if (this.modeInfo.projects && this.modeInfo.projects.length) {
             this.projectNames = this.modeInfo.projects.map(item => item.split(path.sep).pop())
@@ -27,7 +27,7 @@ module.exports = class BaseMode {
      * 打印当前模式的信息
      */
     logModeInfo () {
-        this.logger.info('启动模式:', chalk.yellow(this.modeInfo.modeName === 'multiple' ? '多工程模式(multiple)' : '单工程模式(single)'))
+        printLog({text: '启动模式:'+ chalk.yellow(this.modeInfo.modeName === 'multiple' ? '多工程模式(multiple)' : '单工程模式(single)')})
     }
 
     resolveProjectRootDir () {

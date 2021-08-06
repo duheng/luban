@@ -9,7 +9,7 @@ const getWebpackConfig = (mode = 'development') => {
   const __webpackConfig = require(webpackConfig[mode])()
   if (config.modifyWebpackConfig) {
    // console.log("AS---", config.modifyWebpackConfig(__webpackConfig))
-    return config.modifyWebpackConfig(__webpackConfig);
+    return {...__webpackConfig, ...config.modifyWebpackConfig(__webpackConfig)};
   } else {
     return __webpackConfig
   }

@@ -1,4 +1,4 @@
-const { chalk } = require('@qnpm/ykit3-shared-utils')
+const chalk = require('chalk');
 
 const defaultMessage = chalk`没有实现的抽象方法`
 

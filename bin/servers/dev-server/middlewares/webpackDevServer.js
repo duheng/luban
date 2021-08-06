@@ -1,16 +1,18 @@
 const path = require('path')
 const fs = require('fs')
-const { chalk, shell, fse, lodash: _, globby } = require('@qnpm/ykit3-shared-utils')
-const configResolver = require('@qnpm/ykit3-config-resolver')
+const chalk = require('chalk');
+const {  getWebpackConfig } = require("../../../utils/webpackConfig");
+
+const devServerWebpackConfig = getWebpackConfig('development');
 const { MODE_NAMES, WEBPACK_HMR_URL, HOT_HEART_BEAT_INTERVAL } = require('../utils/constants')
 const { generateDllWebpackConfig, generateDllReferencePlugins } = require('../../../utils/webpackConfig')
 const webpack = require('webpack')
 const webpackDevMiddleware = require('webpack-dev-middleware')
 const webpackHotMiddleware = require('webpack-hot-middleware')
-const { isChangeDll, setDllVersion } = require('../../../utils/dllpitch')
-const { webpackStatsFormatter } = require('../../../utils/print')
-
-const { match } = require('assert')
+// const { isChangeDll, setDllVersion } = require('../../../utils/dllpitch')
+// const { webpackStatsFormatter } = require('../../../utils/print')
+const isString = val => typeof val === 'string';
+const { match } = require('assert');
 const CWD = process.cwd()
 function transformRequestUrlHash (url) {
     return url.replace(/@[^.]*\./, '@dev.')
@@ -25,7 +27,7 @@ function transformRequestUrProjectName (url, projectName) {
 
 function transformRequestUrlPublicPath (url) {
     // return url
-    const __splitUrl =  url.split('/prd')
+    const __splitUrl =  url.split('/js')
     const resUrl = __splitUrl.length > 1 ? __splitUrl[1] : __splitUrl[0]
     return resUrl.replace(/[\/]+/, '\/')
 }
@@ -88,11 +90,12 @@ module.exports = (hot, rePackDll, port) => async function (ctx, next) {
     ctx.req.url = ctx.req.url.replace(/\?.*/, '')
     const { modeInfo, mode, logger, curDir } = ctx
    // 根据请当前请求所在项目更新缓存目录地址
-    const rootDir = mode.resolveProjectRootDir(ctx.projectName)
-    const configInfo = configResolver(rootDir)
-    const matchcwd =new RegExp(`${path.basename(CWD)}/`,"gmi");
-    const dllBaseDir = global.cacheDllDirectory.split('.qcache')[1].replace(matchcwd,'')
-    global.cacheDllDirectory = `${rootDir}/.qcache${dllBaseDir}`
+    // const rootDir = mode.resolveProjectRootDir(ctx.projectName)
+    // const configInfo = configResolver(rootDir)
+    
+    // const matchcwd =new RegExp(`${path.basename(CWD)}/`,"gmi");
+    // const dllBaseDir = global.cacheDllDirectory.split('.qcache')[1].replace(matchcwd,'')
+    // global.cacheDllDirectory = `${rootDir}/.qcache${dllBaseDir}`
 
     if (modeInfo.modeName === MODE_NAMES.MULTIPLE && (!ctx.projectName || !mode.isProjectName(ctx.projectName))) {
         await next()
@@ -112,7 +115,7 @@ module.exports = (hot, rePackDll, port) => async function (ctx, next) {
 
     const __cacheId =  formatCacheUrl(transformRequestUrlPublicPath(ctx.req.url))
     const cacheId =  getCacheKey(__cacheId, devCompilerCacheMap)
-   
+   console.log('AA---',cacheId)
     // 销毁中间件
     const { maxMiddleware } = global.ykit3CustomConfig || {}
     destroyMiddleware(maxMiddleware, cacheId, devCompilerCacheMap)
@@ -134,8 +137,7 @@ module.exports = (hot, rePackDll, port) => async function (ctx, next) {
     let { compiler, devServerMiddleware, _visit, hotMiddleware, webpackConfig, dllConfig, dllWebpackConfig, compiledAssetsNames } = devCompilerCacheMap.get(cacheId) || {}
 
     try { 
-        webpackConfig = configInfo.webpackConfig
-        dllConfig = configInfo.dllConfig
+        webpackConfig = devServerWebpackConfig
 
         const splitOutputPath =  webpackConfig.output.path.split(CWD)[1]
         if(!!ctx.projectName) {
@@ -149,62 +151,16 @@ module.exports = (hot, rePackDll, port) => async function (ctx, next) {
             ctx.req.url = transformRequestUrlPublicPath(ctx.req.url) 
         }
         
-        if (dllConfig.lib && isChangeDll(global.cacheDllDirectory, dllConfig.lib)) {
-            logger.info('📦 正在打包dll,清稍后...')
-            compilingSet.add(cacheId)
-            dllWebpackConfig = generateDllWebpackConfig({
-                dllConfig: {
-                    lib: dllConfig.lib,
-                    outputPath: global.cacheDllDirectory
-                },
-                logger,
-                isCover,
-                slient: true
-            })
-            isCover = false
-            if (dllWebpackConfig) {
-                const entryObj = {}
-                Object.keys(dllWebpackConfig.entry).forEach(item => {
-                    const entryConfig = dllWebpackConfig.entry[item]
-                    if (!(_.isArray(entryConfig) || _.isString(entryConfig))) {
-                        logger.error(chalk`{red entry ${item} 配置错误}，只支持数组和字符串类型。接收到的值为：`, dllWebpackConfig.entry[item])
-                        throw new Error('')
-                    }
-                    entryObj[item] = mode.resolveWebpackEntry(dllWebpackConfig.entry[item])
-                })
-                dllWebpackConfig.entry = entryObj
-                mode.handleOutputConfig(dllWebpackConfig.output, port)
-
-                dllWebpackConfig.context = path.resolve(ctx.projectName)
-                const dllCompiler = webpack(dllWebpackConfig)
-                try {
-                    await new Promise((resolve, reject) => {
-                        dllCompiler.run((err, stats) => {
-                            if (err) {
-                                logger.error('打包失败', err)
-                                reject(err)
-                            }
-                            setDllVersion(global.cacheDllDirectory, dllConfig.lib)
-                            compilingSet.delete(cacheId) 
-                            setTimeout(_=>{
-                                resolve()
-                            },100)
-                        })
-                    })
-                } catch (e) {
-                    logger.error(e)
-                    return
-                }
-            }
-        }
-
+       
         if (ctx.req.url && ctx.req.url.includes('_dll@')) { // 返回dll
             const fileNamePattern = ctx.requestUrl.pathname.split('/').pop().replace(/@[^.]*\./, '@*.')
-            const files = await globby(`${global.cacheDllDirectory}/${fileNamePattern}`)
-            if (files.length) {
-                ctx.body = fs.createReadStream( files[0]);
-                return
-            }
+          //  var files000 = fs.readdirSync(`${global.cacheDllDirectory}/${fileNamePattern}`);
+//console.log('files000-----', files000)
+            // const files = await globby(`${global.cacheDllDirectory}/${fileNamePattern}`)
+            // if (files.length) {
+            //     ctx.body = fs.createReadStream( files[0]);
+            //     return
+            // }
         }
 
         if (!devServerMiddleware) {
@@ -214,7 +170,7 @@ module.exports = (hot, rePackDll, port) => async function (ctx, next) {
                 let isRequestingEntry = false
                 let entryItem = webpackConfig.entry[item]
                 // 将入口的绝对地址转换成相对地址
-                if(_.isArray(entryItem)){
+                if(Array.isArray(entryItem)){
                     const entryItemKey = entryItem.length - 1
                     const __entryItem =  entryItem[entryItemKey]
                     if(!!ctx.projectName && __entryItem.split(ctx.projectName).length > 1) {
@@ -230,6 +186,7 @@ module.exports = (hot, rePackDll, port) => async function (ctx, next) {
                     }
                 }
                 // 判断所请求的资源是否在入口配置中
+                console.log(`${item}@dev${path.extname(ctx.req.url)}`,'---M3---',transformRequestUrlPublicPath(ctx.req.url))
                 const matchingPath = `${item}@dev${path.extname(ctx.req.url)}` === transformRequestUrlPublicPath(ctx.req.url);
                 const matchingKey = `/${item}@dev${path.extname(ctx.req.url)}`  ===  transformRequestUrlPublicPath(ctx.req.url);
 
@@ -243,7 +200,7 @@ module.exports = (hot, rePackDll, port) => async function (ctx, next) {
                         entryObj[item] = [`${require.resolve('webpack-hot-middleware/client')}?reload=true&path=${hmrUrl}&timeout=20000`, mode.resolveWebpackEntry(entryItem)]
                     } else {
                         const entryConfig = webpackConfig.entry[item]
-                        if (!(_.isArray(entryConfig) || _.isString(entryConfig))) {
+                        if (!(Array.isArray(entryConfig) || isString(entryConfig))) {
                             logger.error(chalk`{red entry ${item} 配置错误}，只支持数组和字符串类型。接收到的值为：`, webpackConfig.entry[item])
                             throw new Error('')
                         }
@@ -252,19 +209,19 @@ module.exports = (hot, rePackDll, port) => async function (ctx, next) {
                 }
             })
 
-         
+         console.log('M1---',entryObj)
            if(Object.keys(entryObj).length === 0) {
              return await next()
            }
 
             webpackConfig.entry = entryObj
-           
+            console.log('M2---',entryObj)
             mode.handleOutputConfig(webpackConfig.output, port)
 
-            if (dllConfig.lib) {
-                const dllReferencePlugins = generateDllReferencePlugins(ctx.projectName, Object.keys(dllConfig.lib))
-                webpackConfig.plugins.push(...dllReferencePlugins.filter(Boolean))
-            }
+            // if (dllConfig.lib) {
+            //     const dllReferencePlugins = generateDllReferencePlugins(ctx.projectName, Object.keys(dllConfig.lib))
+            //     webpackConfig.plugins.push(...dllReferencePlugins.filter(Boolean))
+            // }
 
             webpackConfig.context = path.resolve(ctx.projectName)
 
@@ -323,12 +280,12 @@ module.exports = (hot, rePackDll, port) => async function (ctx, next) {
         }
         ctx.compiledAssetsNames = compiledAssetsNames
         ctx.compiler = compiler
-        {
-            const dllFiles = await globby(path.join(global.cacheDllDirectory, '*_dll@*'))
-            ctx.dllAssets = dllFiles.map(item =>{
-                return  item.split('/').pop()
-            })
-        }
+        // {
+        //     const dllFiles = await globby(path.join(global.cacheDllDirectory, '*_dll@*'))
+        //     ctx.dllAssets = dllFiles.map(item =>{
+        //         return  item.split('/').pop()
+        //     })
+        // }
         ctx.res.statusCode = 200
         await devServerMiddleware(ctx.req, ctx.res, next)
     } catch (e) {

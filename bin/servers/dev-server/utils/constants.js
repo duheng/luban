@@ -1,5 +1,3 @@
-const configResolver = require('@qnpm/ykit3-config-resolver')
-const CONFIG_FILE_NAME = configResolver.configFileName
 
 module.exports = {
     MODE_NAMES: {
@@ -7,7 +5,7 @@ module.exports = {
         SINGLE: 'single',
         OTHER: 'other'
     },
-    CONFIG_FILE_NAME,
+    CONFIG_FILE_NAME:'luban.js',
     REGEX_PATTERN: {
         URL_PROJECT_NAME: /^\/([^\/]*)/
     },

@@ -1,11 +1,11 @@
 const { MODE_NAMES } = require('../utils/constants')
 const path = require('path')
-const looger = require('../utils/logger')
-const { chalk } = require('@qnpm/ykit3-shared-utils')
+const chalk = require('chalk');
+const { printLog } = require('../../../utils/base')
+
 module.exports = async (ctx) => {
     ctx.res.statusCode = 404
-    looger.error(chalk.red('404'), ctx.req.url, '没找到对应资源')
-
+    printLog({type: 'error',text:   chalk.red('404' + ctx.req.url + ' 没找到对应资源')})
     switch (ctx.modeInfo.modeName) {
     case MODE_NAMES.SINGLE:
         await ctx.render('404-single', {

@@ -1,6 +1,6 @@
-module.exports = ({ modeInfo, mode, curDir, logger }) => async (ctx, next) => {
+module.exports = ({ modeInfo, mode, curDir, printLog }) => async (ctx, next) => {
     ctx.curDir = curDir
-    ctx.logger = logger
+    ctx.printLog = printLog
     ctx.modeInfo = modeInfo
     ctx.mode = mode
     await next()

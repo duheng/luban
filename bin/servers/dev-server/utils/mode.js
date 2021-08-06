@@ -1,5 +1,5 @@
 const path = require('path')
-const { fse } = require('@qnpm/ykit3-shared-utils')
+const fs = require('fs')
 const { MODE_NAMES, CONFIG_FILE_NAME } = require('./constants')
 
 /**
@@ -33,14 +33,14 @@ const modeInfoFactory = (modeName, infos = {}) => {
  * @param {*} curDir
  */
 function resolveStartModeInfo (curDir) {
-    if (fse.existsSync(path.resolve(curDir, CONFIG_FILE_NAME))) {
+    if (fs.existsSync(path.resolve(curDir, CONFIG_FILE_NAME))) {
         return modeInfoFactory(MODE_NAMES.SINGLE)
     } else {
         const projects = []
-        fse.readdirSync(curDir).filter(item => {
+        fs.readdirSync(curDir).filter(item => {
             const subDirPath = path.resolve(curDir, item)
-            if (fse.statSync(subDirPath).isDirectory()) {
-                if (fse.existsSync(path.resolve(subDirPath, CONFIG_FILE_NAME))) {
+            if (fs.statSync(subDirPath).isDirectory()) {
+                if (fs.existsSync(path.resolve(subDirPath, CONFIG_FILE_NAME))) {
                     projects.push(path.resolve(subDirPath))
                 }
             }

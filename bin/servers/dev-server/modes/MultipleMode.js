@@ -1,7 +1,8 @@
 const BaseMode = require('./BaseMode')
 const path = require('path')
 const { REGEX_PATTERN: { URL_PROJECT_NAME } } = require('../utils/constants')
-const { lodash: _, chalk, printLink } = require('@qnpm/ykit3-shared-utils')
+const chalk = require('chalk');
+const { printLog } = require('../../../utils/base')
 
 function isProjectNameInclude (projects, projectName) {
     return projects.some(item => item.slice(-projectName.length) === projectName)
@@ -16,7 +17,7 @@ function resolveModulePath (searchPath, requirePath) {
             res = require.resolve(path.join(searchPath, 'node_modules', requirePath))
         }
     } catch (e) {
-        throw new Error(chalk`${printLink(searchPath, 'gray')} {red 下找不到入口模块:{yellow ${JSON.stringify(requirePath)}} }`)
+        throw new Error(chalk`${chalk.yellow(searchPath)} {red 下找不到入口模块:{yellow ${JSON.stringify(requirePath)}} }`)
     }
     return res
 }
@@ -25,7 +26,7 @@ module.exports = class MultipleMode extends BaseMode {
     logModeInfo () {
         super.logModeInfo()
         const { logger, utils: { chalk } } = this
-        logger.info('工程列表: ', chalk.yellow(this.projectNames))
+        printLog({text: '工程列表:'+ chalk.yellow(this.projectNames)})
     }
 
     resolveProjectRootDir (projectName) {
@@ -42,7 +43,7 @@ module.exports = class MultipleMode extends BaseMode {
         }
         if (projectName) {
             this.projectName = projectName
-            logger.info('请求的工程名:', chalk.yellow(projectName))
+            printLog({text: '请求的工程名:'+ chalk.yellow(projectName)})
             return projectName
         }
         return ''
@@ -52,7 +53,7 @@ module.exports = class MultipleMode extends BaseMode {
         const { curDir, logger } = this
         const projectPath = path.join(curDir, projectName || '')
         if (isProjectNameInclude(this.projectNames, projectName)) {
-            logger.info('工程地址:', projectPath)
+            printLog({text: '工程地址:'+ chalk.yellow(projectPath)})
             return true
         }
         return false
@@ -64,7 +65,7 @@ module.exports = class MultipleMode extends BaseMode {
     }
 
     resolveWebpackEntry (entryItem) {
-        if (_.isArray(entryItem)) {
+        if (Array.isArray(entryItem)) {
             return entryItem.map(item => resolveModulePath(path.join(this.curDir, this.projectName), item))
         }
         return resolveModulePath(path.join(this.curDir, this.projectName), entryItem)

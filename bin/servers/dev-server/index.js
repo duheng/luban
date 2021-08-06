@@ -3,9 +3,9 @@ const fs = require('fs')
 const Koa = require('koa')
 const favicon = require('koa-favicon')
 const views = require('koa-views')
-const { open, printLink, printLog } = require('../../utils/base')
+const { printLog } = require('../../utils/base')
+const chalk = require('chalk');
 
-const logger = require('./utils/logger')
 const page404 = require('./middlewares/404Page')
 const ctxFill = require('./middlewares/ctxFill')
 const resolveProjectName = require('./middlewares/resolveProjectName')
@@ -14,7 +14,7 @@ const webpackHotModuleReplacement = require('./middlewares/webpackHotModuleRepla
 const custom = require('./middlewares/custom')
 const myStatic = require('./middlewares/myStatic')
 const fileRes = require('./middlewares/fileRes')
-const autoCheck = require('./middlewares/autoCheck')
+//const autoCheck = require('./middlewares/autoCheck')
 const { resolveStartModeInfo } = require('./utils/mode')
 const modeFactory = require('./modes/modeFactory')
 
@@ -22,9 +22,9 @@ function createDevServer ({ curDir, modeInfo, mode, options }) {
     // 启动服务器
     const app = new Koa()
     app.use(favicon(path.resolve(__dirname, './favicon.ico')))
-    app.use(ctxFill({ modeInfo, mode, logger, curDir }))// 填充 ctx
+    app.use(ctxFill({ modeInfo, mode, printLog, curDir }))// 填充 ctx
     app.use(resolveProjectName)// 解析工程名
-    app.use(autoCheck({ modeInfo, mode, logger, curDir })) // 依赖检查
+   // app.use(autoCheck({ modeInfo, mode, printLog, curDir })) // 依赖检查
     app.use(fileRes(modeInfo))
     app.use(webpackDevServer(!!options.hot, !!options.dll, options.port || 8888))
     app.use(webpackHotModuleReplacement)
@@ -41,7 +41,7 @@ function createDevServer ({ curDir, modeInfo, mode, options }) {
             app.listen(port, () => {
                 const link = `http://localhost:${port}/`
                 printLog({text:`本地目录:${process.cwd()}`})
-                printLog({text:`开发服务器启动在: ${printLink(link, 'cyan')}`})
+                printLog({text:`开发服务器启动在: ${chalk.yellow(link)}`})
                 // logger.info('本地目录:', process.cwd())
                // logger.info(`开发服务器启动在: ${printLink(link, 'cyan')}`)
 
@@ -59,7 +59,7 @@ function resolveStartMode () {
     const modeInfo = resolveStartModeInfo(curDir)
 
     const mode = modeFactory(modeInfo.modeName, {
-        logger,
+        printLog,
         curDir,
         modeInfo
     })
@@ -72,7 +72,7 @@ function resolveStartMode () {
 process.on('uncaughtException', (msg) => {
     if (msg && msg.toString().indexOf('address already in use') > -1) {
         const port = /address already in use [^\d]+(\d+)/.exec(msg)[1]
-        logger.error(port + ' 端口已被占用，请使用 -p 指定其他端口')
+        printLog({type: 'error',text: port + ' 端口已被占用，请使用 -p 指定其他端口'})
     } else {
         throw msg
     }
