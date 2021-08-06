@@ -62,12 +62,12 @@ const rules = {
             configFile: path.resolve(__dirname, ".babelrc.js"),
           },
         },
-        {
-          loader: require.resolve('./loader/add-hot-code-loader.js'),
-          options: {
-            entry: config.entry,
-          },
-        }
+        // {
+        //   loader: require.resolve('./loader/add-hot-code-loader.js'),
+        //   options: {
+        //     entry: config.entry,
+        //   },
+        // }
       ].filter(Boolean),
     };
   },

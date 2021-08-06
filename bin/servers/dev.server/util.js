@@ -34,10 +34,7 @@ const formatConfig = (config) => {
 			throw `入口文件加载失败，请检查入口文件\r\n${err}`;
 		}
 
-		__entryNew[i] = [
-			__entry[i],
-			"webpack-hot-middleware/client?reload=false&path=/__webpack_hmr&timeout=20000",
-		];
+		__entryNew[i] = 	__entry[i];
 	}
 	__config.entry = __entryNew;
 	return __config;
