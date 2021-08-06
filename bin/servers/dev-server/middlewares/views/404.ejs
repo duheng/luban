@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>404</title>
+</head>
+<body>
+    <style>
+        body{
+            padding-left: 20px;
+        }
+        .title{
+            font-size:40px;
+        }
+        .link{
+            text-decoration: underline;
+            padding: 0 4px;
+            color: blue;
+            cursor:pointer;
+        }
+        .label {
+            background: hsla(39, 100%, 50%, 0.4);
+            padding: 2px 4px;
+            border-radius: 4px;
+            box-shadow: 0 0 2px #000;
+        }
+    </style>
+    <h2 class="title">404</h2>
+    <p>请求的url <a class="link"><%= url %></a> 没有找到</p>
+    <p>---------------------------------------</p>
+    
+    <p>启动模式: <span class="label" ><%= modeInfo.modeName %></span></p></body>
+</html>

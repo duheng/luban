@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>404-single</title>
+</head>
+<body>
+    <style>
+        body{
+            padding-left: 20px;
+        }
+        .title{
+            font-size:40px;
+        }
+        .link{
+            text-decoration: underline;
+            padding: 0 4px;
+            color: blue;
+            cursor:pointer;
+        }
+        .label {
+            background: hsla(39, 100%, 50%, 0.4);
+            padding: 2px 4px;
+            border-radius: 4px;
+            box-shadow: 0 0 2px #000;
+        }
+    </style>
+    <h3>～<%= url %></h3>
+    <p>---------------------------------------</p>
+    
+    <p>启动模式: <span class="label" ><%= modeInfo.modeName %></span></p>
+    <% if(compiledAssetsNames){%>
+        <p>打包输出资源: <% compiledAssetsNames.map((name) =>{%>
+            <br><a class="link" href="/prd/<%= name %>"><%= name %></a>
+            <%})%>
+        </p>
+    <%}%>
+    <% if(dllAssets){%>
+        <p>dll资源: <% dllAssets.map((name) =>{%>
+            <br><a class="link" href="/prd/<%= name %>"><%= name %></a>
+            <%})%>
+        </p>
+    <%}%>
+
+</body>
+</html>
