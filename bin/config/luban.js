@@ -6,6 +6,10 @@ module.exports = {
   "base": "src",
   "build": "prd",
   "dll": "dll",
+  "chunk_dir":{
+    "js":'js',
+    "css":'css'
+  },
   "static": {
     "development": "",
     "production": "//q.qunarzz.com/"

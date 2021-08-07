@@ -3,8 +3,9 @@ const webpack = require('webpack')
 const CWD = process.cwd()
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const { config } = require('../utils/common')
+const {  cacheDllDirectory } = require("../utils/buildCache");
 
-const dllPath = path.join(CWD, config.build, config.dll || 'dll')
+const dllPath = cacheDllDirectory
 const library = '[name]_[chunkhash]'
 module.exports = {
     mode: "production",

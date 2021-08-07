@@ -1,6 +1,7 @@
 const path = require("path");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CWD = process.cwd();
+const { useCache, cacheDirectory } = require("../utils/buildCache");
 
 const devMode = process.env.NODE_ENV !== "production";
 //const devMode = true
@@ -47,11 +48,12 @@ const rules = {
           //   workers: 4
           // }
         },
+        !!useCache &&
         {
           loader: require.resolve("cache-loader-hash"),
           options: {
             mode:'hash',
-            cacheDirectory: path.resolve(CWD, ".cache-loader"),
+            cacheDirectory
           },
         },
         {

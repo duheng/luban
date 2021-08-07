@@ -26,7 +26,7 @@ function createDevServer ({ curDir, modeInfo, mode, options }) {
     app.use(resolveProjectName)// 解析工程名
    // app.use(autoCheck({ modeInfo, mode, printLog, curDir })) // 依赖检查
     app.use(fileRes(modeInfo))
-    app.use(webpackDevServer(!!options.hot, !!options.dll, options.port || 8888))
+    app.use(webpackDevServer(!!options.hot, options.port || 8888))
     app.use(webpackHotModuleReplacement)
     app.use(myStatic(curDir))
     app.use(custom(curDir))

@@ -5,11 +5,12 @@ const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const AddAssetHtmlPlugin = require("add-asset-html-webpack-plugin");
 const VueLoaderPlugin = require("vue-loader/lib/plugin");
 const FormatProgressPlugin = require("../plugins/format-progress-plugin");
+const { terserCacheDirectory } = require("../utils/buildCache");
 
 const fs = require("fs");
 const path = require("path");
 const CWD = process.cwd();
-
+const devMode = process.env.NODE_ENV !== "production";
 const {
   entry,
   dllReferencePlugin,
@@ -21,10 +22,10 @@ const plugins = (config) => {
   let __plugins = [
     new webpack.ProgressPlugin(FormatProgressPlugin),
 
-    new CleanWebpackPlugin({
-      verbose: false,
-      cleanOnceBeforeBuildPatterns: ["**/*", "!dll", "!dll/**/*"],
-    }),
+    // new CleanWebpackPlugin({
+    //   verbose: false,
+    //   cleanOnceBeforeBuildPatterns: ["**/*", "!dll", "!dll/**/*"],
+    // }),
     // new webpack.ContextReplacementPlugin(/^\.\/locale$/, (context) => {
     //   if (!/\/moment\//.test(context.context)) return;
 
@@ -82,6 +83,11 @@ const webpackConfig = (config) => {
   return {
     context: path.join(CWD),
     entry: entry,
+    output: {
+      path: path.resolve(CWD, config.build),
+      publicPath: config.static[process.env.NODE_ENV],
+      filename: devMode ? config.chunk['js'].replace(/@(\S*)\./i,'@dev.') : config.chunk['js'],
+    },
     externals: config.externals || {},
     target: 'web', 
     module: rules(config),
@@ -123,8 +129,7 @@ const webpackConfig = (config) => {
       minimizer: [
         process.env.NODE_ENV === "production"
           ? new TerserPlugin({
-              cache: true,
-              // cache: path.resolve(__dirname, 'ugCache'),
+              cache: terserCacheDirectory,
               parallel: true,
               extractComments: true, // 提取license文件
               terserOptions: {

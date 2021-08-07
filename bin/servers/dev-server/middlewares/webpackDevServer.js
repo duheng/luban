@@ -2,6 +2,9 @@ const path = require('path')
 const fs = require('fs')
 const chalk = require('chalk');
 const {  getWebpackConfig } = require("../../../utils/webpackConfig");
+const {  cacheDllDirectory } = require("../../../utils/buildCache");
+
+const fg = require('fast-glob');
 
 const devServerWebpackConfig = getWebpackConfig('development');
 const { MODE_NAMES, WEBPACK_HMR_URL, HOT_HEART_BEAT_INTERVAL } = require('../utils/constants')
@@ -27,9 +30,10 @@ function transformRequestUrProjectName (url, projectName) {
 
 function transformRequestUrlPublicPath (url) {
     // return url
-    const __splitUrl =  url.split('/js')
-    const resUrl = __splitUrl.length > 1 ? __splitUrl[1] : __splitUrl[0]
-    return resUrl.replace(/[\/]+/, '\/')
+    // const __splitUrl =  url.split('/prd')
+    // const resUrl = __splitUrl.length > 1 ? __splitUrl[1] : __splitUrl[0]
+   //  return url.replace(/\/*/,'')
+    return url
 }
 
 function hackMultiple (projectName, url) {
@@ -81,21 +85,13 @@ let devCompilerCacheMap = new Map()
 const compilingSet = new Set()
 const compiledCallbackMap = new Map()
 
-let isCover
-module.exports = (hot, rePackDll, port) => async function (ctx, next) {
+module.exports = (hot, port) => async function (ctx, next) {
+    //console.log('devServerWebpackConfig----', devServerWebpackConfig)
     global.hot = hot
     process.env.NODE_ENV = 'development'
     ctx.res.setHeader('Access-Control-Allow-Origin', '*')
-    isCover = isCover === void 0 ? rePackDll : isCover
     ctx.req.url = ctx.req.url.replace(/\?.*/, '')
     const { modeInfo, mode, logger, curDir } = ctx
-   // 根据请当前请求所在项目更新缓存目录地址
-    // const rootDir = mode.resolveProjectRootDir(ctx.projectName)
-    // const configInfo = configResolver(rootDir)
-    
-    // const matchcwd =new RegExp(`${path.basename(CWD)}/`,"gmi");
-    // const dllBaseDir = global.cacheDllDirectory.split('.qcache')[1].replace(matchcwd,'')
-    // global.cacheDllDirectory = `${rootDir}/.qcache${dllBaseDir}`
 
     if (modeInfo.modeName === MODE_NAMES.MULTIPLE && (!ctx.projectName || !mode.isProjectName(ctx.projectName))) {
         await next()
@@ -107,7 +103,6 @@ module.exports = (hot, rePackDll, port) => async function (ctx, next) {
     }
  
     ctx.req.url = transformRequestUrlHash(ctx.req.url)
-    ctx.req.url = hackMultiple(ctx.projectName, ctx.req.url)
 
     const formatCacheUrl = (url) => path.join('/'+ctx.projectName, url ).replace('.map','').slice(1);
 
@@ -115,7 +110,9 @@ module.exports = (hot, rePackDll, port) => async function (ctx, next) {
 
     const __cacheId =  formatCacheUrl(transformRequestUrlPublicPath(ctx.req.url))
     const cacheId =  getCacheKey(__cacheId, devCompilerCacheMap)
-   console.log('AA---',cacheId)
+   console.log(__cacheId, '---AA---',cacheId)
+
+  // console.log( 'BBB---',devCompilerCacheMap)
     // 销毁中间件
     const { maxMiddleware } = global.ykit3CustomConfig || {}
     destroyMiddleware(maxMiddleware, cacheId, devCompilerCacheMap)
@@ -137,7 +134,7 @@ module.exports = (hot, rePackDll, port) => async function (ctx, next) {
     let { compiler, devServerMiddleware, _visit, hotMiddleware, webpackConfig, dllConfig, dllWebpackConfig, compiledAssetsNames } = devCompilerCacheMap.get(cacheId) || {}
 
     try { 
-        webpackConfig = devServerWebpackConfig
+        webpackConfig = {...devServerWebpackConfig}
 
         const splitOutputPath =  webpackConfig.output.path.split(CWD)[1]
         if(!!ctx.projectName) {
@@ -150,17 +147,14 @@ module.exports = (hot, rePackDll, port) => async function (ctx, next) {
         if(!isMoreDir) {
             ctx.req.url = transformRequestUrlPublicPath(ctx.req.url) 
         }
-        
        
         if (ctx.req.url && ctx.req.url.includes('_dll@')) { // 返回dll
             const fileNamePattern = ctx.requestUrl.pathname.split('/').pop().replace(/@[^.]*\./, '@*.')
-          //  var files000 = fs.readdirSync(`${global.cacheDllDirectory}/${fileNamePattern}`);
-//console.log('files000-----', files000)
-            // const files = await globby(`${global.cacheDllDirectory}/${fileNamePattern}`)
-            // if (files.length) {
-            //     ctx.body = fs.createReadStream( files[0]);
-            //     return
-            // }
+            const files = fg.sync(`${cacheDllDirectory}/${fileNamePattern}`)
+            if (files.length) {
+                ctx.body = fs.createReadStream(files[0]);
+                return
+            }
         }
 
         if (!devServerMiddleware) {
@@ -186,14 +180,13 @@ module.exports = (hot, rePackDll, port) => async function (ctx, next) {
                     }
                 }
                 // 判断所请求的资源是否在入口配置中
-                console.log(`${item}@dev${path.extname(ctx.req.url)}`,'---M3---',transformRequestUrlPublicPath(ctx.req.url))
-                const matchingPath = `${item}@dev${path.extname(ctx.req.url)}` === transformRequestUrlPublicPath(ctx.req.url);
+                console.log( '/'+ webpackConfig.output.filename.replace(/\/(\S*)@/i,`/${item}@`),'---M3---',transformRequestUrlPublicPath(ctx.req.url))
+                const matchingPath =   '/'+ webpackConfig.output.filename.replace(/\/(\S*)@/i,`/${item}@`) === transformRequestUrlPublicPath(ctx.req.url);
                 const matchingKey = `/${item}@dev${path.extname(ctx.req.url)}`  ===  transformRequestUrlPublicPath(ctx.req.url);
 
                 if (matchingPath || matchingKey) {
                     isRequestingEntry = true;
                 }
-
                 if(isRequestingEntry) {
                     if (hot) {
                         const hmrUrl = `http://127.0.0.1:${port}` + (modeInfo.modeName === MODE_NAMES.SINGLE ? `/${WEBPACK_HMR_URL}` : `/${ctx.projectName}/${WEBPACK_HMR_URL}`)
@@ -216,7 +209,6 @@ module.exports = (hot, rePackDll, port) => async function (ctx, next) {
 
             webpackConfig.entry = entryObj
             console.log('M2---',entryObj)
-            mode.handleOutputConfig(webpackConfig.output, port)
 
             // if (dllConfig.lib) {
             //     const dllReferencePlugins = generateDllReferencePlugins(ctx.projectName, Object.keys(dllConfig.lib))
@@ -246,7 +238,7 @@ module.exports = (hot, rePackDll, port) => async function (ctx, next) {
                 ctx.compiledAssetsNames = Object.keys(stats.compilation.assets)
                 while (compilingSet.has(cacheId)) { compilingSet.delete(cacheId) }
                 let __keyCacheId = setCacheIdMap(ctx.compiledAssetsNames).toString()
-            
+            console.log('compiledAssetsNames----', ctx.compiledAssetsNames )
                devCompilerCacheMap.set(__keyCacheId, {
                     compiler,
                     devServerMiddleware,

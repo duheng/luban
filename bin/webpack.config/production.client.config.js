@@ -42,12 +42,12 @@ const plugins = [
 
 module.exports = () => {
   return merge(__baseConfig, {
-    output: {
-      path: buildPath,
-      publicPath: config.static[process.env.NODE_ENV],
-      chunkFilename: "js/[name]-[chunkhash:8].js",
-      filename: jsName,
-    },
+    // output: {
+    //   path: buildPath,
+    //   publicPath: config.static[process.env.NODE_ENV],
+    //   chunkFilename: "js/[name]-[chunkhash:8].js",
+    //   filename: jsName,
+    // },
     mode: "production",
     devtool: "source-map",
     plugins,

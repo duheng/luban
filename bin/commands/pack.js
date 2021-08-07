@@ -6,6 +6,7 @@ const path = require("path");
 const CWD = process.cwd();
 const { config } = require("../utils/common");
 const {  getWebpackConfig } = require("../utils/webpackConfig");
+
 const webpack = require("webpack");
 const pack = (webpackConfig) => {
   return new Promise((resolve, reject) => {
@@ -40,14 +41,6 @@ module.exports = async (options) => {
     process.env.NODE_ENV = "development";
     webpackConfig = getWebpackConfig('server');
   } else {
-    try {
-      if (!fs.existsSync(path.join(CWD, config.build, config.dll))) {
-        await require("./dll")(options);
-      }
-    } catch (e) {
-      console.log("打包dll失败：", e);
-    }
-
     if (options.prod) {
       //生产环境
       process.env.NODE_ENV = "production";
@@ -56,7 +49,18 @@ module.exports = async (options) => {
       process.env.NODE_ENV = "development";
       webpackConfig = getWebpackConfig('development');
     }
+
+    try {
+      const {  cacheDllDirectory } = require("../utils/buildCache");
+      if (!fs.existsSync(cacheDllDirectory)) {
+        await require("./dll")(options);
+      }
+    } catch (e) {
+      console.log("打包dll失败：", e);
+    }
+
   }
+  console.log('webpackConfig----', webpackConfig)
  // const wbpackAction = `${webpackCommand} --config ${webpackConfig()} --mode=${process.env.NODE_ENV} --colors`;
   await pack(webpackConfig);
 };
