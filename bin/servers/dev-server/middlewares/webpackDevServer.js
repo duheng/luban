@@ -1,14 +1,12 @@
 const path = require('path')
 const fs = require('fs')
 const chalk = require('chalk');
+const fg = require('fast-glob');
 const {  getWebpackConfig } = require("../../../utils/webpackConfig");
 const {  cacheDllDirectory } = require("../../../utils/buildCache");
-
-const fg = require('fast-glob');
-
+const { referenceDll, isDllFile } = require("../../../commands/dll")
 const devServerWebpackConfig = getWebpackConfig('development');
 const { MODE_NAMES, WEBPACK_HMR_URL, HOT_HEART_BEAT_INTERVAL } = require('../utils/constants')
-const { generateDllWebpackConfig, generateDllReferencePlugins } = require('../../../utils/webpackConfig')
 const webpack = require('webpack')
 const webpackDevMiddleware = require('webpack-dev-middleware')
 const webpackHotMiddleware = require('webpack-hot-middleware')
@@ -19,13 +17,6 @@ const { match } = require('assert');
 const CWD = process.cwd()
 function transformRequestUrlHash (url) {
     return url.replace(/@[^.]*\./, '@dev.')
-}
-
-function transformRequestUrProjectName (url, projectName) {
-    if (url.includes('__webpack_hmr')) {
-        return url
-    }
-    return url.replace(projectName, '')
 }
 
 function transformRequestUrlPublicPath (url) {
@@ -147,8 +138,8 @@ module.exports = (hot, port) => async function (ctx, next) {
         if(!isMoreDir) {
             ctx.req.url = transformRequestUrlPublicPath(ctx.req.url) 
         }
-       
-        if (ctx.req.url && ctx.req.url.includes('_dll@')) { // 返回dll
+
+        if (ctx.req.url && isDllFile(ctx.req.url)) { // 返回dll
             const fileNamePattern = ctx.requestUrl.pathname.split('/').pop().replace(/@[^.]*\./, '@*.')
             const files = fg.sync(`${cacheDllDirectory}/${fileNamePattern}`)
             if (files.length) {
@@ -209,11 +200,7 @@ module.exports = (hot, port) => async function (ctx, next) {
 
             webpackConfig.entry = entryObj
             console.log('M2---',entryObj)
-
-            // if (dllConfig.lib) {
-            //     const dllReferencePlugins = generateDllReferencePlugins(ctx.projectName, Object.keys(dllConfig.lib))
-            //     webpackConfig.plugins.push(...dllReferencePlugins.filter(Boolean))
-            // }
+            webpackConfig.plugins.push(...referenceDll(ctx.projectName).filter(Boolean))
 
             webpackConfig.context = path.resolve(ctx.projectName)
 
@@ -272,12 +259,11 @@ module.exports = (hot, port) => async function (ctx, next) {
         }
         ctx.compiledAssetsNames = compiledAssetsNames
         ctx.compiler = compiler
-        // {
-        //     const dllFiles = await globby(path.join(global.cacheDllDirectory, '*_dll@*'))
-        //     ctx.dllAssets = dllFiles.map(item =>{
-        //         return  item.split('/').pop()
-        //     })
-        // }
+        const fileNamePattern = ctx.requestUrl.pathname.split('/').pop().replace(/@[^.]*\./, '@*.')
+        const dllFiles = fg.sync(`${cacheDllDirectory}/${fileNamePattern}`)
+        ctx.dllAssets = dllFiles.map(item =>{
+            return  item.split('/').pop()
+        })
         ctx.res.statusCode = 200
         await devServerMiddleware(ctx.req, ctx.res, next)
     } catch (e) {

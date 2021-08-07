@@ -4,6 +4,8 @@ require("shelljs/global");
 const fs = require("fs");
 const path = require("path");
 const CWD = process.cwd();
+const { printLog } = require('../utils/base')
+
 const { config } = require("../utils/common");
 const {  getWebpackConfig } = require("../utils/webpackConfig");
 
@@ -49,18 +51,17 @@ module.exports = async (options) => {
       process.env.NODE_ENV = "development";
       webpackConfig = getWebpackConfig('development');
     }
-
+    const {  cacheDllDirectory } = require("../utils/buildCache");
+    const { packDll, referenceDll } = require("./dll")
     try {
-      const {  cacheDllDirectory } = require("../utils/buildCache");
       if (!fs.existsSync(cacheDllDirectory)) {
-        await require("./dll")(options);
+        await packDll(options);
       }
     } catch (e) {
       console.log("打包dll失败：", e);
     }
-
+    webpackConfig.plugins.push(...referenceDll('').filter(Boolean))
   }
-  console.log('webpackConfig----', webpackConfig)
- // const wbpackAction = `${webpackCommand} --config ${webpackConfig()} --mode=${process.env.NODE_ENV} --colors`;
+
   await pack(webpackConfig);
 };

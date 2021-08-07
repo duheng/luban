@@ -3,20 +3,51 @@
 require('shelljs/global')
 const path = require('path')
 const fs = require('fs')
-const { config, webpackCommand } = require('../utils/common')
+const webpack = require("webpack");
+
+const { printLog } = require('../utils/base')
+const { config, webpackCommand, isContainFile } = require('../utils/common')
+const {  cacheDllDirectory } = require("../utils/buildCache");
+
 const webpackDll = path.resolve(__dirname, '..', 'webpack.config', 'webpack.dll') 
 
-const dll = (options) => {
-  return new Promise((resolve, reject) => {
-    exec(`${webpackCommand} --config ${webpackDll} --mode=production --colors`)
-    resolve(true)
-  })
-}
-
-module.exports = async (options) => {
+const packDll = (options) => {
 	if(!!config.library && Object.keys(config.library).length > 0){
-		await dll(options)
+		return new Promise((resolve, reject) => {
+			exec(`${webpackCommand} --config ${webpackDll} --mode=production --colors`)
+			resolve(true)
+		})
 	} else {
-		return null
+		return []
 	}
 }
+
+const referenceDll = (projectName) => {
+	const ctxPath = path.resolve(projectName)
+	if(!!config.library && Object.keys(config.library).length > 0){
+		return Object.keys(config.library).map(name => {
+			const fileName = isContainFile(path.join(cacheDllDirectory), `${name}[^.]*\\.manifest\\.json`)
+			if (!fileName) {
+				printLog({type: 'error', text:`没有找到${name}对应的dll manifest.json 文件`})
+				return null
+			}
+			return new webpack.DllReferencePlugin({
+				context: ctxPath,
+				manifest: require(path.join(cacheDllDirectory, fileName))
+			})
+		})
+	} else {
+		return []
+	}
+}
+
+const isDllFile = (url) => {
+	const __url = url.split('/').pop().split('@')[0]
+	return Object.keys(config.library).includes(__url)
+}
+
+module.exports = {
+	packDll,
+    referenceDll,
+	isDllFile
+} 

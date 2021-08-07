@@ -136,7 +136,22 @@ const genAlias = (projectDir, config) => {
   return { ...map };
 };
 
-
+const isContainFile = (dir, pattern) => {
+  try {
+      if (!fs.statSync(dir).isDirectory()) {
+          return false
+      }
+  } catch (e) {
+      return false
+  }
+  const filenames = fs.readdirSync(dir)
+  for (let i = 0; i < filenames.length; i++) {
+      if (new RegExp(pattern).test(filenames[i])) {
+          return filenames[i]
+      }
+  }
+  return false
+}
 
 module.exports = {
   webpackCommand: getWebpackCommand(),
@@ -146,4 +161,5 @@ module.exports = {
   loadDllAssets,
   genAlias,
   getTemplate,
+  isContainFile,
 };

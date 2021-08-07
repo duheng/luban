@@ -14,6 +14,7 @@ const webpackHotModuleReplacement = require('./middlewares/webpackHotModuleRepla
 const custom = require('./middlewares/custom')
 const myStatic = require('./middlewares/myStatic')
 const fileRes = require('./middlewares/fileRes')
+const packDll = require('./middlewares/packDll')
 //const autoCheck = require('./middlewares/autoCheck')
 const { resolveStartModeInfo } = require('./utils/mode')
 const modeFactory = require('./modes/modeFactory')
@@ -24,6 +25,7 @@ function createDevServer ({ curDir, modeInfo, mode, options }) {
     app.use(favicon(path.resolve(__dirname, './favicon.ico')))
     app.use(ctxFill({ modeInfo, mode, printLog, curDir }))// 填充 ctx
     app.use(resolveProjectName)// 解析工程名
+    app.use(packDll)// 打包dll
    // app.use(autoCheck({ modeInfo, mode, printLog, curDir })) // 依赖检查
     app.use(fileRes(modeInfo))
     app.use(webpackDevServer(!!options.hot, options.port || 8888))

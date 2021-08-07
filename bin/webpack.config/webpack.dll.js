@@ -24,7 +24,8 @@ module.exports = {
     ],
     output:{
         path: dllPath,
-        filename:'[name]_dll@[chunkhash].js',
+        filename:'[name]@[chunkhash].js',
         library
     }
 }
+
