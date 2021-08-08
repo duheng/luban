@@ -83,7 +83,6 @@ const plugins = (config) => {
   return __plugins;
 };
 const webpackConfig = (config) => {
-  console.log("UU-------", path.join(CWD,projectName, config.base))
   return {
     context: path.join(CWD),
     entry: entry,

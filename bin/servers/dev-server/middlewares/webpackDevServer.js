@@ -110,9 +110,6 @@ module.exports = (hot, port) => async function (ctx, next) {
 
     const __cacheId =  formatCacheUrl(transformRequestUrlPublicPath(ctx.req.url))
     const cacheId =  getCacheKey(__cacheId, devCompilerCacheMap)
-   console.log(__cacheId, '---AA---',cacheId)
-
-  // console.log( 'BBB---',devCompilerCacheMap)
     // 销毁中间件
     const { maxMiddleware } = global.ykit3CustomConfig || {}
     destroyMiddleware(maxMiddleware, cacheId, devCompilerCacheMap)
@@ -175,7 +172,6 @@ module.exports = (hot, port) => async function (ctx, next) {
                     }
                 }
                 // 判断所请求的资源是否在入口配置中
-                console.log( '/'+ webpackConfig.output.filename.replace('[name]',item),'---M3---',transformRequestUrlPublicPath(ctx.req.url))
                 const matchingPath =   '/'+ webpackConfig.output.filename.replace('[name]',item) === transformRequestUrlPublicPath(ctx.req.url);
                 const matchingKey = `/${item}@dev${path.extname(ctx.req.url)}`  ===  transformRequestUrlPublicPath(ctx.req.url);
 
@@ -197,13 +193,11 @@ module.exports = (hot, port) => async function (ctx, next) {
                 }
             })
 
-         console.log('M1---',entryObj)
            if(Object.keys(entryObj).length === 0) {
              return await next()
            }
 
             webpackConfig.entry = entryObj
-            console.log('M2---',entryObj)
             webpackConfig.plugins.push(...referenceDll(ctx.projectName).filter(Boolean))
 
             webpackConfig.context = path.resolve(ctx.projectName)
@@ -229,7 +223,6 @@ module.exports = (hot, port) => async function (ctx, next) {
                 ctx.compiledAssetsNames = Object.keys(stats.compilation.assets)
                 while (compilingSet.has(cacheId)) { compilingSet.delete(cacheId) }
                 let __keyCacheId = setCacheIdMap(ctx.compiledAssetsNames).toString()
-            console.log('compiledAssetsNames----', ctx.compiledAssetsNames )
                devCompilerCacheMap.set(__keyCacheId, {
                     compiler,
                     devServerMiddleware,

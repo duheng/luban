@@ -60,7 +60,6 @@ const filterFile = (dir, pattern) => {
 
 const getEntry = () => {
   const __config = !!global.devServerconfig ? global.devServerconfig :  getConfig();
-  console.log('__config++++', global.devServerconfig)
   if (typeof __config.entry != "object") {
     return printLog({type:'error',text:'entry必须object类型\n 例如："entry": {"main":"./src/pages/index.js"}\r\n'})
   }
