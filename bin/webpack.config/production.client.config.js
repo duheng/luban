@@ -5,7 +5,9 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const baseConfig = require("./base.config");
 const CreatVersionPlugin = require("../plugins/creat-version-plugin");
 const CreatHtmlPlugin = require("../plugins/creat-html-plugin");
-const { config , getTemplate } = require("../utils/common");
+const { getConfig , getTemplate } = require("../utils/common");
+const config = !!global.devServerconfig ? global.devServerconfig : getConfig()
+
 let __baseConfig = baseConfig(config);
 const CWD = process.cwd();
 

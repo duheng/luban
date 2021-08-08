@@ -4,9 +4,12 @@ const fs = require("fs");
 const confman = require("confman");
 const CWD = process.cwd();
 const { printLog, getUtilName } = require('./base');
+const __projectName = global.projectName ? `${global.projectName}/` : ''
+
 const getConfig = () => {
     const __name = getUtilName()
     const __projectName = global.projectName ? `${global.projectName}/` : ''
+
     const __config =  confman.load(`${CWD}/${__projectName}${__name}`);
     if(Object.keys(__config).length > 0) {
       return __config;
@@ -56,14 +59,15 @@ const filterFile = (dir, pattern) => {
 };
 
 const getEntry = () => {
-  const __config = getConfig();
+  const __config = !!global.devServerconfig ? global.devServerconfig :  getConfig();
+  console.log('__config++++', global.devServerconfig)
   if (typeof __config.entry != "object") {
     return printLog({type:'error',text:'entry必须object类型\n 例如："entry": {"main":"./src/pages/index.js"}\r\n'})
   }
   if (Object.keys(__config.entry).length > 0) {
     return __config.entry;
   } else {
-    const pageDir = path.join(CWD, __config.base, __config.pages);
+    const pageDir = path.join(CWD,__projectName, __config.base, __config.pages);
     try {
       if (!fs.existsSync(pageDir)) {
         printLog({type:'error',text:'请设置项目配置文件入口entry字段'})

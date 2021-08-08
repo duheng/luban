@@ -141,7 +141,6 @@ module.exports = (hot, port) => async function (ctx, next) {
             const __path = splitOutputPath.replace(ctx.projectName,'')
             webpackConfig.output.path =  path.resolve(path.join(ctx.projectName,__path))
             webpackConfig.output.filename = `${ctx.projectName}/${webpackConfig.output.filename}`
-       console.log('webpackConfig.output.path ---', webpackConfig.output )
         }
 
         if (ctx.req.url && isDllFile(ctx.req.url)) { // 返回dll

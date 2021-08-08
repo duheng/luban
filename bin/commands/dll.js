@@ -4,17 +4,16 @@ require('shelljs/global')
 const path = require('path')
 const fs = require('fs')
 const webpack = require("webpack");
-
 const { printLog } = require('../utils/base')
-const { getConfig, webpackCommand, isContainFile } = require('../utils/common')
+const { getConfig, isContainFile } = require('../utils/common')
 const {  cacheDllDirectory } = require("../utils/buildCache");
 const config = !!global.devServerconfig ? global.devServerconfig : getConfig()
-const webpackDll = path.resolve(__dirname, '..', 'webpack.config', 'webpack.dll') 
 
 const packDll = (options) => {
 	if(!!config.library && Object.keys(config.library).length > 0){
 		return new Promise((resolve, reject) => {
-			exec(`${webpackCommand} --config ${webpackDll} --mode=production --colors`)
+			const webpackDll = path.resolve(__dirname, '..', 'webpack.config', 'webpack.dll') 
+			exec(`webpack --config ${webpackDll} --mode=production --colors`)
 			resolve(true)
 		})
 	} else {

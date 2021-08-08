@@ -1,4 +1,5 @@
-const { config } = require('./common');
+const { getConfig } = require('./common');
+const config = !!global.devServerconfig ? global.devServerconfig : getConfig()
 const webpackConfig = {
   development: '../webpack.config/development.client.config',
   production: '../webpack.config/production.client.config',

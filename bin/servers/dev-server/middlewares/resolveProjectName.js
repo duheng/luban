@@ -13,6 +13,7 @@ module.exports = async (ctx, next) => {
     const { config } = require('../../../utils/common')
     if(config && Object.keys(config).length > 0) {
         global.devServerconfig = config
+        await next()
     }
-    await next()
+  
 }

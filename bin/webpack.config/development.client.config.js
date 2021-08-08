@@ -3,7 +3,9 @@ const merge = require("webpack-merge");
 const path = require("path");
 const baseConfig = require("./base.config");
 const CreatHtmlPlugin = require("../plugins/creat-html-plugin");
-const { config, getTemplate } = require("../utils/common");
+const { getConfig, getTemplate } = require("../utils/common");
+const config = !!global.devServerconfig ? global.devServerconfig : getConfig()
+
 const __baseConfig = baseConfig(config);
 const CWD = process.cwd();
 
