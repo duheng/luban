@@ -6,9 +6,9 @@ const fs = require('fs')
 const webpack = require("webpack");
 
 const { printLog } = require('../utils/base')
-const { config, webpackCommand, isContainFile } = require('../utils/common')
+const { getConfig, webpackCommand, isContainFile } = require('../utils/common')
 const {  cacheDllDirectory } = require("../utils/buildCache");
-
+const config = !!global.devServerconfig ? global.devServerconfig : getConfig()
 const webpackDll = path.resolve(__dirname, '..', 'webpack.config', 'webpack.dll') 
 
 const packDll = (options) => {

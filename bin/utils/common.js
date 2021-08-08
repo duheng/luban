@@ -4,12 +4,12 @@ const fs = require("fs");
 const confman = require("confman");
 const CWD = process.cwd();
 const { printLog, getUtilName } = require('./base');
-
 const getConfig = () => {
     const __name = getUtilName()
-    const configs = confman.load(`${CWD}/${__name}`);
-    if(Object.keys(configs).length > 0) {
-      return configs;
+    const __projectName = global.projectName ? `${global.projectName}/` : ''
+    const __config =  confman.load(`${CWD}/${__projectName}${__name}`);
+    if(Object.keys(__config).length > 0) {
+      return __config;
     } else {
       printLog({type:'error',text:`没有加载到配置文件${__name}.*`})
     }
@@ -156,6 +156,7 @@ const isContainFile = (dir, pattern) => {
 module.exports = {
   webpackCommand: getWebpackCommand(),
   config: getConfig(),
+  getConfig,
   entry: getEntry(),
   dllReferencePlugin,
   loadDllAssets,

@@ -11,6 +11,9 @@ const fs = require("fs");
 const path = require("path");
 const CWD = process.cwd();
 const devMode = process.env.NODE_ENV !== "production";
+const projectName = global.projectName ? `${global.projectName}/` : ''
+
+
 const {
   entry,
   dllReferencePlugin,
@@ -80,6 +83,7 @@ const plugins = (config) => {
   return __plugins;
 };
 const webpackConfig = (config) => {
+  console.log("UU-------", path.join(CWD,projectName, config.base))
   return {
     context: path.join(CWD),
     entry: entry,
@@ -100,7 +104,7 @@ const webpackConfig = (config) => {
       ],
       alias: {
         vue$: "vue/dist/vue.esm.js",
-        ...genAlias(path.join(CWD, config.base), config),
+        ...genAlias(path.join(CWD, projectName,config.base), config),
       },
       extensions: [".js", ".jsx", ".scss", ".css",  ".vue", ".json", ".less",".ts", ".tsx"],
     },

@@ -104,7 +104,7 @@ module.exports = (hot, port) => async function (ctx, next) {
     
     ctx.req.url = transformRequestUrlHash(ctx.req.url)
 
-    const formatCacheUrl = (url) => path.join('/'+ctx.projectName, url ).replace('.map','').slice(1);
+    const formatCacheUrl = (url) => path.join('/'+url ).replace('.map','').slice(1);
 
     const setCacheIdMap = ( compiledAssetsNames) => compiledAssetsNames.map((item)=>formatCacheUrl(item));
 
@@ -140,6 +140,8 @@ module.exports = (hot, port) => async function (ctx, next) {
         if(!!ctx.projectName) {
             const __path = splitOutputPath.replace(ctx.projectName,'')
             webpackConfig.output.path =  path.resolve(path.join(ctx.projectName,__path))
+            webpackConfig.output.filename = `${ctx.projectName}/${webpackConfig.output.filename}`
+       console.log('webpackConfig.output.path ---', webpackConfig.output )
         }
 
         if (ctx.req.url && isDllFile(ctx.req.url)) { // 返回dll
@@ -174,8 +176,8 @@ module.exports = (hot, port) => async function (ctx, next) {
                     }
                 }
                 // 判断所请求的资源是否在入口配置中
-                console.log( '/'+ webpackConfig.output.filename.replace(/\/(\S*)@/i,`/${item}@`),'---M3---',transformRequestUrlPublicPath(ctx.req.url))
-                const matchingPath =   '/'+ webpackConfig.output.filename.replace(/\/(\S*)@/i,`/${item}@`) === transformRequestUrlPublicPath(ctx.req.url);
+                console.log( '/'+ webpackConfig.output.filename.replace('[name]',item),'---M3---',transformRequestUrlPublicPath(ctx.req.url))
+                const matchingPath =   '/'+ webpackConfig.output.filename.replace('[name]',item) === transformRequestUrlPublicPath(ctx.req.url);
                 const matchingKey = `/${item}@dev${path.extname(ctx.req.url)}`  ===  transformRequestUrlPublicPath(ctx.req.url);
 
                 if (matchingPath || matchingKey) {
