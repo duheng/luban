@@ -2,10 +2,7 @@ const path = require('path')
 const fs = require('fs')
 const chalk = require('chalk');
 const fg = require('fast-glob');
-const {  getWebpackConfig } = require("../../../utils/webpackConfig");
-const {  cacheDllDirectory } = require("../../../utils/buildCache");
-const { referenceDll, isDllFile } = require("../../../commands/dll")
-const devServerWebpackConfig = getWebpackConfig('development');
+
 const { MODE_NAMES, WEBPACK_HMR_URL, HOT_HEART_BEAT_INTERVAL } = require('../utils/constants')
 const webpack = require('webpack')
 const webpackDevMiddleware = require('webpack-dev-middleware')
@@ -13,7 +10,6 @@ const webpackHotMiddleware = require('webpack-hot-middleware')
 // const { isChangeDll, setDllVersion } = require('../../../utils/dllpitch')
 // const { webpackStatsFormatter } = require('../../../utils/print')
 const isString = val => typeof val === 'string';
-const { match } = require('assert');
 const CWD = process.cwd()
 function transformRequestUrlHash (url) {
     return url.replace(/@[^.]*\./, '@dev.')
@@ -27,12 +23,12 @@ function transformRequestUrlPublicPath (url) {
     return url
 }
 
-function hackMultiple (projectName, url) {
-    if(projectName && !!url.match(projectName) && !url.match('prd')) { // hack 多文件夹请求中未带prd的情况，转发到正确地址
-        return url.replace(projectName,`${projectName}/prd`)
-    }
-    return url;
-}
+// function hackMultiple (projectName, url) {
+//     if(projectName && !!url.match(projectName) && !url.match('prd')) { // hack 多文件夹请求中未带prd的情况，转发到正确地址
+//         return url.replace(projectName,`${projectName}/prd`)
+//     }
+//     return url;
+// }
 // 销毁中间件
 function destroyMiddleware (maxMiddleware, cacheId, devCompilerCacheMap) {
     const now = +new Date();
@@ -70,7 +66,18 @@ function getCacheKey (cacheId, devCompilerCacheMap) {
     return __key
 }
 
-
+function loadConfig() {
+    const {  getWebpackConfig } = require("../../../utils/webpackConfig");
+    const {  cacheDllDirectory } = require("../../../utils/buildCache");
+    const { referenceDll, isDllFile } = require("../../../commands/dll")
+    const devServerWebpackConfig = getWebpackConfig('development');
+    return {
+        cacheDllDirectory,
+        referenceDll,
+        isDllFile,
+        devServerWebpackConfig
+    }
+}
 // 工程编译结果的缓存
 let devCompilerCacheMap = new Map()
 const compilingSet = new Set()
@@ -83,7 +90,7 @@ module.exports = (hot, port) => async function (ctx, next) {
     ctx.res.setHeader('Access-Control-Allow-Origin', '*')
     ctx.req.url = ctx.req.url.replace(/\?.*/, '')
     const { modeInfo, mode, logger, curDir } = ctx
-
+   
     if (modeInfo.modeName === MODE_NAMES.MULTIPLE && (!ctx.projectName || !mode.isProjectName(ctx.projectName))) {
         await next()
         return
@@ -92,7 +99,9 @@ module.exports = (hot, port) => async function (ctx, next) {
     if (modeInfo.modeName === MODE_NAMES.SINGLE) {
         ctx.projectName = ''
     }
- 
+
+    const { cacheDllDirectory, referenceDll, isDllFile, devServerWebpackConfig } = loadConfig()
+    
     ctx.req.url = transformRequestUrlHash(ctx.req.url)
 
     const formatCacheUrl = (url) => path.join('/'+ctx.projectName, url ).replace('.map','').slice(1);
@@ -131,12 +140,6 @@ module.exports = (hot, port) => async function (ctx, next) {
         if(!!ctx.projectName) {
             const __path = splitOutputPath.replace(ctx.projectName,'')
             webpackConfig.output.path =  path.resolve(path.join(ctx.projectName,__path))
-        }
-       
-        const isMoreDir = Object.keys(webpackConfig.entry).filter(item=>!!item.match('/')).length > 0
-       
-        if(!isMoreDir) {
-            ctx.req.url = transformRequestUrlPublicPath(ctx.req.url) 
         }
 
         if (ctx.req.url && isDllFile(ctx.req.url)) { // 返回dll
@@ -207,7 +210,7 @@ module.exports = (hot, port) => async function (ctx, next) {
             compiler = webpack(webpackConfig)
             devServerMiddleware = webpackDevMiddleware(compiler, {
                 logLevel: 'debug',
-                writeToDisk: isMoreDir,
+                writeToDisk: true,
                 hot,
                 watchOptions: {
                      aggregateTimeout: 200,
