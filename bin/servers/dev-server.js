@@ -2,7 +2,11 @@ const path = require("path");
 const fs = require("fs");
 const proxy = require("koa-proxies");
 const Webpack = require("webpack");
-const { devMiddleware, hotMiddleware } = require("koa-webpack-middleware");
+//const {  hotMiddleware } = require("koa-webpack-middleware");
+//const devMiddleware = require("webpack-dev-middleware");
+const hotMiddleware = require("webpack-hot-middleware");
+
+
 const __config = require("../webpack.config/development.client.config")();
 const koa = require("koa");
 const app = new koa();
@@ -42,7 +46,7 @@ const formatConfig = (config) => {
 
 		__entryNew[i] = [
 			__entry[i],
-			"webpack-hot-middleware/client?reload=false&path=/__webpack_hmr&timeout=20000",
+			"webpack-hot-middleware/client?reload=true&path=/__webpack_hmr&timeout=20000",
 		];
 	}
 	__config.entry = __entryNew;
@@ -87,49 +91,61 @@ module.exports = (targetConfig) => {
 			);
 		});
 	}
-
+	// , {
+	// 	//writeToDisk: true,
+	// 	publicPath: config.output.publicPath,
+	// 	stats: {
+	// 		colors: true,
+	// 		cached: true,
+	// 		exclude: [/node_modules[\\\/]/],
+	// 	},
+	// }
 	app.use(
-		devMiddleware(compile, {
-			noInfo: false,
-			hot: false,
-			writeToDisk: true,
-			publicPath: config.output.publicPath,
-			stats: {
-				colors: true,
-				cached: true,
-				exclude: [/node_modules[\\\/]/],
-			},
-		})
+		require("webpack-dev-middleware")(compile)
 	);
 
-	app.use(hotMiddleware(compile));
-
-	app.use(
-		//重定向到首页
-		async (ctx, next) => {
-			const __instans = [".html", ".htm", ""];
-			if (__instans.indexOf(path.extname(ctx.url)) > -1) {
-				const __indexHtml = indexHtml(ctx.url);
-				const filename = path.join(compile.outputPath, __indexHtml);
-
-				const htmlFile = await new Promise(function(resolve, reject) {
-					compile.outputFileSystem.readFile(
-						filename,
-						(err, result) => {
-							if (err) {
-								reject(err);
-							} else {
-								resolve(result);
-							}
-						}
-					);
-				});
-				ctx.type = "html";
-				ctx.body = htmlFile;
-			}
-			await next();
+	app.use(require("webpack-hot-middleware")(compile));
+	compile.hooks.done.tap("done", stats => {
+		const info = stats.toJson();
+		if (stats.hasWarnings()) {
+			console.warn(info.warnings);
 		}
-	);
+	
+		if (stats.hasErrors()) {
+			console.error(info.errors);
+			return;
+		}
+		console.log("打包完成");
+	});
+	
+	
+	
+	// app.use(
+	// 	//重定向到首页
+	// 	async (ctx, next) => {
+	// 		const __instans = [".html", ".htm", ""];
+	// 		if (__instans.indexOf(path.extname(ctx.url)) > -1) {
+	// 			const __indexHtml = indexHtml(ctx.url);
+	// 			const filename = path.join(compile.outputPath, __indexHtml);
+
+	// 			const htmlFile = await new Promise(function(resolve, reject) {
+	// 				compile.outputFileSystem.readFile(
+	// 					filename,
+	// 					(err, result) => {
+	// 						if (err) {
+	// 							reject(err);
+	// 						} else {
+	// 							resolve(result);
+	// 						}
+	// 					}
+	// 				);
+	// 			});
+	// 			ctx.type = "html";
+	// 			ctx.body = htmlFile;
+	// 		}
+	// 		//await next();
+	// 	}
+	// );
 
 	app.listen(targetConfig.port, () => {
 		console.log(

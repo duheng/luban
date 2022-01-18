@@ -33,7 +33,11 @@ const plugins = (config) => {
     //       request: '../locale', // resolved relatively
     //   });
     // }),
-    new webpack.IgnorePlugin(/\.\/locale/, /moment/),
+   // new webpack.IgnorePlugin(/\.\/locale/, /moment/),
+   new webpack.IgnorePlugin({
+    resourceRegExp: /^\.\/locale$/,
+    contextRegExp: /moment$/,
+  }),
     // new webpack.IgnorePlugin(/\.\/locale/, /moment/,/(en|zh-cn)\.js/),
 //   new webpack.ContextReplacementPlugin(
 //     // 需要被处理的文件目录位置
@@ -100,7 +104,7 @@ const webpackConfig = (config) => {
     },
     resolveLoader: {
       modules: [path.resolve(__dirname, "..", "..", "node_modules")],
-      moduleExtensions: ["-loader"],
+     // moduleExtensions: ["-loader"],
     },
     plugins: plugins(config),
     optimization: {
@@ -117,7 +121,7 @@ const webpackConfig = (config) => {
         },
       },
       // 用模块路劲名字作为webpack的模块名
-      namedModules: true,
+      moduleIds: 'named',
       minimize: false,
       // https://github.com/webpack-contrib/terser-webpack-plugin#terseroptions
       minimizer: [
