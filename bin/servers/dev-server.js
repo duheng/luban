@@ -8,8 +8,8 @@ const hotMiddleware = require("webpack-hot-middleware");
 
 
 const __config = require("../webpack.config/development.client.config")();
-const koa = require("koa");
-const app = new koa();
+const express = require("express");
+const app = express();
 
 const formatConfig = (config) => {
 	let __config = { ...config };
@@ -76,21 +76,21 @@ const config = formatConfig(__config);
 const compile = Webpack(config);
 
 module.exports = (targetConfig) => {
-	const __proxy = targetConfig.proxy;
-	if (__proxy && __proxy.length > 0) {
-		console.log(`[luban] 已为您初始化以下 ${__proxy.length} 个代理 \n`);
-		__proxy.map((item) => {
-			console.log(`${item.path} -> ${item.target}/${item.path}\n`);
-			app.use(
-				proxy(item.path, {
-					target: item.target,
-					changeOrigin: true,
-					rewrite: path,
-					logs: true,
-				})
-			);
-		});
-	}
+	// const __proxy = targetConfig.proxy;
+	// if (__proxy && __proxy.length > 0) {
+	// 	console.log(`[luban] 已为您初始化以下 ${__proxy.length} 个代理 \n`);
+	// 	__proxy.map((item) => {
+	// 		console.log(`${item.path} -> ${item.target}/${item.path}\n`);
+	// 		app.use(
+	// 			proxy(item.path, {
+	// 				target: item.target,
+	// 				changeOrigin: true,
+	// 				rewrite: path,
+	// 				logs: true,
+	// 			})
+	// 		);
+	// 	});
+	// }
 	// , {
 	// 	//writeToDisk: true,
 	// 	publicPath: config.output.publicPath,
@@ -100,52 +100,56 @@ module.exports = (targetConfig) => {
 	// 		exclude: [/node_modules[\\\/]/],
 	// 	},
 	// }
-	app.use(
-		require("webpack-dev-middleware")(compile)
-	);
-
-	app.use(require("webpack-hot-middleware")(compile));
-	compile.hooks.done.tap("done", stats => {
-		const info = stats.toJson();
-		if (stats.hasWarnings()) {
-			console.warn(info.warnings);
-		}
-	
-		if (stats.hasErrors()) {
-			console.error(info.errors);
-			return;
-		}
-		console.log("打包完成");
+	function applyMiddleware(middleware, req, res) {
+		const _send = res.send;
+		return new Promise((resolve, reject) => {
+		  try {
+			res.send = function () {
+			  _send.apply(res, arguments) && resolve(false);
+			};
+			middleware(req, res, resolve.bind(null, true));
+		  } catch (error) {
+			reject(error);
+		  }
+		});
+	  }
+	const devMiddleware = require("webpack-dev-middleware")(compile, {
+		serverSideRender: true 
 	});
 	
-	
-	
-	// app.use(
-	// 	//重定向到首页
-	// 	async (ctx, next) => {
-	// 		const __instans = [".html", ".htm", ""];
-	// 		if (__instans.indexOf(path.extname(ctx.url)) > -1) {
-	// 			const __indexHtml = indexHtml(ctx.url);
-	// 			const filename = path.join(compile.outputPath, __indexHtml);
+	app.use(devMiddleware);
 
-	// 			const htmlFile = await new Promise(function(resolve, reject) {
-	// 				compile.outputFileSystem.readFile(
-	// 					filename,
-	// 					(err, result) => {
-	// 						if (err) {
-	// 							reject(err);
-	// 						} else {
-	// 							resolve(result);
-	// 						}
-	// 					}
-	// 				);
-	// 			});
-	// 			ctx.type = "html";
-	// 			ctx.body = htmlFile;
-	// 		}
-	// 		//await next();
+	app.use(require("webpack-hot-middleware")(compile));
+	// compile.hooks.done.tap("done", stats => {
+	// 	const info = stats.toJson();
+	// 	if (stats.hasWarnings()) {
+	// 		console.warn(info.warnings);
 	// 	}
-	// );
+	
+	// 	if (stats.hasErrors()) {
+	// 		console.error(info.errors);
+	// 		return;
+	// 	}
+	// 	console.log("打包完成");
+	// });
+	
+	
+	
+	app.use("*",(req,res, next) => {//重定向到首页
+		const __instans = [".html", ".htm", ""];
+		if (__instans.indexOf(path.extname(req.url)) > -1) {
+			const __indexHtml = indexHtml(req.url);
+			const filename = path.join(compile.outputPath, __indexHtml);
+			compile.outputFileSystem.readFile(filename, (err, result) => {
+				if (err) {
+					return next(err)
+				}
+				res.set('content-type', 'text/html')
+				res.send(result)
+				res.end()
+			});
+		}
+	});
 
 	app.listen(targetConfig.port, () => {
 		console.log(
