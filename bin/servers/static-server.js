@@ -1,17 +1,14 @@
 const path = require("path");
 const fs = require("fs");
-const koa = require("koa");
-const app = new koa();
-const koaStatic = require('koa-static');
-
+const express = require("express");
+const app = express();
 const CWD = process.cwd();
 
 
 module.exports = (targetConfig) => {
 
   const outputPath = path.join(CWD, targetConfig.build)
-
-  app.use(koaStatic(outputPath))
+  app.use(express.static(outputPath));
 
   const indexHtml = (url) => {
     // 页面重定向匹配
@@ -33,12 +30,13 @@ module.exports = (targetConfig) => {
 
   app.use(
     //重定向到首页，
-    async (ctx, next) => {
-      const __indexHtml = indexHtml(ctx.url);
+    async (req,res, next) => {
+      const __indexHtml = indexHtml(req.url);
       const filename = path.join(outputPath, __indexHtml);
-      ctx.type = "html";
-      ctx.body =  fs.createReadStream(filename);
-      await next();
+     // ctx.body =  fs.createReadStream(filename);
+      res.set('content-type', 'text/html')
+      res.send(filename)
+      res.end()
     }
   );
 

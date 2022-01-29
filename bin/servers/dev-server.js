@@ -1,16 +1,11 @@
 const path = require("path");
 const fs = require("fs");
-const proxy = require("koa-proxies");
+const { createProxyMiddleware } = require('http-proxy-middleware');
 const Webpack = require("webpack");
-//const {  hotMiddleware } = require("koa-webpack-middleware");
-//const devMiddleware = require("webpack-dev-middleware");
-const hotMiddleware = require("webpack-hot-middleware");
-
-
 const __config = require("../webpack.config/development.client.config")();
 const express = require("express");
 const app = express();
-
+let flag = true
 const formatConfig = (config) => {
 	let __config = { ...config };
 	let __entry = __config.entry;
@@ -46,7 +41,8 @@ const formatConfig = (config) => {
 
 		__entryNew[i] = [
 			__entry[i],
-			"webpack-hot-middleware/client?reload=true&path=/__webpack_hmr&timeout=20000",
+			'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000',
+			
 		];
 	}
 	__config.entry = __entryNew;
@@ -63,11 +59,11 @@ const indexHtml = (url) => {
 	} else {
 		__indexname = entrys[0];
 		// 多页面需要在系统入口文件中匹配请求过来的页面，没有匹配到则返回404页面
-		// const __reqpage = url
-		// 	.split("/")
-		// 	.pop()
-		// 	.split(".")[0];
-		// __indexname = entrys.indexOf(__reqpage) > -1 ? __reqpage : "404";
+		const __reqpage = url
+			.split("/")
+			.pop()
+			.split(".")[0];
+		__indexname = entrys.indexOf(__reqpage) > -1 ? __reqpage : "404";
 	}
 	return `${__indexname}.html`;
 };
@@ -76,65 +72,20 @@ const config = formatConfig(__config);
 const compile = Webpack(config);
 
 module.exports = (targetConfig) => {
-	// const __proxy = targetConfig.proxy;
-	// if (__proxy && __proxy.length > 0) {
-	// 	console.log(`[luban] 已为您初始化以下 ${__proxy.length} 个代理 \n`);
-	// 	__proxy.map((item) => {
-	// 		console.log(`${item.path} -> ${item.target}/${item.path}\n`);
-	// 		app.use(
-	// 			proxy(item.path, {
-	// 				target: item.target,
-	// 				changeOrigin: true,
-	// 				rewrite: path,
-	// 				logs: true,
-	// 			})
-	// 		);
-	// 	});
-	// }
-	// , {
-	// 	//writeToDisk: true,
-	// 	publicPath: config.output.publicPath,
-	// 	stats: {
-	// 		colors: true,
-	// 		cached: true,
-	// 		exclude: [/node_modules[\\\/]/],
-	// 	},
-	// }
-	function applyMiddleware(middleware, req, res) {
-		const _send = res.send;
-		return new Promise((resolve, reject) => {
-		  try {
-			res.send = function () {
-			  _send.apply(res, arguments) && resolve(false);
-			};
-			middleware(req, res, resolve.bind(null, true));
-		  } catch (error) {
-			reject(error);
-		  }
+	const __proxy = targetConfig.proxy;
+	if (__proxy && __proxy.length > 0) {
+		console.log(`[luban] 已为您初始化以下 ${__proxy.length} 个代理 \n`);
+		__proxy.map((item) => {
+			console.log(`${item.path} -> ${item.target}/${item.path}\n`);
+			app.use(item.path, createProxyMiddleware({ target: item.target, changeOrigin: true,logs: false, }));
 		});
-	  }
-	const devMiddleware = require("webpack-dev-middleware")(compile, {
-		serverSideRender: true 
-	});
-	
+	}
+	const devMiddleware = require("webpack-dev-middleware")(compile);
 	app.use(devMiddleware);
-
-	app.use(require("webpack-hot-middleware")(compile));
-	// compile.hooks.done.tap("done", stats => {
-	// 	const info = stats.toJson();
-	// 	if (stats.hasWarnings()) {
-	// 		console.warn(info.warnings);
-	// 	}
-	
-	// 	if (stats.hasErrors()) {
-	// 		console.error(info.errors);
-	// 		return;
-	// 	}
-	// 	console.log("打包完成");
-	// });
-	
-	
-	
+	app.use(require("webpack-hot-middleware")(compile, {
+		path: "/__what",
+		heartbeat: 2000
+	}));
 	app.use("*",(req,res, next) => {//重定向到首页
 		const __instans = [".html", ".htm", ""];
 		if (__instans.indexOf(path.extname(req.url)) > -1) {
@@ -151,9 +102,25 @@ module.exports = (targetConfig) => {
 		}
 	});
 
-	app.listen(targetConfig.port, () => {
-		console.log(
-			`🌍 start service at http://${targetConfig.host}:${targetConfig.port}\n`
-		);
-	});
+	compile.hooks.done.tap("done", stats => {
+		const info = stats.toJson();
+		if (stats.hasWarnings()) {
+			console.warn(info.warnings);
+		}
+	
+		if (stats.hasErrors()) {
+			console.error(info.errors);
+			return;
+		}
+		console.log("打包完成");
+		if(flag) {
+			flag = false
+			app.listen(targetConfig.port, () => {
+				console.log(
+					`🌍 start service at http://${targetConfig.host}:${targetConfig.port}\n`
+				);
+			});
+		}
+		
+	});  
 };

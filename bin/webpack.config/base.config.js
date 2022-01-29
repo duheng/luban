@@ -25,27 +25,10 @@ const plugins = (config) => {
       verbose: false,
       cleanOnceBeforeBuildPatterns: ["**/*", "!dll", "!dll/**/*"],
     }),
-    // new webpack.ContextReplacementPlugin(/^\.\/locale$/, (context) => {
-    //   if (!/\/moment\//.test(context.context)) return;
-
-    //   Object.assign(context, {
-    //       regExp: /^\.\/\w+/,
-    //       request: '../locale', // resolved relatively
-    //   });
-    // }),
-   // new webpack.IgnorePlugin(/\.\/locale/, /moment/),
-   new webpack.IgnorePlugin({
-    resourceRegExp: /^\.\/locale$/,
-    contextRegExp: /moment$/,
-  }),
-    // new webpack.IgnorePlugin(/\.\/locale/, /moment/,/(en|zh-cn)\.js/),
-//   new webpack.ContextReplacementPlugin(
-//     // 需要被处理的文件目录位置
-//     /moment[\/\\]locale/,
-//     // 正则匹配需要被包括进来的文件
-//     /(en|zh-cn)\.js/
-// ),
-
+    new webpack.IgnorePlugin({
+      resourceRegExp: /^\.\/locale$/,
+      contextRegExp: /moment$/,
+    }),
     new webpack.DefinePlugin({
       "process.env": {
         NODE_ENV: JSON.stringify(process.env.NODE_ENV),
@@ -59,11 +42,12 @@ const plugins = (config) => {
     new VueLoaderPlugin(),
     new webpack.optimize.ModuleConcatenationPlugin(),
   ];
-  //fs.existsSync(path.join(CWD, config.build, config.dll)
+
   if (!!config.library && Object.keys(config.library).length > 0 && fs.existsSync(path.join(CWD, config.build, config.dll)) ) {
     __plugins.push(...dllReferencePlugin(config));
     __plugins.push(new AddAssetHtmlPlugin(loadDllAssets(config)));
   }
+  
   const __assetsDir = path.resolve(config.base, config.assets || "assets");
 
   if (fs.existsSync(__assetsDir) && fs.statSync(__assetsDir).isDirectory()) {
