@@ -4,6 +4,7 @@ const { createProxyMiddleware } = require('http-proxy-middleware');
 const Webpack = require("webpack");
 const __config = require("../webpack.config/development.client.config")();
 const express = require("express");
+const history = require('connect-history-api-fallback');
 const app = express();
 let flag = true
 const formatConfig = (config) => {
@@ -41,8 +42,7 @@ const formatConfig = (config) => {
 
 		__entryNew[i] = [
 			__entry[i],
-			'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000',
-			
+			"webpack-hot-middleware/client?reload=true&path=/__webpack_hmr&timeout=20000",
 		];
 	}
 	__config.entry = __entryNew;
@@ -70,7 +70,6 @@ const indexHtml = (url) => {
 
 const config = formatConfig(__config);
 const compile = Webpack(config);
-
 module.exports = (targetConfig) => {
 	const __proxy = targetConfig.proxy;
 	if (__proxy && __proxy.length > 0) {
@@ -81,46 +80,45 @@ module.exports = (targetConfig) => {
 		});
 	}
 	const devMiddleware = require("webpack-dev-middleware")(compile);
+	//
 	app.use(devMiddleware);
-	app.use(require("webpack-hot-middleware")(compile, {
-		path: "/__what",
-		heartbeat: 2000
-	}));
-	app.use("*",(req,res, next) => {//重定向到首页
-		const __instans = [".html", ".htm", ""];
-		if (__instans.indexOf(path.extname(req.url)) > -1) {
-			const __indexHtml = indexHtml(req.url);
-			const filename = path.join(compile.outputPath, __indexHtml);
-			compile.outputFileSystem.readFile(filename, (err, result) => {
-				if (err) {
-					return next(err)
-				}
-				res.set('content-type', 'text/html')
-				res.send(result)
-				res.end()
-			});
-		}
-	});
+	app.use(require("webpack-hot-middleware")(compile));
+	app.use(history())
+	// app.use("*",(req,res, next) => {//重定向到首页
+	// 	const __instans = [".html", ".htm", ""];
+	// 	if (__instans.indexOf(path.extname(req.url)) > -1) {
+	// 		const __indexHtml = indexHtml(req.url);
+	// 		const filename = path.join(compile.outputPath, __indexHtml);
+	// 		compile.outputFileSystem.readFile(filename, (err, result) => {
+	// 			if (err) {
+	// 				return next(err)
+	// 			}
+	// 			res.set('content-type', 'text/html;charset=UTF-8')
+	// 			res.send(result)
+	// 			res.end()
+	// 		});
+	// 	}
+	// });
 
-	compile.hooks.done.tap("done", stats => {
-		const info = stats.toJson();
-		if (stats.hasWarnings()) {
-			console.warn(info.warnings);
-		}
+	// compile.hooks.done.tap("done", stats => {
+	// 	const info = stats.toJson();
+	// 	if (stats.hasWarnings()) {
+	// 		console.warn(info.warnings);
+	// 	}
 	
-		if (stats.hasErrors()) {
-			console.error(info.errors);
-			return;
-		}
-		console.log("打包完成");
-		if(flag) {
-			flag = false
-			app.listen(targetConfig.port, () => {
-				console.log(
-					`🌍 start service at http://${targetConfig.host}:${targetConfig.port}\n`
-				);
-			});
-		}
+	// 	if (stats.hasErrors()) {
+	// 		console.error(info.errors);
+	// 		return;
+	// 	}
+	// 	console.log("打包完成");
 		
-	});  
+		
+	// });  
+
+	
+		app.listen(targetConfig.port, () => {
+			console.log(
+				`🌍 start service at http://${targetConfig.host}:${targetConfig.port}\n`
+			);
+		});
 };
