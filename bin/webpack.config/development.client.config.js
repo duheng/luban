@@ -9,8 +9,8 @@ const CWD = process.cwd();
 
 const buildPath = path.resolve(CWD, config.build);
 
-const jsName = "js/[name]@dev.js";
-const cssName = "css/[name]@dev.css";
+const jsName = "js/[name]@[chunkhash].js";
+const cssName = "css/[name]@[chunkhash].css";
 
 const plugins = () => {
   let __plugins = [

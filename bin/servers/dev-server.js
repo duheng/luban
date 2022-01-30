@@ -31,18 +31,23 @@ const formatConfig = (config) => {
 				console.log(
 					"\n系统检测到入口文件缺少热更新必须的module.hot，系统已为您自动添加\n"
 				);
-				fs.appendFileSync(
-					path.resolve(__entry[i]),
-					";if (module.hot) {module.hot.accept()};"
-				);
+				console.log('111')
+				// fs.appendFileSync(
+				// 	path.resolve(__entry[i]),
+				// 	`;if (module.hot) {module.hot.accept()}; module.hot.accept('../reducers/index.js', ()=>{
+				// 		const nextReducer = require('../reducers/index.js');
+				// 		store.replaceReducer(nextReducer || nextReducer.default);
+				// 	  })`
+				// );
 			}
 		} catch (err) {
 			throw `入口文件加载失败，请检查入口文件\r\n${err}`;
 		}
 
 		__entryNew[i] = [
+			//'webpack-hot-middleware/client?noInfo=true&reload=true',
 			__entry[i],
-			"webpack-hot-middleware/client?reload=true&path=/__webpack_hmr&timeout=20000",
+			"webpack-hot-middleware/client?noInfo=true",
 		];
 	}
 	__config.entry = __entryNew;
@@ -80,10 +85,12 @@ module.exports = (targetConfig) => {
 		});
 	}
 	const devMiddleware = require("webpack-dev-middleware")(compile);
-	//
-	app.use(devMiddleware);
-	app.use(require("webpack-hot-middleware")(compile));
 	app.use(history())
+	app.use(devMiddleware);
+	app.use(require("webpack-hot-middleware")(compile, {
+		publicPath: config.output.publicPath,
+	}));
+	
 	// app.use("*",(req,res, next) => {//重定向到首页
 	// 	const __instans = [".html", ".htm", ""];
 	// 	if (__instans.indexOf(path.extname(req.url)) > -1) {

@@ -47,13 +47,13 @@ const rules = {
           //   workers: 4
           // }
         },
-        {
-          loader: require.resolve("cache-loader-hash"),
-          options: {
-            mode:'hash',
-            cacheDirectory: path.resolve(CWD, ".cache-loader"),
-          },
-        },
+        // {
+        //   loader: require.resolve("cache-loader-hash"),
+        //   options: {
+        //     mode:'hash',
+        //     cacheDirectory: path.resolve(CWD, ".cache-loader"),
+        //   },
+        // },
         {
           loader: require.resolve("babel-loader"),
           options: {
