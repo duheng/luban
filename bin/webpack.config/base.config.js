@@ -95,6 +95,7 @@ const webpackConfig = (config) => {
       // runtimeChunk: {
       //     name: 'runtime'
       // },
+     // runtimeChunk: 'single',
       splitChunks: {
         minSize: 1,
         maxAsyncRequests: 100000,

@@ -45,12 +45,14 @@ const formatConfig = (config) => {
 		}
 
 		__entryNew[i] = [
-			//'webpack-hot-middleware/client?noInfo=true&reload=true',
 			__entry[i],
-			"webpack-hot-middleware/client?noInfo=true",
+			"webpack-hot-middleware/client?reload=false&path=/__webpack_hmr&timeout=20000",
+			//'webpack-hot-middleware/client?reload=true',
 		];
 	}
+
 	__config.entry = __entryNew;
+	console.log(__config)
 	return __config;
 };
 
@@ -85,12 +87,10 @@ module.exports = (targetConfig) => {
 		});
 	}
 	const devMiddleware = require("webpack-dev-middleware")(compile);
-	app.use(history())
-	app.use(devMiddleware);
-	app.use(require("webpack-hot-middleware")(compile, {
-		publicPath: config.output.publicPath,
-	}));
 	
+	app.use(devMiddleware);
+	app.use(require("webpack-hot-middleware")(compile));
+	app.use(history())
 	// app.use("*",(req,res, next) => {//重定向到首页
 	// 	const __instans = [".html", ".htm", ""];
 	// 	if (__instans.indexOf(path.extname(req.url)) > -1) {

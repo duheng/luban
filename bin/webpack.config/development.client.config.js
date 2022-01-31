@@ -8,8 +8,8 @@ const __baseConfig = baseConfig(config);
 const CWD = process.cwd();
 
 const buildPath = path.resolve(CWD, config.build);
-
-const jsName = "js/[name]@[chunkhash].js";
+const timeStamp = new Date().getTime();
+const jsName = `[name]@[chunkhash].js`;
 const cssName = "css/[name]@[chunkhash].css";
 
 const plugins = () => {
@@ -28,6 +28,7 @@ module.exports = () => {
       chunkFilename: "js/[name]-[chunkhash:8].js",
       filename: jsName,
     },
+    target: 'web', 
     mode: "development",
     devtool: "eval-cheap-module-source-map",
     performance: {
