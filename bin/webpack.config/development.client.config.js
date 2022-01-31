@@ -9,7 +9,7 @@ const CWD = process.cwd();
 
 const buildPath = path.resolve(CWD, config.build);
 const timeStamp = new Date().getTime();
-const jsName = `[name]@[chunkhash].js`;
+const jsName = `js/[name]@[chunkhash].js`;
 const cssName = "css/[name]@[chunkhash].css";
 
 const plugins = () => {

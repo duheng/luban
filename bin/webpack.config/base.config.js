@@ -71,7 +71,6 @@ const webpackConfig = (config) => {
     context: path.join(CWD),
     entry: entry,
     externals: config.externals || {},
-    target: 'web', 
     module: rules(config),
     resolve: {
       modules: [
@@ -92,12 +91,12 @@ const webpackConfig = (config) => {
     },
     plugins: plugins(config),
     optimization: {
-      // runtimeChunk: {
-      //     name: 'runtime'
-      // },
+      runtimeChunk: {
+          name: 'runtime'
+      },
      // runtimeChunk: 'single',
       splitChunks: {
-        minSize: 1,
+        minSize: 3,
         maxAsyncRequests: 100000,
         maxInitialRequests: 100000,
         cacheGroups: {
