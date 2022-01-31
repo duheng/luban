@@ -91,12 +91,12 @@ const webpackConfig = (config) => {
     },
     plugins: plugins(config),
     optimization: {
-      runtimeChunk: {
-          name: 'runtime'
-      },
+      // runtimeChunk: {
+      //     name: 'runtime'
+      // },
      // runtimeChunk: 'single',
       splitChunks: {
-        minSize: 3,
+        minSize: 1,
         maxAsyncRequests: 100000,
         maxInitialRequests: 100000,
         cacheGroups: {
