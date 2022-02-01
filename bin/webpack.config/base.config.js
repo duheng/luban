@@ -91,9 +91,9 @@ const webpackConfig = (config) => {
     },
     plugins: plugins(config),
     optimization: {
-      // runtimeChunk: {
-      //     name: 'runtime'
-      // },
+      runtimeChunk: {
+          name: 'runtime'
+      },
      // runtimeChunk: 'single',
       splitChunks: {
         minSize: 1,

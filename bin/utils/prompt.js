@@ -68,6 +68,10 @@ const selectTmpl = async () => {
                 value : "React_Redux_Antd"
               },
               {
+                name : 'react+mobx的client项目',
+                value : "React_Mobx"
+              },
+              {
                 name : 'koa+react+redux的前后端结合的ssr项目',
                 value : "Koa_React_Redux"
               },
