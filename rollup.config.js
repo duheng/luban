@@ -1,6 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const cwd = process.cwd();
+import copy from 'rollup-plugin-copy'
 import multiInput from 'rollup-plugin-multi-input';
 import { terser } from "rollup-plugin-terser";
 import serve from "rollup-plugin-serve";
@@ -15,7 +16,7 @@ const binMark = `#!/bin/sh
 ":" //# comment; exec /usr/bin/env node --max_old_space_size=8000 "$0" "$@"`
 export default [
     {
-        input: ['src/**/*.js'],
+        input: ['src/**/*.js','!src/config','!src/index.js'],
         output:  {
             banner: mark,
             dir: 'bin',
@@ -24,21 +25,16 @@ export default [
         plugins: [
             terser({ compress: { drop_console: false } }),
             multiInput(),
+            copy({
+                targets: [
+                  { src: 'src/index.js', dest: 'bin' },
+                  { src: 'src/config/*', dest: 'bin/config' }
+                ]
+            }),
             process.env.ENV === "development" ? serve({
                 port: 3000,
                 contentBase: ["./"], // 静态资源所在目录
             }) : null
-        ],
-    },
-    {
-        input: ['src/index.js'],
-        output:  {
-            banner: binMark,
-            dir: 'bin',
-            format:  'cjs',
-        },
-        plugins: [
-           // multiInput(),
         ],
     }
 

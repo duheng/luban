@@ -1,3 +1,6 @@
+#!/bin/sh 
+":" //# comment; exec /usr/bin/env node --max_old_space_size=8000 "$0" "$@"
+
 const commander = require("commander");
 const packages = require("../package.json");
 const chalk = require('chalk');

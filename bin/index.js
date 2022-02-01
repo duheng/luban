@@ -1,6 +1,5 @@
 #!/bin/sh 
 ":" //# comment; exec /usr/bin/env node --max_old_space_size=8000 "$0" "$@"
-'use strict';
 
 const commander = require("commander");
 const packages = require("../package.json");
@@ -24,8 +23,8 @@ const printLogo = () => {
     chalk.hex('5bc2e7').bold('        *********前端工程化构建工具**********')
     ,
     '\n\n\n',
-  );
-};
+  )
+}
 commander.version(packages.version);
 
 commander
@@ -44,7 +43,7 @@ commander
   .option("-n --node", "打包node serve工程")
   .allowUnknownOption()
   .action(async (options) => {
-    printLogo();
+    printLogo()
     await require("./commands/pack")(options);
   });
 
@@ -55,7 +54,7 @@ commander
   .allowUnknownOption()
   .action(async (options) => {
     try {
-      printLogo();
+      printLogo()
       await require("./commands/server")(options);
     } catch (err) {
       console.log("启动serve失败 \r\n", err);
@@ -68,7 +67,7 @@ commander
   .allowUnknownOption()
   .action(async (options) => {
     try {
-      printLogo();
+      printLogo()
       await require("./commands/dll")(options);
     } catch (err) {
       console.log("dll打包失败\r\n", err);
