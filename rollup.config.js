@@ -12,8 +12,6 @@ const mark = `/**
 * github: https://github.com/duheng/
 **/`
 
-const binMark = `#!/bin/sh 
-":" //# comment; exec /usr/bin/env node --max_old_space_size=8000 "$0" "$@"`
 export default [
     {
         input: ['src/**/*.js','!src/config','!src/index.js'],
