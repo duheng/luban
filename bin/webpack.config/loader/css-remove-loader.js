@@ -1,3 +1,1 @@
-module.exports = () => {
-  return 'module.exports = null';
-};
+"use strict";module.exports=()=>"module.exports = null";
