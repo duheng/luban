@@ -68,9 +68,7 @@ const indexHtml = (url) => {
 	return `${__indexname}.html`;
 };
 
-const config = formatConfig(__config);
-const compile = Webpack(config);
-module.exports = (targetConfig) => {
+const proxyAction = (targetConfig) => {
 	const __proxy = targetConfig.proxy;
 	if (__proxy && __proxy.length > 0) {
 		console.log(`[luban] 已为您初始化以下 ${__proxy.length} 个代理 \n`);
@@ -79,6 +77,12 @@ module.exports = (targetConfig) => {
 			app.use(item.path, createProxyMiddleware({ target: item.target, changeOrigin: false,logs: false, }));
 		});
 	}
+}
+
+const config = formatConfig(__config);
+const compile = Webpack(config);
+module.exports = (targetConfig) => {
+	
 	console.log();
 	const devMiddleware = require("webpack-dev-middleware")(compile);
 	app.use(devMiddleware);
@@ -86,6 +90,7 @@ module.exports = (targetConfig) => {
 	devMiddleware.waitUntilValid(() => {
 		app.use(require("webpack-hot-middleware")(compile));
 		console.log();
+		proxyAction(targetConfig);
 		app.listen(targetConfig.port, () => {
 			console.log(
 				`🌍 start service at http://${targetConfig.host}:${targetConfig.port}\n`
