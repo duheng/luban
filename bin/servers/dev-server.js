@@ -6,7 +6,6 @@ const __config = require("../webpack.config/development.client.config")();
 const express = require("express");
 const history = require('connect-history-api-fallback');
 const app = express();
-let flag = true
 const formatConfig = (config) => {
 	let __config = { ...config };
 	let __entry = __config.entry;
@@ -31,14 +30,10 @@ const formatConfig = (config) => {
 				console.log(
 					"\n系统检测到入口文件缺少热更新必须的module.hot，系统已为您自动添加\n"
 				);
-				console.log('111')
-				// fs.appendFileSync(
-				// 	path.resolve(__entry[i]),
-				// 	`;if (module.hot) {module.hot.accept()}; module.hot.accept('../reducers/index.js', ()=>{
-				// 		const nextReducer = require('../reducers/index.js');
-				// 		store.replaceReducer(nextReducer || nextReducer.default);
-				// 	  })`
-				// );
+				fs.appendFileSync(
+					path.resolve(__entry[i]),
+					`;if (module.hot) {module.hot.accept()}; `
+				);
 			}
 		} catch (err) {
 			throw `入口文件加载失败，请检查入口文件\r\n${err}`;
@@ -47,12 +42,10 @@ const formatConfig = (config) => {
 		__entryNew[i] = [
 			__entry[i],
 			"webpack-hot-middleware/client?reload=false&path=/__webpack_hmr&timeout=20000",
-			//'webpack-hot-middleware/client?reload=true',
 		];
 	}
 
 	__config.entry = __entryNew;
-	console.log(__config)
 	return __config;
 };
 
@@ -91,22 +84,14 @@ module.exports = (targetConfig) => {
 	app.use(devMiddleware);
 	app.use(require("webpack-hot-middleware")(compile));
 	app.use(history())
-	// app.use("*",(req,res, next) => {//重定向到首页
-	// 	const __instans = [".html", ".htm", ""];
-	// 	if (__instans.indexOf(path.extname(req.url)) > -1) {
-	// 		const __indexHtml = indexHtml(req.url);
-	// 		const filename = path.join(compile.outputPath, __indexHtml);
-	// 		compile.outputFileSystem.readFile(filename, (err, result) => {
-	// 			if (err) {
-	// 				return next(err)
-	// 			}
-	// 			res.set('content-type', 'text/html;charset=UTF-8')
-	// 			res.send(result)
-	// 			res.end()
-	// 		});
-	// 	}
-	// });
-
+	devMiddleware.waitUntilValid(() => {
+		console.log();
+		app.listen(targetConfig.port, () => {
+			console.log(
+				`🌍 start service at http://${targetConfig.host}:${targetConfig.port}\n`
+			);
+		});
+	})
 	// compile.hooks.done.tap("done", stats => {
 	// 	const info = stats.toJson();
 	// 	if (stats.hasWarnings()) {
@@ -118,14 +103,5 @@ module.exports = (targetConfig) => {
 	// 		return;
 	// 	}
 	// 	console.log("打包完成");
-		
-		
 	// });  
-
-	
-		app.listen(targetConfig.port, () => {
-			console.log(
-				`🌍 start service at http://${targetConfig.host}:${targetConfig.port}\n`
-			);
-		});
 };
