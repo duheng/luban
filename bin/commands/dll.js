@@ -8,7 +8,7 @@ const webpackDll = path.resolve(__dirname, '..', 'webpack.config', 'webpack.dll'
 
 const dll = (options) => {
   return new Promise((resolve, reject) => {
-    exec(`${webpackCommand} --config ${webpackDll} --mode=production --colors`)
+    exec(`${webpackCommand} --config ${webpackDll} --mode=production --no-colors`)
     resolve(true)
   })
 }

@@ -76,15 +76,15 @@ module.exports = (targetConfig) => {
 		console.log(`[luban] 已为您初始化以下 ${__proxy.length} 个代理 \n`);
 		__proxy.map((item) => {
 			console.log(`${item.path} -> ${item.target}/${item.path}\n`);
-			app.use(item.path, createProxyMiddleware({ target: item.target, changeOrigin: true,logs: false, }));
+			app.use(item.path, createProxyMiddleware({ target: item.target, changeOrigin: false,logs: false, }));
 		});
 	}
+	console.log();
 	const devMiddleware = require("webpack-dev-middleware")(compile);
-	
 	app.use(devMiddleware);
-	app.use(require("webpack-hot-middleware")(compile));
 	app.use(history())
 	devMiddleware.waitUntilValid(() => {
+		app.use(require("webpack-hot-middleware")(compile));
 		console.log();
 		app.listen(targetConfig.port, () => {
 			console.log(
@@ -102,6 +102,6 @@ module.exports = (targetConfig) => {
 	// 		console.error(info.errors);
 	// 		return;
 	// 	}
-	// 	console.log("打包完成");
+	// 	//console.log("打包完成");
 	// });  
 };
