@@ -2,8 +2,7 @@ const path = require("path");
 const chalk = require('chalk');
 
 const getUtilName = () => {
-    const __package = path.join(__dirname,"..","..","package.json");
-    console.log('__package-----', __package)
+    const __package = require(path.join(__dirname,"..","..","package.json"))
     return Object.keys(__package.bin)[0]
 }
 const printLog = ({name = '', type='default', text = ''}) => {

@@ -5,8 +5,8 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const { config } = require('../utils/common')
 
 const dllPath = path.join(CWD, 'dll')
-const library = '[name]_[chunkhash]'
-console.log('config------', config)
+const library = '[name]_[fullhash]'
+console.log('config------', config.library)
 module.exports = {
     mode: "production",
     entry:{
@@ -24,7 +24,7 @@ module.exports = {
     ],
     output:{
         path: dllPath,
-        filename:'[name]_dll@[chunkhash].js',
+        filename:'[name]_dll@[fullhash].js',
         library
     }
 }

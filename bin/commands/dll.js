@@ -1,1 +1,0 @@
-"use strict";require("shelljs/global");const e=require("path");require("fs");const{config:r,webpackCommand:o}=require("../utils/common"),i=e.resolve(__dirname,"..","webpack.config","webpack.dll");module.exports=async e=>{if(!(r.library&&Object.keys(r.library).length>0))return null;await new Promise(((e,r)=>{exec(`${o} --config ${i} --mode production --no-stats`),e(!0)}))};
