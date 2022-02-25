@@ -17,7 +17,7 @@ export default [
         input: ['src/**/*.js','!src/config','!src/index.js'],
         output:  {
             banner: mark,
-            dir: 'bin',
+            dir: 'lib',
             format:  'cjs',
         },
         plugins: [
@@ -25,8 +25,9 @@ export default [
             multiInput(),
             copy({
                 targets: [
-                  { src: 'src/index.js', dest: 'bin' },
-                  { src: 'src/config/*', dest: 'bin/config' }
+                  { src: 'src/index.js', dest: 'lib' },
+                  { src: 'src/config/*', dest: 'lib/config' },
+                  { src: 'src/webpack.config/.babelrc.js', dest: 'lib/webpack.config' }
                 ]
             }),
             process.env.ENV === "development" ? serve({

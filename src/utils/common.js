@@ -1,18 +1,17 @@
 const webpack = require("webpack");
 const path = require("path");
 const fs = require("fs");
-const confman = require("confman");
 const CWD = process.cwd();
 const { printLog, getUtilName } = require('./base');
 
 const getConfig = () => {
     const __name = getUtilName()
-    const configs = confman.load(`${CWD}/${__name}`);
-    if(Object.keys(configs).length > 0) {
-      return configs;
-    } else {
-      printLog({type:'error',text:`没有加载到配置文件${__name}.*`})
-    }
+    console.log('PT--------', `${CWD}/${__name}`)
+    // if(Object.keys(configs).length > 0) {
+    //   return configs;
+    // } else {
+    //   printLog({type:'error',text:`没有加载到配置文件${__name}.*`})
+    // }
 }
 
 const getWebpackCommand = () => {

@@ -2,9 +2,9 @@
   "name": "@mozi/luban",
   "version": "1.0.9",
   "description": "前端工程化构建工具🔧",
-  "main": "bin/index.js",
+  "main": "lib/index.js",
   "bin": {
-    "luban": "bin/index.js"
+    "luban": "lib/index.js"
   },
   "scripts": {
     "start": "export ENV=development && rollup --config rollup.config.js --watch",
@@ -39,7 +39,6 @@
     "chalk": "^4.1.0",
     "clean-webpack-plugin": "^3.0.0",
     "commander": "^5.1.0",
-    "confman": "^0.2.10",
     "connect-history-api-fallback": "^1.6.0",
     "copy-webpack-plugin": "^6.0.3",
     "core-js": "^3.6.5",
