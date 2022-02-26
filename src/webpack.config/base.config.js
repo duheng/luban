@@ -3,6 +3,7 @@ const TerserPlugin = require("terser-webpack-plugin");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const AddAssetHtmlPlugin = require("add-asset-html-webpack-plugin");
+const { terserCacheDirectory } =  require("../utils/buildCache");
 const VueLoaderPlugin = require("vue-loader/lib/plugin");
 const FormatProgressPlugin = require("../plugins/format-progress-plugin");
 
@@ -111,9 +112,8 @@ const webpackConfig = (config) => {
       minimizer: [
         process.env.NODE_ENV === "production"
           ? new TerserPlugin({
-              cache: true,
-              // cache: path.resolve(__dirname, 'ugCache'),
-              parallel: true,
+              include: /\/node_modules/,
+              parallel: true, 
               extractComments: true, // 提取license文件
               terserOptions: {
                 // https://github.com/webpack-contrib/terser-webpack-plugin#terseroptions

@@ -35,7 +35,6 @@ const plugins = [
     chunkFilename: cssName,
     ignoreOrder: true, // Enable to remove warnings about conflicting order
   }),
-  new webpack.HashedModuleIdsPlugin(),
   new CreatVersionPlugin(config),
   ...CreatHtmlPlugin("production", __baseConfig, getTemplate),
 ];
