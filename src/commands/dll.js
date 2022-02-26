@@ -14,9 +14,9 @@ const dll = (options) => {
 
 module.exports = async (options) => {
 	if(!!config.library && Object.keys(config.library).length > 0){
-		printLog('正在打包dll')
+		printLog('building dll')
 		await dll(options)
-		printLog('dll打包完成')
+		printLog('dll build complete')
 	} else {
 		return null
 	}

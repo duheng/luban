@@ -5,9 +5,11 @@ const path = require("path");
 const CWD = process.cwd();
 const { config, useDllPath } = require("../utils/common");
 const {  getWebpackConfig } = require("../utils/webpackConfig");
+const { printLog } = require('../utils/printLog')
 const webpack = require("webpack");
 const pack = (webpackConfig) => {
   return new Promise((resolve, reject) => {
+    printLog('Building project')
     webpack({...webpackConfig}, (err, stats) => {
       if (err) {
         console.error(err.stack || err);
@@ -26,6 +28,7 @@ const pack = (webpackConfig) => {
       if (stats.hasWarnings()) {
         console.warn(info.warnings);
       }
+      printLog('Build project complete')
       resolve();
     });
 
