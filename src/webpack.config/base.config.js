@@ -106,7 +106,8 @@ const webpackConfig = (config) => {
         },
       },
       // 用模块路劲名字作为webpack的模块名
-     // moduleIds: 'named',
+     // chunkIds: false,
+     // moduleIds: false,
       minimize: false,
       // https://github.com/webpack-contrib/terser-webpack-plugin#terseroptions
       minimizer: [
