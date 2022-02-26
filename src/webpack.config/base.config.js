@@ -20,7 +20,7 @@ const {
 const rules = require("./rules");
 const plugins = (config) => {
   let __plugins = [
-   // new webpack.ProgressPlugin(FormatProgressPlugin),
+    new webpack.ProgressPlugin(FormatProgressPlugin),
 
     new CleanWebpackPlugin({
       verbose: false,
