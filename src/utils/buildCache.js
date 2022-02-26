@@ -7,7 +7,6 @@ const { exec } = require('child_process');
  * skipLubanCache 是否阻止缓存，默认值 false
  * 
  * **/
- console.log('devMode-----', global.envs)
 const { skipLubanCache = false, NODE_ENV, deploy_type  } = process.env
 
 const jenkinsPath = '/home/q/prj/npm' //jenkins缓存路径
