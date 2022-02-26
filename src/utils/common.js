@@ -3,7 +3,6 @@ const path = require("path");
 const fs = require("fs");
 const CWD = process.cwd();
 const { printLog, getUtilName } = require('./base');
-
 const getConfig = () => {
     const __name = getUtilName()
     const configs = require(`${CWD}/${__name}.js`)
@@ -12,6 +11,11 @@ const getConfig = () => {
     } else {
       printLog({type:'error',text:`没有加载到配置文件${__name}.*`})
     }
+}
+
+const useDllPath = () => {
+  const __config = getConfig();
+  return  path.join(CWD, __config.dll)
 }
 
 const getWebpackCommand = () => {
@@ -91,7 +95,7 @@ const dllReferencePlugin = (config) => {
   const libKeys = Object.keys(config.library);
   return libKeys.map((name) => {
     const __fileName = filterFile(
-      path.join(CWD, config.build, config.dll),
+      useDllPath(),
       `${name}[^.]*\\.manifest\\.json`
     );
     if (!__fileName) {
@@ -100,18 +104,18 @@ const dllReferencePlugin = (config) => {
     }
     return new webpack.DllReferencePlugin({
       context: path.join(CWD),
-      manifest: require(path.join(CWD, config.build, config.dll, __fileName)),
+      manifest: require(path.join(useDllPath(), __fileName)),
     });
   });
 };
 
 const loadDllAssets = (config) => {
   return fs
-    .readdirSync(path.join(CWD, config.build, config.dll))
+    .readdirSync(useDllPath())
     .filter((filename) => filename.match(/.js$/))
     .map((filename) => {
       return {
-        filepath: path.join(CWD, config.build, config.dll, filename),
+        filepath: path.join(useDllPath(), filename),
         outputPath: "dll",
         publicPath: `${config.static[process.env.NODE_ENV]}/dll`,
       };
@@ -145,4 +149,5 @@ module.exports = {
   loadDllAssets,
   genAlias,
   getTemplate,
+  useDllPath,
 };

@@ -3,7 +3,7 @@ require("shelljs/global");
 const fs = require("fs");
 const path = require("path");
 const CWD = process.cwd();
-const { config } = require("../utils/common");
+const { config, useDllPath } = require("../utils/common");
 const {  getWebpackConfig } = require("../utils/webpackConfig");
 const webpack = require("webpack");
 const pack = (webpackConfig) => {
@@ -40,7 +40,7 @@ module.exports = async (options) => {
     webpackConfig = getWebpackConfig('server');
   } else {
     try {
-      if (!fs.existsSync(path.join(CWD, config.build, config.dll))) {
+      if (!fs.existsSync(useDllPath())) {
         await require("./dll")(options);
       }
     } catch (e) {

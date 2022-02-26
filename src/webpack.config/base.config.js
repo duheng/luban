@@ -5,6 +5,7 @@ const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const AddAssetHtmlPlugin = require("add-asset-html-webpack-plugin");
 const VueLoaderPlugin = require("vue-loader/lib/plugin");
 const FormatProgressPlugin = require("../plugins/format-progress-plugin");
+const { useDllPath } = require("../utils/common");
 
 const fs = require("fs");
 const path = require("path");
@@ -43,7 +44,7 @@ const plugins = (config) => {
     new webpack.optimize.ModuleConcatenationPlugin(),
   ];
 
-  if (!!config.library && Object.keys(config.library).length > 0 && fs.existsSync(path.join(CWD, config.build, config.dll)) ) {
+  if (!!config.library && Object.keys(config.library).length > 0 && fs.existsSync(useDllPath()) ) {
     __plugins.push(...dllReferencePlugin(config));
     __plugins.push(new AddAssetHtmlPlugin(loadDllAssets(config)));
   }
