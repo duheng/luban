@@ -4,6 +4,7 @@ const fs = require("fs");
 const path = require("path");
 const CWD = process.cwd();
 const { config, useDllPath } = require("../utils/common");
+const { isChangeDll } = require("../utils/dllPitch");
 const {  getWebpackConfig } = require("../utils/webpackConfig");
 const { printLog } = require('../utils/printLog')
 const webpack = require("webpack");
@@ -43,7 +44,8 @@ module.exports = async (options) => {
     webpackConfig = getWebpackConfig('server');
   } else {
     try {
-      if (!fs.existsSync(useDllPath())) {
+      const _useDllPath = useDllPath()
+      if (isChangeDll(_useDllPath, config)) {
         await require("./dll")(options);
       }
     } catch (e) {
