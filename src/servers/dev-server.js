@@ -83,6 +83,7 @@ const config = formatConfig(__config);
 const compile = Webpack(config);
 module.exports = (targetConfig) => {
 	
+	console.log('BUILDENV-----',process.env)
 	console.log();
 	const devMiddleware = require("webpack-dev-middleware")(compile);
 	app.use(devMiddleware);

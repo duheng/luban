@@ -4,6 +4,7 @@ const fs = require("fs");
 const path = require("path");
 const CWD = process.cwd();
 const { config, useDllPath } = require("../utils/common");
+const { changeCache, setCacheVersion } = require("../utils/clearCache");
 const { isChangeDll } = require("../utils/dllPitch");
 const {  getWebpackConfig } = require("../utils/webpackConfig");
 const { printLog } = require('../utils/printLog')
@@ -32,13 +33,13 @@ const pack = (webpackConfig) => {
       printLog('Build project complete')
       resolve();
     });
-
     
   });
 };
 
 module.exports = async (options) => {
   let webpackConfig = null;
+  
   if (options.node) {
     process.env.NODE_ENV = "development";
     webpackConfig = getWebpackConfig('server');
@@ -62,5 +63,7 @@ module.exports = async (options) => {
     }
   }
  // const wbpackAction = `${webpackCommand} --config ${webpackConfig()} --mode=${process.env.NODE_ENV} --colors`;
+  changeCache(process.env.NODE_ENV) // 检查缓存
   await pack(webpackConfig);
+  setCacheVersion(process.env.NODE_ENV) // 设置缓存版本
 };
