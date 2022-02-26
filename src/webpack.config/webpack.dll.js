@@ -4,7 +4,7 @@ const CWD = process.cwd()
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const { config, useDllPath } = require('../utils/common')
 const library = '[name]_[fullhash]'
-console.log('config------', config.library)
+
 module.exports = {
     mode: "production",
     entry:{

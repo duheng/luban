@@ -1,19 +1,22 @@
 require('shelljs/global')
 const path = require('path')
 const fs = require('fs')
+const { printLog } = require('../utils/printLog')
 const { config, webpackCommand } = require('../utils/common')
 const webpackDll = path.resolve(__dirname, '..', 'webpack.config', 'webpack.dll') 
 
 const dll = (options) => {
-  return new Promise((resolve, reject) => {
-    exec(`${webpackCommand} --config ${webpackDll} --mode production`)
-    resolve(true)
-  })
+	return new Promise((resolve, reject) => {
+		exec(`${webpackCommand} --config ${webpackDll} --mode production --no-stats`)
+		resolve(true)
+	})
 }
 
 module.exports = async (options) => {
 	if(!!config.library && Object.keys(config.library).length > 0){
+		printLog('正在打包dll')
 		await dll(options)
+		printLog('dll打包完成')
 	} else {
 		return null
 	}
