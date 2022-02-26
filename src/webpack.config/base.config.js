@@ -3,7 +3,6 @@ const TerserPlugin = require("terser-webpack-plugin");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const AddAssetHtmlPlugin = require("add-asset-html-webpack-plugin");
-const { terserCacheDirectory } =  require("../utils/buildCache");
 const VueLoaderPlugin = require("vue-loader/lib/plugin");
 const FormatProgressPlugin = require("../plugins/format-progress-plugin");
 

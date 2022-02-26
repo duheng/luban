@@ -1,6 +1,6 @@
 const path = require("path");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const { cacheDllDirectory } =  require("../utils/buildCache");
+const { cacheLorderDirectory } =  require("../utils/buildCache");
 const CWD = process.cwd();
 
 const devMode = process.env.NODE_ENV !== "production";
@@ -52,7 +52,7 @@ const rules = {
           loader: require.resolve("cache-loader-hash"),
           options: {
             mode:'hash',
-            cacheDirectory: cacheDllDirectory,
+            cacheDirectory: cacheLorderDirectory,
           },
         },
         {
