@@ -46,7 +46,7 @@ const plugins = (config) => {
 
   if (!!config.library && Object.keys(config.library).length > 0 && fs.existsSync(useDllPath()) ) {
     __plugins.push(...dllReferencePlugin(config));
-    __plugins.push(new AddAssetHtmlPlugin(loadDllAssets(config)));
+    __plugins.push(loadDllAssets(config));
   }
   
   const __assetsDir = path.resolve(config.base, config.assets || "assets");
