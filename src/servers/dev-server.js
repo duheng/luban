@@ -88,27 +88,27 @@ module.exports = (targetConfig) => {
 	console.log();
 	console.log('A-------',1)	
 	app.use(devMiddleware);
-	// app.use(history())
-	// devMiddleware.waitUntilValid(() => {
-	//     app.use(hotMiddleware);
-	// 	console.log();
-	// 	proxyAction(targetConfig);
-	// 	app.listen(targetConfig.port, () => {
-	// 		console.log(
-	// 			`🌍 start service at http://${targetConfig.host}:${targetConfig.port}\n`
-	// 		);
-	// 	});
+	app.use(history())
+	devMiddleware.waitUntilValid(() => {
+	    app.use(hotMiddleware);
+		console.log();
+		proxyAction(targetConfig);
+		app.listen(targetConfig.port, () => {
+			console.log(
+				`🌍 start service at http://${targetConfig.host}:${targetConfig.port}\n`
+			);
+		});
 
-	// 	process.on('uncaughtException', (msg) => {
-	// 		if (msg && msg.toString().indexOf('address already in use') > -1) {
-	// 			const port = /address already in use [^\d]+(\d+)/.exec(msg)[1]
-	// 			logger.error(port + ' 端口已被占用，请在luban.js 中更换端口')
-	// 		} else {
-	// 			throw msg
-	// 		}
-	// 	})
+		process.on('uncaughtException', (msg) => {
+			if (msg && msg.toString().indexOf('address already in use') > -1) {
+				const port = /address already in use [^\d]+(\d+)/.exec(msg)[1]
+				logger.error(port + ' 端口已被占用，请在luban.js 中更换端口')
+			} else {
+				throw msg
+			}
+		})
 		
-	// })
+	})
 	// compile.hooks.done.tap("done", stats => {
 	// 	const info = stats.toJson();
 	// 	if (stats.hasWarnings()) {
