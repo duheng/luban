@@ -74,7 +74,7 @@ const proxyAction = (targetConfig) => {
 		console.log(`[luban] 已为您初始化以下 ${__proxy.length} 个代理 \n`);
 		__proxy.map((item) => {
 			console.log(`${item.path} -> ${item.target}/${item.path}\n`);
-			app.use(item.path, createProxyMiddleware({ target: item.target, changeOrigin: false,logs: false, }));
+			app.use(item.path, createProxyMiddleware({ target: item.target, changeOrigin: true,logs: false, }));
 		});
 	}
 }
