@@ -27,6 +27,7 @@ module.exports = function (api) {
         // 解析类的属性
         require.resolve('@babel/plugin-proposal-class-properties'),
         // Polyfills the runtime needed for async/await and generators
+        require.resolve('@babel/plugin-transform-modules-commonjs'),
         [
           require.resolve("@babel/plugin-transform-runtime"),
           {
