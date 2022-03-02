@@ -21,7 +21,6 @@ const rules = require("./rules");
 const plugins = (config) => {
   let __plugins = [
     new webpack.ProgressPlugin(FormatProgressPlugin),
-
     new CleanWebpackPlugin({
       verbose: false,
       cleanOnceBeforeBuildPatterns: ["**/*", "!dll", "!dll/**/*"],
@@ -30,13 +29,14 @@ const plugins = (config) => {
       resourceRegExp: /^\.\/locale$/,
       contextRegExp: /moment$/,
     }),
-    new webpack.DefinePlugin({
-      "process.env": {
-        NODE_ENV: JSON.stringify(process.env.NODE_ENV),
-      },
-      API: JSON.stringify(config.api[process.env.NODE_ENV]),
-      STATIC: JSON.stringify(config.static[process.env.NODE_ENV]),
-    }),
+    // new webpack.DefinePlugin({
+    //   "process.env": {
+    //     NODE_ENV: JSON.stringify(process.env.NODE_ENV),
+    //   },
+    //   API: JSON.stringify(config.api[process.env.NODE_ENV]),
+    //   STATIC: JSON.stringify(config.static[process.env.NODE_ENV]),
+    // }),
+    
     new webpack.ProvidePlugin({
       React: "react",
     }),
@@ -46,7 +46,7 @@ const plugins = (config) => {
 
   if (!!config.library && Object.keys(config.library).length > 0 && fs.existsSync(useDllPath()) ) {
     __plugins.push(...dllReferencePlugin(config));
-    __plugins.push(loadDllAssets(config));
+    __plugins.push(new AddAssetHtmlPlugin(loadDllAssets(config)));
   }
   
   const __assetsDir = path.resolve(config.base, config.assets || "assets");
