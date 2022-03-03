@@ -1,24 +1,24 @@
-const path = require("path");
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const { useCache, cacheDirectory } =  require("../utils/buildCache");
+const path = require('path');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const { useCache, cacheDirectory } = require('../utils/buildCache');
 const CWD = process.cwd();
 
-const devMode = process.env.NODE_ENV !== "production";
+const devMode = process.env.NODE_ENV !== 'production';
 //const devMode = true
 //process.env.NODE_ENV = 'development'
 
 const postCssLoader = () => {
   return {
-    loader: require.resolve("postcss-loader"),
+    loader: require.resolve('postcss-loader'),
     options: {
-      ident: "postcss",
+      ident: 'postcss',
       plugins: [
-        require(require.resolve("autoprefixer"))({
+        require(require.resolve('autoprefixer'))({
           overrideBrowserslist: [
-            "ie >= 9",
-            "> 1%",
-            "iOS 7",
-            "last 3 iOS versions",
+            'ie >= 9',
+            '> 1%',
+            'iOS 7',
+            'last 3 iOS versions',
           ],
         }),
       ],
@@ -29,11 +29,11 @@ const postCssLoader = () => {
 const common_css_rule = [
   {
     loader: devMode
-      ? require.resolve("style-loader")
+      ? require.resolve('style-loader')
       : MiniCssExtractPlugin.loader, // 将 JS 字符串生成为 style 节点
   },
   {
-    loader: require.resolve("css-loader"),
+    loader: require.resolve('css-loader'),
   },
 ];
 
@@ -44,25 +44,22 @@ const rules = {
       exclude: /node_modules/,
       use: [
         {
-          loader: require.resolve("thread-loader"),
-          // options: {
-          //   workers: 4
-          // }
+          loader: require.resolve('thread-loader'),
         },
-        useCache && process.env.NODE_ENV &&
-        {
-          loader: require.resolve("cache-loader-hash"),
-          options: {
-            mode:'hash',
-            cacheDirectory: `${cacheDirectory}/${process.env.NODE_ENV}`,
+        useCache &&
+          process.env.NODE_ENV && {
+            loader: require.resolve('cache-loader-hash'),
+            options: {
+              mode: 'hash',
+              cacheDirectory: `${cacheDirectory}/${process.env.NODE_ENV}`,
+            },
           },
-        },
         {
-          loader: require.resolve("babel-loader"),
+          loader: require.resolve('babel-loader'),
           options: {
             babelrc: false,
             compact: false,
-            configFile: path.resolve(__dirname, ".babelrc.js"),
+            configFile: path.resolve(__dirname, '.babelrc.js'),
           },
         },
       ].filter(Boolean),
@@ -73,7 +70,7 @@ const rules = {
       test: /\.vue$/,
       exclude: /node_modules/,
       use: {
-        loader: require.resolve("vue-loader"),
+        loader: require.resolve('vue-loader'),
       },
     };
   },
@@ -91,7 +88,7 @@ const rules = {
       use: [
         ...common_css_rule,
         {
-          loader: require.resolve("less-loader"),
+          loader: require.resolve('less-loader'),
           options: {
             lessOptions: {
               javascriptEnabled: true,
@@ -108,7 +105,7 @@ const rules = {
       use: [
         ...common_css_rule,
         {
-          loader: require.resolve("sass-loader"), // 将 Sass 编译成 CSS
+          loader: require.resolve('sass-loader'), // 将 Sass 编译成 CSS
         },
       ].filter(Boolean),
     };
@@ -116,33 +113,40 @@ const rules = {
   image: (config) => {
     return {
       test: /\.(jpe?g|png|gif|ico)$/,
-      loader: require.resolve("url-loader"),
-      options: {
-        limit: config.base64_image_limit, // 20k以内的图片用base64，可配置
-        name: `${path.resolve(CWD, config.base)}/${config.assets}/images/[name]-[hash:8].[ext]`,
-      },
+      type: 'asset/resource',
+      // parser: {
+      //   dataUrlCondition: {
+      //     maxSize: config.base64_image_limit, // 20k以内的图片用base64，可配置
+      //   },
+      // },
+      // options: {
+      //   limit: config.base64_image_limit, // 20k以内的图片用base64，可配置
+      //   name: `${path.resolve(CWD, config.base)}/${
+      //     config.assets
+      //   }/images/[name]-[hash:8].[ext]`,
+      // },
     };
   },
-   media: () => {
+  media: () => {
     return {
       test: /\.(eot|woff|otf|svg|ttf|woff2|appcache|mp3|mp4|pdf)(\?|$)/,
-      use: [
-        {
-          loader: require.resolve("url-loader"),
-          options: {
-            name: "[name]-[hash:8].[ext]",
-          },
-        },
-        {
-          loader: require.resolve("file-loader"),
-          options: {
-             name: '[name][hash:8].[ext]'
-          }
-        }
-      ],
+      type: 'asset/resource',
+      // use: [
+      //   {
+      //     loader: require.resolve('url-loader'),
+      //     options: {
+      //       name: '[name]-[hash:8].[ext]',
+      //     },
+      //   },
+      //   {
+      //     loader: require.resolve('file-loader'),
+      //     options: {
+      //       name: '[name][hash:8].[ext]',
+      //     },
+      //   },
+      // ],
     };
   },
-
 };
 
 module.exports = (config) => {

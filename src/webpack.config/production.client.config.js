@@ -1,18 +1,18 @@
-const webpack = require("webpack");
-const {merge} = require("webpack-merge");
-const path = require("path");
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const baseConfig = require("./base.config");
-const CreatVersionPlugin = require("../plugins/creat-version-plugin");
-const CreatHtmlPlugin = require("../plugins/creat-html-plugin");
-const { config , getTemplate } = require("../utils/common");
+const webpack = require('webpack');
+const { merge } = require('webpack-merge');
+const path = require('path');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const baseConfig = require('./base.config');
+const CreatVersionPlugin = require('../plugins/creat-version-plugin');
+const CreatHtmlPlugin = require('../plugins/creat-html-plugin');
+const { config, getTemplate } = require('../utils/common');
 let __baseConfig = baseConfig(config);
 const CWD = process.cwd();
 
 const buildPath = path.resolve(CWD, config.build);
 
-const jsName = "js/[name]@[chunkhash].js";
-const cssName = "css/[name]@[chunkhash].css";
+const jsName = 'js/[name]@[chunkhash].js';
+const cssName = 'css/[name]@[chunkhash].css';
 
 __baseConfig.module.rules.map((item) => {
   if (/css|sass|less/.test(item.use)) {
@@ -36,7 +36,7 @@ const plugins = [
     ignoreOrder: true, // Enable to remove warnings about conflicting order
   }),
   new CreatVersionPlugin(config),
-  ...CreatHtmlPlugin("production", __baseConfig, getTemplate),
+  ...CreatHtmlPlugin('production', __baseConfig, getTemplate),
 ];
 
 module.exports = () => {
@@ -44,12 +44,12 @@ module.exports = () => {
     output: {
       path: buildPath,
       publicPath: config.static[process.env.NODE_ENV],
-      chunkFilename: "js/[name]-[chunkhash:8].js",
+      chunkFilename: 'js/[name]-[chunkhash:8].js',
       filename: jsName,
     },
     target: ['web', 'es5'],
-    mode: "production",
-    devtool: "source-map",
+    mode: 'production',
+    devtool: 'source-map',
     plugins,
     performance: {
       hints: false,

@@ -1,14 +1,14 @@
-const webpack = require("webpack");
-const TerserPlugin = require("terser-webpack-plugin");
-const CopyWebpackPlugin = require("copy-webpack-plugin");
-const { CleanWebpackPlugin } = require("clean-webpack-plugin");
-const AddAssetHtmlPlugin = require("add-asset-html-webpack-plugin");
-const VueLoaderPlugin = require("vue-loader/lib/plugin");
-const FormatProgressPlugin = require("../plugins/format-progress-plugin");
-const { useDllPath } = require("../utils/common");
+const webpack = require('webpack');
+const TerserPlugin = require('terser-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const AddAssetHtmlPlugin = require('add-asset-html-webpack-plugin');
+const VueLoaderPlugin = require('vue-loader/lib/plugin');
+const FormatProgressPlugin = require('../plugins/format-progress-plugin');
+const { useDllPath } = require('../utils/common');
 
-const fs = require("fs");
-const path = require("path");
+const fs = require('fs');
+const path = require('path');
 const CWD = process.cwd();
 
 const {
@@ -16,14 +16,14 @@ const {
   dllReferencePlugin,
   loadDllAssets,
   genAlias,
-} = require("../utils/common");
-const rules = require("./rules");
+} = require('../utils/common');
+const rules = require('./rules');
 const plugins = (config) => {
   let __plugins = [
     new webpack.ProgressPlugin(FormatProgressPlugin),
     new CleanWebpackPlugin({
       verbose: false,
-      cleanOnceBeforeBuildPatterns: ["**/*", "!dll", "!dll/**/*"],
+      cleanOnceBeforeBuildPatterns: ['**/*', '!dll', '!dll/**/*'],
     }),
     new webpack.IgnorePlugin({
       resourceRegExp: /^\.\/locale$/,
@@ -36,20 +36,24 @@ const plugins = (config) => {
     //   API: JSON.stringify(config.api[process.env.NODE_ENV]),
     //   STATIC: JSON.stringify(config.static[process.env.NODE_ENV]),
     // }),
-    
+
     new webpack.ProvidePlugin({
-      React: "react",
+      React: 'react',
     }),
     new VueLoaderPlugin(),
     new webpack.optimize.ModuleConcatenationPlugin(),
   ];
 
-  if (!!config.library && Object.keys(config.library).length > 0 && fs.existsSync(useDllPath()) ) {
+  if (
+    !!config.library &&
+    Object.keys(config.library).length > 0 &&
+    fs.existsSync(useDllPath())
+  ) {
     __plugins.push(...dllReferencePlugin(config));
     __plugins.push(new AddAssetHtmlPlugin(loadDllAssets(config)));
   }
-  
-  const __assetsDir = path.resolve(config.base, config.assets || "assets");
+
+  const __assetsDir = path.resolve(config.base, config.assets || 'assets');
 
   if (fs.existsSync(__assetsDir) && fs.statSync(__assetsDir).isDirectory()) {
     __plugins.push(
@@ -57,14 +61,13 @@ const plugins = (config) => {
         patterns: [
           {
             from: __assetsDir,
-            to: config.assets || "assets"
-          }
-        ]
+            to: config.assets || 'assets',
+          },
+        ],
       })
     );
   }
 
-  
   return __plugins;
 };
 const webpackConfig = (config) => {
@@ -76,26 +79,36 @@ const webpackConfig = (config) => {
     resolve: {
       modules: [
         CWD,
-        path.resolve(__dirname, "..", "..", "node_modules"),
-        "node_modules",
-        "bower_components",
+        path.resolve(__dirname, '..', '..', 'node_modules'),
+        'node_modules',
+        'bower_components',
       ],
       alias: {
-        vue$: "vue/dist/vue.esm.js",
+        vue$: 'vue/dist/vue.esm.js',
         ...genAlias(path.join(CWD, config.base), config),
       },
-      extensions: [".js", ".jsx", ".scss", ".css",  ".vue", ".json", ".less",".ts", ".tsx"],
+      extensions: [
+        '.js',
+        '.jsx',
+        '.scss',
+        '.css',
+        '.vue',
+        '.json',
+        '.less',
+        '.ts',
+        '.tsx',
+      ],
     },
     resolveLoader: {
-      modules: [path.resolve(__dirname, "..", "..", "node_modules")],
-     // moduleExtensions: ["-loader"],
+      modules: [path.resolve(__dirname, '..', '..', 'node_modules')],
+      // moduleExtensions: ["-loader"],
     },
     plugins: plugins(config),
     optimization: {
       // runtimeChunk: {
       //     name: 'runtime'
       // },
-     // runtimeChunk: 'single',
+      // runtimeChunk: 'single',
       splitChunks: {
         minSize: 1,
         maxAsyncRequests: 100000,
@@ -106,15 +119,15 @@ const webpackConfig = (config) => {
         },
       },
       // 用模块路劲名字作为webpack的模块名
-     // chunkIds: false,
-     // moduleIds: false,
+      // chunkIds: false,
+      // moduleIds: false,
       minimize: false,
       // https://github.com/webpack-contrib/terser-webpack-plugin#terseroptions
       minimizer: [
-        process.env.NODE_ENV === "production"
+        process.env.NODE_ENV === 'production'
           ? new TerserPlugin({
               include: /\/node_modules/,
-              parallel: true, 
+              parallel: true,
               extractComments: true, // 提取license文件
               terserOptions: {
                 // https://github.com/webpack-contrib/terser-webpack-plugin#terseroptions
