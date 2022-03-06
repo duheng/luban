@@ -90,17 +90,14 @@ const devMiddleware = webpackDevMiddleware(compile);
 const hotMiddleware = webpacHotMiddleware(compile);
 module.exports = (targetConfig) => {
   console.log();
+  app.use(history());
   proxyAction(targetConfig);
   app.use(devMiddleware);
-  app.use(history());
-  devMiddleware.waitUntilValid(() => {
-    app.use(hotMiddleware);
-    console.log();
-    app.listen(targetConfig.port, () => {
-      console.log(
-        `🌍 start service at http://${targetConfig.host}:${targetConfig.port}\n`
-      );
-    });
+  app.use(hotMiddleware);
+  app.listen(targetConfig.port, () => {
+    console.log(
+      `🌍 start service at http://${targetConfig.host}:${targetConfig.port}\n`
+    );
     process.on('uncaughtException', (msg) => {
       if (msg && msg.toString().indexOf('address already in use') > -1) {
         const port = /address already in use [^\d]+(\d+)/.exec(msg)[1];
@@ -110,6 +107,8 @@ module.exports = (targetConfig) => {
       }
     });
   });
+ 
+ 
   // compile.hooks.done.tap("done", stats => {
   // 	const info = stats.toJson();
   // 	if (stats.hasWarnings()) {
