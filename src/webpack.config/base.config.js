@@ -130,7 +130,7 @@ const webpackConfig = (config) => {
           ? new TerserPlugin({
               exclude: /\/node_modules/,
               parallel: true,
-              extractComments: true, // 提取license文件
+              extractComments: false, // 提取license文件
               terserOptions: {
                 // https://github.com/webpack-contrib/terser-webpack-plugin#terseroptions
                 // mangle: true, // Note `mangle.properties` is `false` by default.
