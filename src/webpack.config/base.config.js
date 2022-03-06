@@ -84,6 +84,7 @@ const webpackConfig = (config) => {
     entry: entry,
     externals: config.externals || {},
     module: rules(config),
+    cache: false,
     resolve: {
       modules: [
         CWD,

@@ -32,9 +32,9 @@ module.exports = () => {
     target: 'web',
     mode: 'development',
     devtool: 'eval-cheap-module-source-map',
-    // performance: {
-    //   hints: false,
-    // },
+    performance: {
+      hints: false,
+    },
     plugins: plugins(),
   });
 };

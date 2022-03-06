@@ -52,8 +52,8 @@ module.exports = () => {
     mode: 'production',
     devtool: 'source-map',
     plugins,
-    // performance: {
-    //   hints: false,
-    // },
+    performance: {
+      hints: false,
+    },
   });
 };
