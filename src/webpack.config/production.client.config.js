@@ -11,8 +11,8 @@ const CWD = process.cwd();
 
 const buildPath = path.resolve(CWD, config.build);
 
-const jsName = 'js/[name]@[chunkhash].js';
-const cssName = 'css/[name]@[chunkhash].css';
+const jsName = 'js/[name]@[contenthash].js';
+const cssName = 'css/[name]@[contenthash].css';
 
 __baseConfig.module.rules.map((item) => {
   if (/css|sass|less/.test(item.use)) {
@@ -46,13 +46,14 @@ module.exports = () => {
       publicPath: config.static[process.env.NODE_ENV],
       chunkFilename: jsName,
       filename: jsName,
+      clean: true
     },
     target: 'web',
     mode: 'production',
     devtool: 'source-map',
     plugins,
-    performance: {
-      hints: false,
-    },
+    // performance: {
+    //   hints: false,
+    // },
   });
 };

@@ -62,6 +62,11 @@ module.exports = async (options) => {
       webpackConfig = getWebpackConfig('development');
     }
   }
+  
+  if(options.min) {
+    webpackConfig.optimization.minimize = true
+  }
+  
  // const wbpackAction = `${webpackCommand} --config ${webpackConfig()} --mode=${process.env.NODE_ENV} --colors`;
   changeCache(process.env.NODE_ENV) // 检查缓存
   await pack(webpackConfig);

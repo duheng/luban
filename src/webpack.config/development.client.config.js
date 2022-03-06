@@ -9,8 +9,8 @@ const CWD = process.cwd();
 
 const buildPath = path.resolve(CWD, config.build);
 const timeStamp = new Date().getTime();
-const jsName = `js/[name]@[chunkhash].js`;
-const cssName = 'css/[name]@[chunkhash].css';
+const jsName = `js/[name]@[contenthash].js`;
+const cssName = 'css/[name]@[contenthash].css';
 
 const plugins = () => {
   let __plugins = [
@@ -27,13 +27,14 @@ module.exports = () => {
       publicPath: config.static[process.env.NODE_ENV] || '/',
       chunkFilename: jsName,
       filename: jsName,
+      clean:true
     },
     target: 'web',
     mode: 'development',
     devtool: 'eval-cheap-module-source-map',
-    performance: {
-      hints: false,
-    },
+    // performance: {
+    //   hints: false,
+    // },
     plugins: plugins(),
   });
 };

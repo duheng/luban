@@ -21,11 +21,6 @@ const rules = require('./rules');
 const plugins = (config) => {
   let __plugins = [
     new webpack.ProgressPlugin(FormatProgressPlugin),
-    new CleanWebpackPlugin({
-      verbose: false,
-      cleanOnceBeforeBuildPatterns: ['**/*', '!dll', '!dll/**/*'],
-    }),
-
     // new webpack.IgnorePlugin({
     //   resourceRegExp: /^\.\/locale$/,
     //   contextRegExp: /moment$/,
@@ -122,7 +117,8 @@ const webpackConfig = (config) => {
       // 用模块路劲名字作为webpack的模块名
       // chunkIds: false,
       // moduleIds: false,
-     // chunkIds: 'named',
+     // chunkIds: false,
+      chunkIds: 'deterministic',
       minimize: false,
       // https://github.com/webpack-contrib/terser-webpack-plugin#terseroptions
       minimizer: [
