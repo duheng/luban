@@ -44,7 +44,7 @@ module.exports = () => {
     output: {
       path: buildPath,
       publicPath: config.static[process.env.NODE_ENV],
-      chunkFilename: 'js/[name]-[chunkhash:8].js',
+      chunkFilename: jsName,
       filename: jsName,
     },
     target: 'web',
