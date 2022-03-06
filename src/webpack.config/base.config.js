@@ -25,10 +25,11 @@ const plugins = (config) => {
       verbose: false,
       cleanOnceBeforeBuildPatterns: ['**/*', '!dll', '!dll/**/*'],
     }),
-    new webpack.IgnorePlugin({
-      resourceRegExp: /^\.\/locale$/,
-      contextRegExp: /moment$/,
-    }),
+
+    // new webpack.IgnorePlugin({
+    //   resourceRegExp: /^\.\/locale$/,
+    //   contextRegExp: /moment$/,
+    // }),
     // new webpack.DefinePlugin({
     //   "process.env": {
     //     NODE_ENV: JSON.stringify(process.env.NODE_ENV),
@@ -36,13 +37,16 @@ const plugins = (config) => {
     //   API: JSON.stringify(config.api[process.env.NODE_ENV]),
     //   STATIC: JSON.stringify(config.static[process.env.NODE_ENV]),
     // }),
-
-    new webpack.ProvidePlugin({
-      React: 'react',
-    }),
-    new VueLoaderPlugin(),
     new webpack.optimize.ModuleConcatenationPlugin(),
   ];
+
+  if(config.platform == 'react') {
+    __plugins.push(new webpack.ProvidePlugin({
+      React: 'react',
+    }));
+  } else if(config.platform == 'vue') {
+    __plugins.push(new VueLoaderPlugin());
+  }
 
   if (
     !!config.library &&
@@ -70,6 +74,15 @@ const plugins = (config) => {
 
   return __plugins;
 };
+
+const getAllAlias = (config) => {
+  let __alias = { ...genAlias(path.join(CWD, config.base), config) }
+  if(config.platform == 'vue') {
+    __alias['vue$'] = 'vue/dist/vue.esm.js'
+  }
+  return __alias
+};
+
 const webpackConfig = (config) => {
   return {
     context: path.join(CWD),
@@ -81,22 +94,18 @@ const webpackConfig = (config) => {
         CWD,
         path.resolve(__dirname, '..', '..', 'node_modules'),
         'node_modules',
-        'bower_components',
       ],
-      alias: {
-        vue$: 'vue/dist/vue.esm.js',
-        ...genAlias(path.join(CWD, config.base), config),
-      },
+      alias: getAllAlias(config),
       extensions: [
         '.js',
         '.jsx',
+        '.tsx',
         '.scss',
         '.css',
         '.vue',
         '.json',
         '.less',
         '.ts',
-        '.tsx',
       ],
     },
     resolveLoader: {
@@ -113,7 +122,7 @@ const webpackConfig = (config) => {
       // 用模块路劲名字作为webpack的模块名
       // chunkIds: false,
       // moduleIds: false,
-      chunkIds: 'named',
+     // chunkIds: 'named',
       minimize: false,
       // https://github.com/webpack-contrib/terser-webpack-plugin#terseroptions
       minimizer: [

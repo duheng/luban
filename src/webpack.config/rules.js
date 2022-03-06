@@ -65,7 +65,10 @@ const rules = {
       ].filter(Boolean),
     };
   },
-  vue: () => {
+  vue: (config) => {
+    if(config.platform !== 'vue') {
+      return {}
+    }
     return {
       test: /\.vue$/,
       exclude: /node_modules/,
