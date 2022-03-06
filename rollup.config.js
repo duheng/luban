@@ -14,7 +14,7 @@ const mark = `/**
 
 export default [
   {
-    input: ['src/**/*.js', '!src/config', '!src/index.js'],
+    input: ['src/**/*.js', '!src/config', '!src/index.js', '!src/servers/dev-server.js'],
     output: {
       banner: mark,
       dir: 'lib',
@@ -26,6 +26,7 @@ export default [
       copy({
         targets: [
           { src: 'src/index.js', dest: 'lib' },
+          { src: 'src/servers/dev-server.js', dest: 'lib/servers' },
           { src: 'src/config/*', dest: 'lib/config' },
           { src: 'src/webpack.config/.babelrc.js', dest: 'lib/webpack.config' },
         ],

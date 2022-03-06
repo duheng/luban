@@ -3,6 +3,8 @@ const fs = require('fs');
 const { createProxyMiddleware } = require('http-proxy-middleware');
 const Webpack = require('webpack');
 const { getWebpackConfig } = require('../utils/webpackConfig');
+const webpackDevMiddleware = require('webpack-dev-middleware');
+const webpacHotMiddleware = require('webpack-hot-middleware');
 const __config = getWebpackConfig('development');
 const express = require('express');
 const history = require('connect-history-api-fallback');
@@ -84,8 +86,8 @@ const proxyAction = (targetConfig) => {
 
 const config = formatConfig(__config);
 const compile = Webpack(config);
-const devMiddleware = require('webpack-dev-middleware')(compile);
-const hotMiddleware = require('webpack-hot-middleware')(compile);
+const devMiddleware = webpackDevMiddleware(compile);
+const hotMiddleware = webpacHotMiddleware(compile);
 module.exports = (targetConfig) => {
   console.log();
   proxyAction(targetConfig);
