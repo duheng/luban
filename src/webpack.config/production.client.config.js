@@ -47,7 +47,7 @@ module.exports = () => {
       chunkFilename: 'js/[name]-[chunkhash:8].js',
       filename: jsName,
     },
-    target: ['web', 'es5'],
+    target: 'web',
     mode: 'production',
     devtool: 'source-map',
     plugins,
