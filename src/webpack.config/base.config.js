@@ -21,10 +21,10 @@ const rules = require('./rules');
 const plugins = (config) => {
   let __plugins = [
     new webpack.ProgressPlugin(FormatProgressPlugin),
-    // new webpack.IgnorePlugin({
-    //   resourceRegExp: /^\.\/locale$/,
-    //   contextRegExp: /moment$/,
-    // }),
+    new webpack.IgnorePlugin({
+      resourceRegExp: /^\.\/locale$/,
+      contextRegExp: /moment$/,
+    }),
     // new webpack.DefinePlugin({
     //   "process.env": {
     //     NODE_ENV: JSON.stringify(process.env.NODE_ENV),
@@ -110,10 +110,36 @@ const webpackConfig = (config) => {
     },
     plugins: plugins(config),
     optimization: {
+      splitChunks: {
+         chunks: "all", //指定打包同步加载还是异步加载
+        minSize: 80000, //构建出来的chunk大于80000才会被分割 
+        minRemainingSize: 0,
+        maxSize: 0, //会尝试根据这个大小进行代码分割,0 不限制大小
+        minChunks: 4, //制定用了几次才进行代码分割
+        maxAsyncRequests: 6,//最大的按需(异步)加载次数，默认为 6。
+        maxInitialRequests: 4,
+        automaticNameDelimiter: "~", //文件生成的连接符
+        name: 'chunk',
+        hidePathInfo: true,
+        cacheGroups: {
+          // defaultVendors: {
+          //   test: /[\\/]node_modules[\\/]/, //符合组的要求就给构建venders
+          //   priority: -10, //优先级用来判断打包到哪个里面去
+          //   filename: "vendors", //指定chunks名称
+          // },
+          common: {
+            name:'chunk-common',
+            minChunks: 3, //被引用两次就提取出来
+            priority:  0,
+            reuseExistingChunk: true, //如果当前要提取的模块，在已经在打包生成的js文件中存在，则将重用该模块，而不是把当前要提取的模块打包生成新的js文件。
+          },
+        },
+
+      },
       // runtimeChunk: {
       //     name: 'runtime'
       // },
-      // runtimeChunk: 'single',
+   
   
       // 用模块路劲名字作为webpack的模块名
       // chunkIds: false,
