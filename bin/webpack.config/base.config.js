@@ -68,8 +68,9 @@ const plugins = (config) => {
     __plugins.push(...dllReferencePlugin(config));
     __plugins.push(new AddAssetHtmlPlugin(loadDllAssets(config)));
   }
-  const __assetsDir = path.resolve(config.base, config.assets || "assets");
 
+  const __assetsDir = path.resolve(config.base, config.assets || "assets");
+  
   if (fs.existsSync(__assetsDir) && fs.statSync(__assetsDir).isDirectory()) {
     __plugins.push(
       new CopyWebpackPlugin({

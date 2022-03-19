@@ -116,24 +116,41 @@ const rules = {
       loader: require.resolve("url-loader"),
       options: {
         limit: config.base64_image_limit, // 20k以内的图片用base64，可配置
-        name: `${path.resolve(CWD, config.base)}/${config.assets}/images/[name]-[hash:8].[ext]`,
+        outputPath: config.assets + '/image/',
+        name: '[name]@[hash:8].[ext]',
       },
     };
   },
-   media: () => {
+  svg: (config) => {
     return {
-      test: /\.(eot|woff|otf|svg|ttf|woff2|appcache|mp3|mp4|pdf)(\?|$)/,
+      test: /\.svg/,
+      use: [
+        {
+          loader: require.resolve("file-loader"),
+          options: {
+            outputPath: config.assets + '/svg/',
+            name: '[name]@[hash:8].[ext]',
+          }
+        }
+      ],
+    };
+  },
+   media: (config) => {
+    return {
+      test: /\.(eot|woff|otf|ttf|woff2|appcache|mp3|mp4|pdf)(\?|$)/,
       use: [
         {
           loader: require.resolve("url-loader"),
           options: {
-            name: "[name]-[hash:8].[ext]",
+            outputPath: config.assets + '/other/',
+            name: '[name]@[hash:8].[ext]',
           },
         },
         {
           loader: require.resolve("file-loader"),
           options: {
-             name: '[name][hash:8].[ext]'
+            outputPath: config.assets + '/other/',
+            name: '[name]@[hash:8].[ext]',
           }
         }
       ],
