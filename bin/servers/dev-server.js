@@ -3,7 +3,8 @@ const fs = require("fs");
 const proxy = require("koa-proxies");
 const Webpack = require("webpack");
 const { devMiddleware, hotMiddleware } = require("koa-webpack-middleware");
-const __config = require("../webpack.config/development.client.config")();
+const { getWebpackConfig } = require('../utils/webpackConfig');
+const __config = getWebpackConfig('development');
 const koa = require("koa");
 const app = new koa();
 

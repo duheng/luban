@@ -26,6 +26,8 @@ module.exports = function (api) {
         require.resolve('@babel/plugin-proposal-optional-chaining'),
         // 解析类的属性
         require.resolve('@babel/plugin-proposal-class-properties'),
+        require.resolve('@babel/plugin-transform-modules-commonjs'),
+        require.resolve('@babel/plugin-syntax-dynamic-import'),
         // Polyfills the runtime needed for async/await and generators
         [
           require.resolve("@babel/plugin-transform-runtime"),

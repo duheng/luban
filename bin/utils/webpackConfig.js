@@ -1,3 +1,4 @@
+const webpack = require("webpack");
 const { config } = require('./common');
 const webpackConfig = {
   development: '../webpack.config/development.client.config',
@@ -8,8 +9,7 @@ const webpackConfig = {
 const getWebpackConfig = (mode = 'development') => {
   const __webpackConfig = require(webpackConfig[mode])()
   if (config.modifyWebpackConfig) {
-   // console.log("AS---", config.modifyWebpackConfig(__webpackConfig))
-    return config.modifyWebpackConfig(__webpackConfig);
+   return {...__webpackConfig, ...config.modifyWebpackConfig(__webpackConfig, webpack)};
   } else {
     return __webpackConfig
   }

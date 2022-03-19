@@ -19,7 +19,7 @@ const {
 const rules = require("./rules");
 const plugins = (config) => {
   let __plugins = [
-    new webpack.ProgressPlugin(FormatProgressPlugin),
+   // new webpack.ProgressPlugin(FormatProgressPlugin),
 
     new CleanWebpackPlugin({
       verbose: false,
@@ -42,13 +42,21 @@ const plugins = (config) => {
 //     /(en|zh-cn)\.js/
 // ),
 
-    new webpack.DefinePlugin({
-      "process.env": {
-        NODE_ENV: JSON.stringify(process.env.NODE_ENV),
-      },
-      API: JSON.stringify(config.api[process.env.NODE_ENV]),
-      STATIC: JSON.stringify(config.static[process.env.NODE_ENV]),
-    }),
+    // new webpack.DefinePlugin({
+    //   "process.env": {
+    //     NODE_ENV: JSON.stringify(process.env.NODE_ENV),
+    //   },
+    //   API: JSON.stringify(config.api[process.env.NODE_ENV]),
+    //   STATIC: JSON.stringify(config.static[process.env.NODE_ENV]),
+    // }),
+    // new webpack.DefinePlugin({
+    //   'process.env':  {
+    //     VITE_API_URL: JSON.stringify('https://qa1.kuai.360.cn')
+    //   },
+    //   'import.meta.env': {
+    //     MOZI: JSON.stringify('https://qa1.kuai.360.cn1111')
+    //   }
+    // }),
     new webpack.ProvidePlugin({
       React: "react",
     }),
