@@ -34,7 +34,10 @@ const plugins = (config) => {
     //       request: '../locale', // resolved relatively
     //   });
     // }),
-    new webpack.IgnorePlugin(/\.\/locale/, /moment/),
+    new webpack.IgnorePlugin({
+      resourceRegExp: /^\.\/locale$/,
+      contextRegExp: /moment$/,
+    }),
     // new webpack.IgnorePlugin(/\.\/locale/, /moment/,/(en|zh-cn)\.js/),
 //   new webpack.ContextReplacementPlugin(
 //     // 需要被处理的文件目录位置
@@ -118,15 +121,41 @@ const webpackConfig = (config) => {
       // runtimeChunk: {
       //     name: 'runtime'
       // },
+      // splitChunks: {
+      //   minSize: 1,
+      //   maxAsyncRequests: 100000,
+      //   maxInitialRequests: 100000,
+      //   cacheGroups: {
+      //     default: false,
+      //     vendors: false,
+      //   },
+      // },
       splitChunks: {
-        minSize: 1,
-        maxAsyncRequests: 100000,
-        maxInitialRequests: 100000,
-        cacheGroups: {
-          default: false,
-          vendors: false,
-        },
-      },
+        chunks: "all", //指定打包同步加载还是异步加载
+       minSize: 80 * 1024, //构建出来的chunk大于80000才会被分割 
+      //  minRemainingSize: 0,
+       maxSize: 0, //会尝试根据这个大小进行代码分割,0 不限制大小
+       minChunks: 3, //制定用了几次才进行代码分割
+       maxAsyncRequests: 6,//最大的按需(异步)加载次数，默认为 6。
+       maxInitialRequests: 4,
+      //  automaticNameDelimiter: "~", //文件生成的连接符
+       //name: 'chunk',
+      //  hidePathInfo: true,
+       cacheGroups: {
+         // defaultVendors: {
+         //   test: /[\\/]node_modules[\\/]/, //符合组的要求就给构建venders
+         //   priority: -10, //优先级用来判断打包到哪个里面去
+         //   filename: "vendors", //指定chunks名称
+         // },
+         default: {
+           name:'chunk-common',
+           minChunks: 3, //被引用两次就提取出来
+           priority:  0,
+          reuseExistingChunk: true, //如果当前要提取的模块，在已经在打包生成的js文件中存在，则将重用该模块，而不是把当前要提取的模块打包生成新的js文件。
+         },
+       },
+
+     },
       // 用模块路劲名字作为webpack的模块名
       namedModules: true,
       minimize: false,
