@@ -38,7 +38,7 @@ commander
 commander
   .command("pack")
   .description("打包💼")
-  .option("-p --prod", "打包线上版本")
+  .option("-d --dev", "打包线测试版本")
   .option("-m --min", "压缩优化")
   .option("-n --node", "打包node serve工程")
   .allowUnknownOption()

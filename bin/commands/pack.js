@@ -53,13 +53,13 @@ module.exports = async (options) => {
       console.log("打包dll失败：", e);
     }
 
-    if (options.prod) {
-      //生产环境
-      process.env.NODE_ENV = "production";
-      webpackConfig = getWebpackConfig('production');
-    } else {
+    if (options.dev) {
       process.env.NODE_ENV = "development";
       webpackConfig = getWebpackConfig('development');
+    } else {
+      // 生产环境
+      process.env.NODE_ENV = "production";
+      webpackConfig = getWebpackConfig('production');
     }
   }
   

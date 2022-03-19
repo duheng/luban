@@ -92,13 +92,15 @@ module.exports = (targetConfig) => {
 	app.use(
 		devMiddleware(compile, {
 			noInfo: false,
-			hot: false,
-			writeToDisk: true,
+			quiet: false,
 			publicPath: config.output.publicPath,
+			writeToDisk: false,
+			watchOptions: {
+				aggregateTimeout: 200,
+				ignored:  /node_modules|dll|.luban-cache/ 
+		   },
 			stats: {
 				colors: true,
-				cached: true,
-				exclude:  /node_modules|dll|.qcache/ ,
 			},
 		})
 	);
