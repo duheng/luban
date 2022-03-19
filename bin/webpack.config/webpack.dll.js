@@ -2,9 +2,7 @@ const path = require('path')
 const webpack = require('webpack')
 const CWD = process.cwd()
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
-const { config } = require('../utils/common')
-
-const dllPath = path.join(CWD, config.build, config.dll || 'dll')
+const { config, useDllPath } = require('../utils/common')
 const library = '[name]_[chunkhash]'
 module.exports = {
     mode: "production",
@@ -13,17 +11,17 @@ module.exports = {
     },
     plugins:[
         new CleanWebpackPlugin({
-          cleanOnceBeforeBuildPatterns: [dllPath]
+          cleanOnceBeforeBuildPatterns: [useDllPath()]
         }),
         new webpack.DllPlugin({
             context: CWD,
             name: library,
-            path: path.join(dllPath,'[name].manifest.json'),
+            path: path.join(useDllPath(),'[name].manifest.json'),
         })
     ],
     output:{
-        path: dllPath,
-        filename:'[name]_dll@[chunkhash].js',
+        path: useDllPath(),
+        filename:'[name]@[chunkhash].js',
         library
     }
 }

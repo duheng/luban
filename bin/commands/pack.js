@@ -1,14 +1,17 @@
-#!/usr/bin/env node
 
 require("shelljs/global");
 const fs = require("fs");
 const path = require("path");
 const CWD = process.cwd();
-const { config } = require("../utils/common");
+const { config, useDllPath } = require("../utils/common");
+const { changeCache, setCacheVersion } = require("../utils/clearCache");
+const { isChangeDll } = require("../utils/dllPitch");
 const {  getWebpackConfig } = require("../utils/webpackConfig");
+const { printLog } = require('../utils/base');
 const webpack = require("webpack");
 const pack = (webpackConfig) => {
   return new Promise((resolve, reject) => {
+    printLog({text:'Building project...'})
     webpack({...webpackConfig}, (err, stats) => {
       if (err) {
         console.error(err.stack || err);
@@ -27,21 +30,23 @@ const pack = (webpackConfig) => {
       if (stats.hasWarnings()) {
         console.warn(info.warnings);
       }
+      printLog({text:'Building project complete.'})
       resolve();
     });
-
     
   });
 };
 
 module.exports = async (options) => {
   let webpackConfig = null;
+  
   if (options.node) {
     process.env.NODE_ENV = "development";
     webpackConfig = getWebpackConfig('server');
   } else {
     try {
-      if (!fs.existsSync(path.join(CWD, config.build, config.dll))) {
+      const _useDllPath = useDllPath()
+      if (isChangeDll(_useDllPath, config)) {
         await require("./dll")(options);
       }
     } catch (e) {
@@ -57,6 +62,13 @@ module.exports = async (options) => {
       webpackConfig = getWebpackConfig('development');
     }
   }
+  
+  if(options.min) {
+    webpackConfig.optimization.minimize = true
+  }
+  
  // const wbpackAction = `${webpackCommand} --config ${webpackConfig()} --mode=${process.env.NODE_ENV} --colors`;
+  changeCache(process.env.NODE_ENV) // 检查缓存
   await pack(webpackConfig);
+  setCacheVersion(process.env.NODE_ENV) // 设置缓存版本
 };

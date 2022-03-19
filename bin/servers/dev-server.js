@@ -98,7 +98,7 @@ module.exports = (targetConfig) => {
 			stats: {
 				colors: true,
 				cached: true,
-				exclude: [/node_modules[\\\/]/],
+				exclude:  /node_modules|dll|.qcache/ ,
 			},
 		})
 	);
