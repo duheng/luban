@@ -63,7 +63,7 @@ const common_css_rule = [
     loader: require.resolve("css-loader"),
   },
 ];
-const __exclude = __exclude
+const __exclude =  /node_modules|dll|.luban-cache/ 
 const rules = {
  
   js: (config) => {
