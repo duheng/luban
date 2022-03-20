@@ -2,7 +2,7 @@ require("shelljs/global");
 const fs = require('fs')
 const path = require('path')
 const crypto = require('crypto')
-const { cacheDirectory } = require('./buildCache')
+const { useCache, cacheDirectory } = require('./buildCache')
 const CWD = process.cwd();
 const pkg = require(path.join(CWD, 'package.json'))
 
@@ -22,6 +22,9 @@ const getCacheVersion = (cacheDir, dependencies) => {
 }
 
 const setCacheVersion = (env) => {
+    if(!useCache){
+      return
+    }
     const cacheDir = `${cacheDirectory}/${env}`
     const dependencies =  !!pkg && !!pkg.dependencies ? pkg.dependencies : {}
     const __dependencies = JSON.stringify(dependencies)
@@ -42,6 +45,9 @@ const isChangeCache = (cacheDir) => {
 }
 
 const changeCache = (env) => {
+  if(!useCache){
+    return
+  }
   const _cacheDir = `${cacheDirectory}/${env}`
   if(isChangeCache(_cacheDir)) {
     rm('-rf',`${_cacheDir}/*`);

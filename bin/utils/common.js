@@ -136,6 +136,9 @@ const genAlias = (projectDir, config) => {
       map[name] = path.join(CWD,__alias[name]) 
     });
   }
+  if(config.platform == 'vue') {
+    map['vue$'] =  "vue/dist/vue.esm.js"
+  }
   return { ...map };
 };
 

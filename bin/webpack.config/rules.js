@@ -1,11 +1,8 @@
 const path = require("path");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const { useCache, cacheDirectory } = require('../utils/buildCache');
-const CWD = process.cwd();
-
 const devMode = process.env.NODE_ENV !== "production";
-//const devMode = true
-//process.env.NODE_ENV = 'development'
+
 const postCssLoader = () => {
   return {
     loader: require.resolve("postcss-loader"),
@@ -14,9 +11,9 @@ const postCssLoader = () => {
       plugins: [
         require(require.resolve("autoprefixer"))({
           overrideBrowserslist: [
-            "ie >= 9",
+            "ie >= 10",
             "> 1%",
-            "iOS 7",
+            "iOS 9",
             "last 3 iOS versions",
           ],
         }),
@@ -67,7 +64,10 @@ const rules = {
       ].filter(Boolean),
     };
   },
-  vue: () => {
+  vue: (config) => {
+    // if(config.platform !== 'vue') {
+    //   return null
+    // }
     return {
       test: /\.vue$/,
       exclude: /node_modules/,
@@ -161,11 +161,26 @@ const rules = {
 
 };
 
+const vue = () => {
+  return {
+    test: /\.vue$/,
+    exclude: /node_modules/,
+    use: {
+      loader: require.resolve("vue-loader"),
+    },
+  };
+}
+
 module.exports = (config) => {
   let rule = [];
   for (let key in rules) {
     rule.push(rules[key](config));
   }
+ 
+  if(config.platform == 'vue') {
+    rule.push(vue())
+  }
+
   return {
     rules: rule,
   };

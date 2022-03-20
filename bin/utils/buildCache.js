@@ -2,6 +2,9 @@ const path = require('path')
 const fs = require('fs')
 const CWD = process.cwd();
 const { exec } = require('child_process');
+const { config } = require("../utils/common");
+const { cache } = config
+console.log('config-----',   config)
 /**
  * 
  * skipLubanCache 是否阻止缓存，默认值 false
@@ -12,7 +15,7 @@ const { skipLubanCache = false, NODE_ENV, deploy_type  } = process.env
 const jenkinsPath = '/home/q/prj/npm' //jenkins缓存路径
 const isJenkinsEnv = fs.existsSync(jenkinsPath) // 是否集成环境
 
-const useCache = !(skipLubanCache == 'true' || skipLubanCache == true)
+const useCache = !(skipLubanCache == 'true' || skipLubanCache == true) && !!cache
 
 const basePath = isJenkinsEnv ? path.join(jenkinsPath) : path.join(CWD) // 机器根路径
 const projectDirName = path.basename(CWD)

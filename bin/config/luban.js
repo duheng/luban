@@ -27,7 +27,8 @@ module.exports = {
   "scss": "scss",
   "assets": "assets",
   "base64_image_limit": 10240,
-  "modifyWebpackConfig": (baseConfig) => {
+  "cache": true,
+  "modifyWebpackConfig": (baseConfig, webpack) => {
     return baseConfig;
   }
 }
