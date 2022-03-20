@@ -15,6 +15,7 @@ const cssName = "css/[name].css";
 const plugins = () => {
   let __plugins = [
     ...CreatHtmlPlugin("development", __baseConfig, getTemplate),
+    new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.HotModuleReplacementPlugin(),
   ];
   return __plugins;

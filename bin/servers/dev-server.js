@@ -1,12 +1,15 @@
 const path = require("path");
 const fs = require("fs");
-const proxy = require("koa-proxies");
 const Webpack = require("webpack");
-const { devMiddleware, hotMiddleware } = require("koa-webpack-middleware");
+const history = require('connect-history-api-fallback');
+const { createProxyMiddleware } = require('http-proxy-middleware');
+const webpackDevMiddleware = require('webpack-dev-middleware')
+const webpackHotMiddleware = require('webpack-hot-middleware')
 const { getWebpackConfig } = require('../utils/webpackConfig');
 const __config = getWebpackConfig('development');
-const koa = require("koa");
-const app = new koa();
+const express = require('express');
+const app =  express();
+const CWD = process.cwd();
 
 const formatConfig = (config) => {
 	let __config = { ...config };
@@ -69,74 +72,58 @@ const indexHtml = (url) => {
 	return `${__indexname}.html`;
 };
 
-const config = formatConfig(__config);
-const compile = Webpack(config);
-
-module.exports = (targetConfig) => {
+const proxyAction = (targetConfig) => {
 	const __proxy = targetConfig.proxy;
 	if (__proxy && __proxy.length > 0) {
-		console.log(`[luban] 已为您初始化以下 ${__proxy.length} 个代理 \n`);
-		__proxy.map((item) => {
-			console.log(`${item.path} -> ${item.target}/${item.path}\n`);
-			app.use(
-				proxy(item.path, {
-					target: item.target,
-					changeOrigin: true,
-					rewrite: path,
-					logs: true,
-				})
-			);
-		});
+	  console.log(`[luban] 已为您初始化以下 ${__proxy.length} 个代理 \n`);
+	  __proxy.map((item) => {
+		console.log(`${item.path} -> ${item.target}${item.path}\n`);
+		app.use(
+		  item.path,
+		  createProxyMiddleware({
+			target: item.target,
+			changeOrigin: item.changeOrigin || true,
+			logs: true,
+		  })
+		);
+	  });
 	}
+ };
 
-	app.use(
-		devMiddleware(compile, {
-			noInfo: false,
-			quiet: false,
-			publicPath: config.output.publicPath,
-			writeToDisk: false,
-			watchOptions: {
-				aggregateTimeout: 200,
-				ignored:  /node_modules|dll|.luban-cache/ 
-		   },
-			stats: {
-				colors: true,
-			},
-		})
-	);
-
-	app.use(hotMiddleware(compile));
-
-	app.use(
-		//重定向到首页
-		async (ctx, next) => {
-			const __instans = [".html", ".htm", ""];
-			if (__instans.indexOf(path.extname(ctx.url)) > -1) {
-				const __indexHtml = indexHtml(ctx.url);
-				const filename = path.join(compile.outputPath, __indexHtml);
-
-				const htmlFile = await new Promise(function(resolve, reject) {
-					compile.outputFileSystem.readFile(
-						filename,
-						(err, result) => {
-							if (err) {
-								reject(err);
-							} else {
-								resolve(result);
-							}
-						}
-					);
-				});
-				ctx.type = "html";
-				ctx.body = htmlFile;
-			}
-			await next();
-		}
-	);
-
+  
+const config = formatConfig(__config);
+const compile = Webpack(config);
+const devMiddleware = webpackDevMiddleware(compile, {
+	logLevel: 'debug',
+	writeToDisk: false,
+    publicPath: config.output.publicPath,
+	watchOptions: {
+		aggregateTimeout: 200,
+		ignored:  /node_modules|dll|.luban-cache/ 
+    }
+})
+const hotMiddleware = webpackHotMiddleware(compile)
+module.exports = (targetConfig) => {
+	app.use(history({
+		index: '/main.html'
+	}));
+	proxyAction(targetConfig);
+	app.use(devMiddleware);
+	app.use(hotMiddleware);
+	devMiddleware.waitUntilValid(()=>{
+		
+	});
 	app.listen(targetConfig.port, () => {
 		console.log(
-			`🌍 start service at http://${targetConfig.host}:${targetConfig.port}\n`
+		  `🌍 start service at http://${targetConfig.host}:${targetConfig.port}\n`
 		);
+		process.on('uncaughtException', (msg) => {
+		  if (msg && msg.toString().indexOf('address already in use') > -1) {
+			const port = /address already in use [^\d]+(\d+)/.exec(msg)[1];
+			logger.error(port + ' 端口已被占用，请在luban.js 中更换端口');
+		  } else {
+			throw msg;
+		  }
+		});
 	});
 };
