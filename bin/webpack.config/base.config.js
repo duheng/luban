@@ -6,7 +6,7 @@ const AddAssetHtmlPlugin = require("add-asset-html-webpack-plugin");
 const VueLoaderPlugin = require("vue-loader/lib/plugin");
 const FormatProgressPlugin = require("../plugins/format-progress-plugin");
 const { useDllPath } = require('../utils/common');
-
+const { useCache, terserCacheDirectory } = require('../utils/buildCache');
 const fs = require("fs");
 const path = require("path");
 const CWD = process.cwd();
@@ -112,7 +112,9 @@ const webpackConfig = (config) => {
       minimizer: [
         process.env.NODE_ENV === "production"
           ? new TerserPlugin({
-              cache: true,
+              minify: TerserPlugin.esbuildMinify,
+              exclude: /node_modules|dll|.luban-cache/ ,
+              cache: useCache ? terserCacheDirectory : false,
               // cache: path.resolve(__dirname, 'ugCache'),
               parallel: true,
               extractComments: true, // 提取license文件

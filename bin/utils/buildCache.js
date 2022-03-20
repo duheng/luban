@@ -50,5 +50,6 @@ module.exports = {
     useCache, 
     cacheDirectory,
     cacheDllDirectory,
+    terserCacheDirectory,
     cleanCache
 }
