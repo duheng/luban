@@ -26,19 +26,25 @@ __baseConfig.module.rules.map((item) => {
   }
 });
 
-const plugins = [
-  new MiniCssExtractPlugin({
-    // Options similar to the same options in webpackOptions.output
-    // all options are optional
-    // filename: 'f_[name].css',
-    filename: cssName,
-    chunkFilename: cssName,
-    ignoreOrder: true, // Enable to remove warnings about conflicting order
-  }),
-  new webpack.HashedModuleIdsPlugin(),
-  new CreatVersionPlugin(config),
-  ...CreatHtmlPlugin("production", __baseConfig, getTemplate),
-];
+const plugins = () => {
+  let __plugins = [
+    new MiniCssExtractPlugin({
+      // Options similar to the same options in webpackOptions.output
+      // all options are optional
+      // filename: 'f_[name].css',
+      filename: cssName,
+      chunkFilename: cssName,
+      ignoreOrder: true, // Enable to remove warnings about conflicting order
+    }),
+    new webpack.HashedModuleIdsPlugin(),
+    ...CreatHtmlPlugin("production", __baseConfig, getTemplate),
+  ];
+  if(config.chunkver) {
+    __plugins.push(new CreatVersionPlugin(config))
+  }
+  return __plugins;
+};
+
 
 module.exports = () => {
   return merge(__baseConfig, {
@@ -50,7 +56,7 @@ module.exports = () => {
     },
     mode: "production",
     devtool: "source-map",
-    plugins,
+    plugins: plugins(),
     performance: {
       hints: false,
     },

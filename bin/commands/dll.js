@@ -17,11 +17,11 @@ const dll = (options) => {
 
 module.exports = async (options) => {
 	if(!!config.library && Object.keys(config.library).length > 0){
-		printLog({text: 'building dll...'})
+		printLog({text: 'Build Dll...'})
 		await dll(options)
 		const _useDllPath = useDllPath()
 		setDllVersion(_useDllPath, config)
-		printLog({text: 'dll build complete'})
+		printLog({text: 'Build Dll Complete.'})
 	} else {
 		return null
 	}

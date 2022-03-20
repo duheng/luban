@@ -22,6 +22,37 @@ const postCssLoader = () => {
   };
 };
 
+const chunkantdAction = () => {
+  const chunk = [
+    [
+      require.resolve('babel-plugin-import'),
+      {
+        "libraryName":  "antd",
+        "libraryDirectory": "es",
+        "style": "less"
+      },
+    ],
+    [
+      require.resolve('babel-plugin-import'),
+      {
+        "libraryName": "@ant-design",
+        "libraryDirectory": "icons",
+        "camel2DashComponentName": false,  // default: true
+      },
+      "@ant-design/icons"
+    ]
+  ]
+  return chunk
+}
+
+const loadBabelConfig = (chunkantd) => {
+  const __config = path.resolve(__dirname, ".babelrc.js")
+  let babelConfig = require(__config)
+  if(chunkantd) {
+    babelConfig.plugins.push(...chunkantdAction())
+  }
+  return babelConfig
+}
 const common_css_rule = [
   {
     loader: devMode
@@ -32,12 +63,13 @@ const common_css_rule = [
     loader: require.resolve("css-loader"),
   },
 ];
-
+const __exclude = __exclude
 const rules = {
-  js: () => {
+ 
+  js: (config) => {
     return {
       test: /\.(js|jsx|ts|tsx)$/,
-      exclude: /node_modules/,
+      exclude: __exclude ,
       use: [
         {
           loader: require.resolve("thread-loader"),
@@ -58,22 +90,10 @@ const rules = {
           options: {
             babelrc: false,
             compact: false,
-            configFile: path.resolve(__dirname, ".babelrc.js"),
+            ...loadBabelConfig(!!config.chunkantd)
           },
         },
       ].filter(Boolean),
-    };
-  },
-  vue: (config) => {
-    // if(config.platform !== 'vue') {
-    //   return null
-    // }
-    return {
-      test: /\.vue$/,
-      exclude: /node_modules/,
-      use: {
-        loader: require.resolve("vue-loader"),
-      },
     };
   },
   css: () => {
@@ -86,7 +106,7 @@ const rules = {
   less: () => {
     return {
       test: /\.less$/,
-      exclude: /node_modules/,
+      exclude: __exclude ,
       use: [
         ...common_css_rule,
         {
@@ -103,7 +123,7 @@ const rules = {
   scss: () => {
     return {
       test: /\.(sa|sc)ss$/,
-      exclude: /node_modules/,
+      exclude: __exclude ,
       use: [
         ...common_css_rule,
         {
@@ -164,7 +184,7 @@ const rules = {
 const vue = () => {
   return {
     test: /\.vue$/,
-    exclude: /node_modules/,
+    exclude: __exclude ,
     use: {
       loader: require.resolve("vue-loader"),
     },

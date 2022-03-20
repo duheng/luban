@@ -28,6 +28,7 @@ module.exports = {
   "assets": "assets",
   "base64_image_limit": 10240,
   "cache": true,
+  "chunkver": false, // 生成构建后各文件的版本号
   "modifyWebpackConfig": (baseConfig, webpack) => {
     return baseConfig;
   }

@@ -11,7 +11,7 @@ const { printLog } = require('../utils/base');
 const webpack = require("webpack");
 const pack = (webpackConfig) => {
   return new Promise((resolve, reject) => {
-    printLog({text:'Building project...'})
+    printLog({text:'Build Project...'})
     webpack({...webpackConfig}, (err, stats) => {
       if (err) {
         console.error(err.stack || err);
@@ -30,7 +30,7 @@ const pack = (webpackConfig) => {
       if (stats.hasWarnings()) {
         console.warn(info.warnings);
       }
-      printLog({text:'Building project complete.'})
+      printLog({text:'Build Project Complete.'})
       resolve();
     });
     
