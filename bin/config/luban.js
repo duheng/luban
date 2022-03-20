@@ -1,10 +1,10 @@
 module.exports = {
-  "host": "127.0.0.1",
-  "port": "3001",
+  "host": "0.0.0.0",
+  "port": "3000",
   "platform": "react",
   "ui_plug":"antd",
   "base": "src",
-  "build": "prd",
+  "build": "dist",
   "dll": "dll",
   "static": {
     "development": "",
@@ -29,6 +29,7 @@ module.exports = {
   "base64_image_limit": 10240,
   "cache": true,
   "chunkver": false, // 生成构建后各文件的版本号
+  "chunkantd": true, // antd动态导入
   "modifyWebpackConfig": (baseConfig, webpack) => {
     return baseConfig;
   }
