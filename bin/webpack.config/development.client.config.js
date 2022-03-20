@@ -21,6 +21,7 @@ const plugins = () => {
 };
 
 module.exports = () => {
+  const __devtool = config['devtool'] || {}
   return merge(__baseConfig, {
     output: {
       path: buildPath,
@@ -29,7 +30,7 @@ module.exports = () => {
       filename: jsName,
     },
     mode: "development",
-    devtool: 'eval-cheap-module-source-map',
+    devtool: __devtool['development'] || 'none',
     performance: {
       hints: false,
     },

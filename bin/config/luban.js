@@ -19,7 +19,10 @@ module.exports = {
      "vendor": ['react', 'react-dom']
   },
   "alias": {},
-  "devtool": "source-map",
+  "devtool": {
+    "development": 'eval-cheap-module-source-map',
+    "production": 'source-map',
+  },
   "css_modules": false,
   "proxy": [],
   "pages": "pages",

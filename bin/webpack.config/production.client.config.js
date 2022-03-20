@@ -46,6 +46,7 @@ const plugins = () => {
 };
 
 module.exports = () => {
+  const __devtool = config['devtool'] || {}
   return merge(__baseConfig, {
     output: {
       path: buildPath,
@@ -54,7 +55,7 @@ module.exports = () => {
       filename: jsName,
     },
     mode: "production",
-    devtool: "source-map",
+    devtool:  __devtool['production'] || "none",
     plugins: plugins(),
     performance: {
       hints: false,
