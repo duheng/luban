@@ -45,7 +45,6 @@ const plugins = () => {
   return __plugins;
 };
 
-
 module.exports = () => {
   return merge(__baseConfig, {
     output: {
