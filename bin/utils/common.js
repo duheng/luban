@@ -12,9 +12,9 @@ const getConfig = () => {
       printLog({type:'error',text:`没有加载到配置文件${__name}.*`})
     }
 }
+const __config = getConfig();
 
 const useDllPath = () => {
-  const __config = getConfig();
   return  path.join(CWD, __config.dll)
 }
 
@@ -25,8 +25,10 @@ const getWebpackCommand = () => {
   return webpackCommand
 }
 
-const getTemplate = () => {
-  const __path = path.join(CWD, "template.html");
+const getTemplate = (name) => {
+  const __matchTmp = Object.keys(__config.template).filter(item=>item == name)
+  const __matchHtml =  __matchTmp.length > 0 ?  path.join(CWD, __config.template[__matchTmp[0]]) : false
+  const __path = __matchHtml ? __matchHtml : path.join(CWD, "template.html");
   let templ = "";
   if (fs.existsSync(__path)) {
     templ = fs.readFileSync(__path, "utf8");
@@ -59,7 +61,6 @@ const filterFile = (dir, pattern) => {
 };
 
 const getEntry = () => {
-  const __config = getConfig();
   if (typeof __config.entry != "object") {
     return printLog({type:'error',text:'entry必须object类型\n 例如："entry": {"main":"./src/pages/index.js"}\r\n'})
   }

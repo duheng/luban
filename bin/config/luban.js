@@ -15,6 +15,9 @@ module.exports = {
     "production": "//api.luban.com/"
   },
   "entry": {'main':'./src/pages/index.js'},
+  "template": { // 自定义模版，会根据 entry 的 key 去匹配template的key中的html，
+    'entry/post-editor/index': './entry/post-editor/index.html',
+  },
   "library": {
      "vendor": ['react', 'react-dom']
   },

@@ -103,11 +103,14 @@ const devMiddleware = webpackDevMiddleware(compile, {
     }
 })
 const hotMiddleware = webpackHotMiddleware(compile)
+
+const historyMiddleware = history();
+
 module.exports = (targetConfig) => {
 	proxyAction(targetConfig);
-	app.use(history({
-		index: '/main.html'
-	}));
+	app.use((req, res, next) => {
+		historyMiddleware(req, res, next);
+	});
 	app.use(devMiddleware);
 	app.use(hotMiddleware);
 	devMiddleware.waitUntilValid(()=>{
