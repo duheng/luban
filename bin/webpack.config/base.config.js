@@ -21,10 +21,7 @@ const rules = require("./rules");
 const plugins = (config) => {
   let __plugins = [
     new webpack.ProgressPlugin(FormatProgressPlugin),
-    new CleanWebpackPlugin({
-      verbose: false,
-      cleanOnceBeforeBuildPatterns: ["**/*", "!dll", "!dll/**/*"],
-    }),
+    new CleanWebpackPlugin(),
     new webpack.IgnorePlugin({
       resourceRegExp: /^\.\/locale$/,
       contextRegExp: /moment$/,
