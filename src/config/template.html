@@ -1,0 +1,35 @@
+<html>			
+    <head>
+	    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+	    <meta name="viewport" content="{%=o.options.viewport || 'width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' %}">
+	  	<meta name="keywords" content="{%=o.options.keywords %}"/>
+        <meta name="description" content="{%=o.options.description %}"/>
+	    <meta name="apple-mobile-web-app-capable" content="yes">
+	    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+	    <!--<meta http-equiv="x-dns-prefetch-control" content="on">-->
+	    <link rel="dns-prefetch" href="//source.qunarzz.com">
+	    <link rel="dns-prefetch" href="//q.qunarzz.com">
+	    <meta content="telephone=no" name="format-detection">
+	    <!-- UC默认竖屏 ，UC强制全屏 -->
+	    <meta name="full-screen" content="yes">
+	    <meta name="browsermode" content="application">
+	    <!-- QQ强制竖屏 QQ强制全屏 -->
+	    <meta name="x5-orientation" content="portrait">
+	    <meta name="x5-fullscreen" content="true">
+	    <meta name="x5-page-mode" content="app">
+	    <link rel="apple-touch-icon-precomposed" href="/qunar-touch.png">
+	    {% if (o.files.favicon) { %}
+	   		<link rel="shortcut icon" href="{%=o.files.favicon%}">
+	    {% } %}
+      	{% for (var css in o.files.css) { %}
+	   		<link href="{%=o.files.css[css] %}" rel="stylesheet">
+	    {% } %}
+	    <title>{%=o.options.title %}</title>
+    </head>
+    <body>
+	    <div id="app"></div>
+	    {% for (var chunk in o.files.js) { %}
+   			<script type="text/javascript" src="{%=o.files.js[chunk]%}"></script>
+	    {% } %}
+    </body>
+</html>

@@ -1,5 +1,3 @@
-#!/usr/bin/env node
-
 require('shelljs/global')
 const fs       = require("fs")
 const path     = require('path')
