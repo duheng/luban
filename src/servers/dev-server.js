@@ -5,6 +5,7 @@ const history = require('connect-history-api-fallback');
 const { createProxyMiddleware } = require('http-proxy-middleware');
 const webpackDevMiddleware = require('webpack-dev-middleware')
 const webpackHotMiddleware = require('webpack-hot-middleware')
+const { printLog } = require('../utils/base');
 const { getWebpackConfig } = require('../utils/webpackConfig');
 const __config = getWebpackConfig('development');
 const express = require('express');
@@ -75,9 +76,9 @@ const indexHtml = (url) => {
 const proxyAction = (targetConfig) => {
 	const __proxy = targetConfig.proxy;
 	if (__proxy && __proxy.length > 0) {
-	  console.log(`[luban] 已为您初始化以下 ${__proxy.length} 个代理 \n`);
+		printLog({text:`[luban] 已为您初始化以下 ${__proxy.length} 个代理 \n`})
+		printLog({text:`${JSON.stringify(__proxy)}\n`})
 	  __proxy.map((item) => {
-		console.log(`${item.path} -> ${item.target}${item.path}\n`);
 		app.use(
 		  item.path,
 		  createProxyMiddleware({
@@ -94,12 +95,13 @@ const proxyAction = (targetConfig) => {
 const config = formatConfig(__config);
 const compile = Webpack(config);
 const devMiddleware = webpackDevMiddleware(compile, {
-	logLevel: 'debug',
+	logLevel: 'error',
+	logTime: true,
 	writeToDisk: false,
     publicPath: config.output.publicPath,
 	watchOptions: {
 		aggregateTimeout: 200,
-		ignored:  /node_modules|dll|.luban-cache/ 
+		ignored:  /node_modules|.luban-cache/ 
     }
 })
 const hotMiddleware = webpackHotMiddleware(compile)
@@ -107,6 +109,7 @@ const hotMiddleware = webpackHotMiddleware(compile)
 const historyMiddleware = history();
 
 module.exports = (targetConfig) => {
+	configlogLevel = targetConfig?.logLevel
 	proxyAction(targetConfig);
 	app.use((req, res, next) => {
 		historyMiddleware(req, res, next);

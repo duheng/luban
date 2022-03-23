@@ -50,20 +50,23 @@ const plugins = (config) => {
   }
 
   const __assetsDir = path.resolve(config.base, config.assets || "assets");
-  
+  const copyPattern = []
   if (fs.existsSync(__assetsDir) && fs.statSync(__assetsDir).isDirectory()) {
-    __plugins.push(
-      new CopyWebpackPlugin({
-        patterns: [
-          {
-            from: __assetsDir,
-            to: config.assets || "assets"
-          }
-        ]
-      })
-    );
+    copyPattern.push({
+      from: __assetsDir,
+      to: config.assets || "assets"
+    })
   }
-  
+
+  if(config.copy instanceof Array && config.copy.length > 0) {
+    copyPattern.push(...config.copy)
+  }
+  __plugins.push(
+    new CopyWebpackPlugin({
+      patterns: [...copyPattern]
+    })
+  );
+
   return __plugins;
 };
 const webpackConfig = (config) => {
