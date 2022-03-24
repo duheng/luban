@@ -1,6 +1,6 @@
 {
   "name": "@mozi/luban",
-  "version": "2.0.5",
+  "version": "2.0.6",
   "description": "前端工程化构建工具🔧",
   "main": "lib/index.js",
   "bin": {

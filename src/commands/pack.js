@@ -10,6 +10,7 @@ const {  getWebpackConfig } = require("../utils/webpackConfig");
 const { printLog } = require('../utils/base');
 const webpack = require("webpack");
 const pack = (webpackConfig) => {
+  const startTime = Date.now()
   return new Promise((resolve, reject) => {
     printLog({text:'Build Project...'})
     webpack({...webpackConfig}, (err, stats) => {
@@ -30,7 +31,9 @@ const pack = (webpackConfig) => {
       if (stats.hasWarnings()) {
         console.warn(info.warnings);
       }
-      printLog({text:'Build Project Complete.'})
+      const countTime = parseInt((Date.now() -  startTime) / 1000)
+      printLog({text:`Build Project Complete.`})
+      printLog({text:`Build Time. ${ countTime }s`})
       resolve();
     });
     
